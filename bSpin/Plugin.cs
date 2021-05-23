@@ -75,6 +75,7 @@ namespace bSpin
         [OnStart]
         public void OnApplicationStart()
         {
+            new GameObject("bSpinController").AddComponent<bSpinController>();
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
 
         }

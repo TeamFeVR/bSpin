@@ -26,12 +26,20 @@ namespace bSpin.HarmonyPatches
 
 			sharedValues.spins = Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile).spins;
 
+			if (Configuration.PluginConfig.Instance.AccountForLiv)
+				sharedValues.offset = LivFinder.GetCameraAngleOffset(LivFinder.FindTracker());
+			else
+				sharedValues.offset = 0.0f;
+			Plugin.Log.Debug("Spin angle offset is " + sharedValues.offset + "°");
+
 #if DEBUG
 
 
 			Plugin.Log.Info("AudioTimeSyncController.StartSong()");
 	#endif
 			sharedValues.player = GameObject.Find("LocalPlayerGameCore");
+
+
 
 			if (sharedValues.noodle && Configuration.PluginConfig.Instance.NoodleCompat)
             {
@@ -59,11 +67,11 @@ namespace bSpin.HarmonyPatches
 				{
 					if (!sharedValues.noodle)
 					{
-						sharedValues.player.transform.Spin(speen, sharedValues.speed);
+						yield return sharedValues.player.transform.Spin(speen, sharedValues.speed, sharedValues.offset);
 					}
 					else if (sharedValues.noodle && Configuration.PluginConfig.Instance.NoodleCompat)
 					{
-						sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed);
+						yield return sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed, sharedValues.offset);
 					}
 				}
 			}
@@ -76,7 +84,10 @@ namespace bSpin.HarmonyPatches
 	{
 		static void Postfix()
 		{
-			bSpinController.Instance.StopAllCoroutines();
+            try
+            {
+				bSpinController.Instance.StopAllCoroutines();
+			}catch(Exception e) { Plugin.Log.Critical(e.ToString()); }
 			
 			sharedValues.player.transform.eulerAngles = new Vector3(0, 0, 0);
 		}
@@ -92,6 +103,7 @@ namespace bSpin.HarmonyPatches
 		public static List<CustomTypes.Spin> spins;
 		public static float speed;
 		public static bool noodle;
+		public static float offset;
 		public static GameObject player;
 
 	}
@@ -113,11 +125,11 @@ namespace bSpin.HarmonyPatches
 				{
 					if (!sharedValues.noodle)
 					{
-						sharedValues.player.transform.Spin(speen, sharedValues.speed);
+						yield return sharedValues.player.transform.Spin(speen, sharedValues.speed, sharedValues.offset);
 					}
 					else if (sharedValues.noodle && Configuration.PluginConfig.Instance.NoodleCompat)
 					{
-						sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed);
+						yield return sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed, sharedValues.offset);
 					}
 				}
 			}

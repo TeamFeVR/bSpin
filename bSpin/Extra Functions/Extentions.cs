@@ -10,7 +10,7 @@ namespace bSpin.Extentions
 {
     public static class MovementExtentions
     {
-        public static IEnumerator Spin(this Transform transform, CustomTypes.Spin speen, float speed)
+        public static IEnumerator Spin(this Transform transform, CustomTypes.Spin speen, float speed, float offset = 0.0f)
         {
 			yield return new WaitForSecondsRealtime(speen.DelayBeforeSpin / speed);
 			float i = 0.0f;
@@ -19,12 +19,11 @@ namespace bSpin.Extentions
 			{
 				i = (Time.time - sT) / (speen.Length / speed);
 
-
 				EasingFunction.Ease ease = speen.Easing;
 				EasingFunction.Function func = EasingFunction.GetEasingFunction(ease);
 
 				float x = func(speen.Begin.x, speen.End.x, i);
-				float y = func(speen.Begin.y, speen.End.y, i);
+				float y = func(speen.Begin.y + offset, speen.End.y + offset, i);
 				float z = func(speen.Begin.z, speen.End.z, i);
 
 				transform.localEulerAngles = new Vector3(x, y, z);
@@ -33,7 +32,7 @@ namespace bSpin.Extentions
 			Plugin.Log.Debug("Spin finished in " + Mathf.RoundToInt(Time.time - sT) + " Seconds");
 			yield return new WaitForSecondsRealtime(speen.DelayAfterSpin / speed);
 		}
-        public static IEnumerator NoodleSpin(this Transform transform, CustomTypes.Spin speen, float speed)
+        public static IEnumerator NoodleSpin(this Transform transform, CustomTypes.Spin speen, float speed, float offset = 0.0f)
         {
 			float pT = Time.time;
 			float a = 0.0f;
@@ -50,12 +49,11 @@ namespace bSpin.Extentions
 			{
 				i = (Time.time - sT) / (speen.Length / speed);
 
-
 				EasingFunction.Ease ease = speen.Easing;
 				EasingFunction.Function func = EasingFunction.GetEasingFunction(ease);
 
 				float x = func(speen.Begin.x, speen.End.x, i);
-				float y = func(speen.Begin.y, speen.End.y, i);
+				float y = func(speen.Begin.y + offset, speen.End.y + offset, i);
 				float z = func(speen.Begin.z, speen.End.z, i);
 
 				transform.localEulerAngles = new Vector3(x, y, z);

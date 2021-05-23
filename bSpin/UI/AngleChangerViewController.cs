@@ -35,6 +35,12 @@ namespace bSpin.UI
             get => HarmonyPatches.sharedValues.speed;
             set => HarmonyPatches.sharedValues.speed = value;
         }
+        [UIValue("livcompat")]
+        public bool livCompat
+        {
+            get => Configuration.PluginConfig.Instance.AccountForLiv;
+            set => Configuration.PluginConfig.Instance.AccountForLiv = value;
+        }
         [UIAction("speed-increase")]
         public void speedIncrease()
         {

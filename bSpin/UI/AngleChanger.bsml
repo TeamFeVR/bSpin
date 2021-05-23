@@ -11,7 +11,8 @@
 		<vertical pref-width='25'>
 			<modifier-container pref-width='25'>
 				<modifier src='bSpin.UI.rotation.png' text='Spin' value='enablespin' apply-on-change='true' hover-hint='Enables/Disables spinning camera effect'></modifier>
-				<modifier src='bSpin.UI.rotation.png' text='Noodle Compat' value='noodlecompat' apply-on-change='true' hover-hint='Enables/Disables noodle extensions workaround'></modifier>
+				<modifier src='bSpin.UI.noodle.png' text='Noodle Compat' value='noodlecompat' apply-on-change='true' hover-hint='Enables/Disables noodle extensions workaround'></modifier>
+				<modifier src='bSpin.UI.AccountForCam.png' text='Account for LIV' value='livcompat' apply-on-change='true' hover-hint='Adjusts the spin angles to account for the angle your camera is at'></modifier>
 			</modifier-container>
 			<vertical pref-width='25'>
 				
