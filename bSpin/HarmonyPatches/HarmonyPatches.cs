@@ -50,7 +50,6 @@ namespace bSpin.HarmonyPatches
 
 
 
-
 			Plugin.Log.Notice("There are currently " + sharedValues.spins.Count.ToString() + " Spins");
 			//Plugin.Log.Info("Found" + sharedValues.player.ToString());
 
@@ -84,11 +83,10 @@ namespace bSpin.HarmonyPatches
 	{
 		static void Postfix()
 		{
-            try
+			try
             {
 				bSpinController.Instance.StopAllCoroutines();
 			}catch(Exception e) { Plugin.Log.Critical(e.ToString()); }
-			
 			sharedValues.player.transform.eulerAngles = new Vector3(0, 0, 0);
 		}
 		[HarmonyTargetMethods]

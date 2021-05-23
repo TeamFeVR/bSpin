@@ -38,6 +38,7 @@ namespace bSpin.Extentions
 			float a = 0.0f;
 			while (a < 1.0f)
 			{
+				//noodle's a piece of shit isn't it?
 				a = (Time.time - pT) / (speen.DelayBeforeSpin / speed);
 				transform.localEulerAngles = speen.Begin;
 				yield return null;
