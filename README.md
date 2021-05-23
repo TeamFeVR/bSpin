@@ -7,4 +7,4 @@ the b stands for whatever you want it to
 
 you are allowed to download, modify, and use the code found on this repo, but if it is shared publicly, such as in a stream or video, you must credit me if asked about it
 
-you are not allowed to distribute this code, raw or compiled, in any way shape or form beyond the limits of the FeVR team, without permission from me
+you are not allowed to distribute this code, raw or compiled, in any way shape or form beyond the limits of the FeVR team, without permission from me, or another team member
