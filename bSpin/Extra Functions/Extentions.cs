@@ -43,7 +43,6 @@ namespace bSpin.Extentions
 				transform.localEulerAngles = speen.Begin;
 				yield return null;
 			}
-
 			float i = 0.0f;
 			float sT = Time.time;
 			while (i < 1.0f)

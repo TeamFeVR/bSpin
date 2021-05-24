@@ -22,36 +22,22 @@ namespace bSpin.HarmonyPatches
 
 		static void Postfix(AudioTimeSyncController __instance)
 		{
-
-
 			sharedValues.spins = Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile).spins;
 
 			if (Configuration.PluginConfig.Instance.AccountForLiv)
 				sharedValues.offset = LivFinder.GetCameraAngleOffset(LivFinder.FindTracker());
 			else
 				sharedValues.offset = 0.0f;
+
 			Plugin.Log.Debug("Spin angle offset is " + sharedValues.offset + "°");
-
-#if DEBUG
-
-
-			Plugin.Log.Info("AudioTimeSyncController.StartSong()");
-	#endif
 			sharedValues.player = GameObject.Find("LocalPlayerGameCore");
-
-
 
 			if (sharedValues.noodle && Configuration.PluginConfig.Instance.NoodleCompat)
             {
-				var noodlePlayerTrack = sharedValues.player.transform.GetChild(0).gameObject;
-				//sharedValues.player.AddComponent(Type.GetType("NoodleExtensions.Animation.PlayerTrack"));
-				sharedValues.player = noodlePlayerTrack;
+				sharedValues.player = sharedValues.player.transform.GetChild(0).gameObject;
 			}
 
-
-
 			Plugin.Log.Notice("There are currently " + sharedValues.spins.Count.ToString() + " Spins");
-			//Plugin.Log.Info("Found" + sharedValues.player.ToString());
 
 			sharedValues.player.transform.localEulerAngles = new Vector3(0, 0.0f, 0);
 			Plugin.Log.Notice("I reset the rotation");
@@ -68,14 +54,13 @@ namespace bSpin.HarmonyPatches
 					{
 						yield return sharedValues.player.transform.Spin(speen, sharedValues.speed, sharedValues.offset);
 					}
-					else if (sharedValues.noodle && Configuration.PluginConfig.Instance.NoodleCompat)
+					else if (sharedValues.noodle)
 					{
 						yield return sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed, sharedValues.offset);
 					}
 				}
 			}
 		}
-
 	}
 
 	[HarmonyPatch]

@@ -13,7 +13,7 @@ namespace bSpin.UI.IngameMenu
     class FloatingScreenCreator
     {
         private static bool didThing = false;
-        internal static FloatingScreen pauseFloatingScreen = FloatingScreen.CreateFloatingScreen(new Vector2(100, 10), false, new Vector3(0, 1.20f, 2.00f), Quaternion.Euler(0, 0, 0), 175f, true);
+        internal static FloatingScreen pauseFloatingScreen = FloatingScreen.CreateFloatingScreen(new Vector2(100, 20), false, new Vector3(0, 1.20f, 2.00f), Quaternion.Euler(0, 0, 0), 175f, true);
         internal static void yeet()
         {
             if (!didThing)

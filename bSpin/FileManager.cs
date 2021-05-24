@@ -13,13 +13,12 @@ namespace bSpin
     {
         public static List<SpinProfile> GetSpinProfiles()
         {
-            List<String> jsonFiles = Directory.GetFiles(Path.Combine(UnityGame.UserDataPath, "bSpin") + "\\").ToList();
+            List<String> jsonFiles = Directory.GetFiles(Path.Combine(UnityGame.UserDataPath, "bSpin") + "\\", "*.json").ToList();
             List<SpinProfile> spinProfiles = new List<SpinProfile>();
             foreach(var sp in jsonFiles)
             {
                 SpinProfile tempSpin = new SpinProfile();
                 Plugin.Log.Debug("Caching profile at " + sp);
-
 
                 tempSpin.spins = Tools.LoadJson(sp);
                 tempSpin.name = sp.Substring((Path.Combine(UnityGame.UserDataPath, "bSpin") + "\\").Length);
