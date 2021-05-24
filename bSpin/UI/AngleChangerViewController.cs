@@ -33,13 +33,23 @@ namespace bSpin.UI
         public float spinSpeed
         {
             get => HarmonyPatches.sharedValues.speed;
-            set => HarmonyPatches.sharedValues.speed = value;
+            set
+            {
+                HarmonyPatches.sharedValues.speed = value;
+                NotifyPropertyChanged();
+            }
         }
         [UIValue("livcompat")]
         public bool livCompat
         {
             get => Configuration.PluginConfig.Instance.AccountForLiv;
             set => Configuration.PluginConfig.Instance.AccountForLiv = value;
+        }
+        [UIValue("pauseui")]
+        public bool pauseUI
+        {
+            get => Configuration.PluginConfig.Instance.PauseMenu;
+            set => Configuration.PluginConfig.Instance.PauseMenu = value;
         }
         [UIAction("speed-increase")]
         public void speedIncrease()
@@ -70,6 +80,7 @@ namespace bSpin.UI
         [UIAction("#post-parse")]
         void setupLists()
         {
+            spinSpeed = HarmonyPatches.sharedValues.speed;
             spinListData.data.Clear();
             foreach(var profile in Plugin.spinProfiles)
             {

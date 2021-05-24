@@ -22,6 +22,7 @@ namespace bSpin.HarmonyPatches
 
 		static void Postfix(AudioTimeSyncController __instance)
 		{
+			PauseMenuPatch.MenuFound = false;
 			sharedValues.spins = Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile).spins;
 
 			if (Configuration.PluginConfig.Instance.AccountForLiv)
@@ -38,7 +39,6 @@ namespace bSpin.HarmonyPatches
 			}
 
 			Plugin.Log.Notice("There are currently " + sharedValues.spins.Count.ToString() + " Spins");
-
 			sharedValues.player.transform.localEulerAngles = new Vector3(0, 0.0f, 0);
 			Plugin.Log.Notice("I reset the rotation");
 			if(Configuration.PluginConfig.Instance.Enabled)

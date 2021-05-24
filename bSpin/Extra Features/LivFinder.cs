@@ -17,6 +17,21 @@ namespace bSpin
 
         public static float GetCameraAngleOffset(Transform camera)
         {
+            ///Summary
+            ///using trig to find an angle
+            ///
+            ///         |\
+            ///         | \
+            ///adjacent |  \
+            ///         |   \
+            ///         |____\
+            ///         opposite
+            /// 
+            /// geometry class coming in clutch
+
+
+
+
             float opposite = camera.position.x;
             float adjacent = camera.position.z;
 

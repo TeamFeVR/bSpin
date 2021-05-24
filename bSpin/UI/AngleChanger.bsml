@@ -13,6 +13,7 @@
 				<modifier src='bSpin.UI.rotation.png' text='Spin' value='enablespin' apply-on-change='true' hover-hint='Enables/Disables spinning camera effect'></modifier>
 				<modifier src='bSpin.UI.noodle.png' text='Noodle Compat' value='noodlecompat' apply-on-change='true' hover-hint='Use this if you fly off in analys'></modifier>
 				<modifier src='bSpin.UI.AccountForCam.png' text='Account for LIV' value='livcompat' apply-on-change='true' hover-hint='Adjusts the spin angles to account for the angle your camera is at'></modifier>
+				<modifier src='bSpin.UI.pausemenu.png' text='Pause UI' value='pauseui' apply-on-change='true' hover-hint='Enables toggling the spin and adjusting speed in the pause menu'></modifier>
 			</modifier-container>
 			<vertical pref-width='25'>
 				

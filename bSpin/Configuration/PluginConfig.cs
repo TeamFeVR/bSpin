@@ -15,6 +15,7 @@ namespace bSpin.Configuration
         public virtual bool NoodleCompat { get; set; } = false;
         public virtual float SpinSpeed { get; set; } = 1.0f;
         public virtual bool AccountForLiv { get; set; } = false;
+        public virtual bool PauseMenu { get; set; } = true;
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).

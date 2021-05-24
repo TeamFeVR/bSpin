@@ -142,6 +142,7 @@
     <Compile Include="FileManager.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
     <Compile Include="HarmonyPatches\HookLevelData.cs" />
+    <Compile Include="HarmonyPatches\PauseMenuPatch.cs" />
     <Compile Include="LevelFeatureWarning.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,6 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\AccountForCam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\pausemenu.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

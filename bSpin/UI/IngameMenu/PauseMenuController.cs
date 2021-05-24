@@ -23,5 +23,16 @@ namespace bSpin.UI.IngameMenu
                 NotifyPropertyChanged();
             }
         }
+        [UIValue("spin-speed")]
+        internal float spinSpeed
+        {
+            get => HarmonyPatches.sharedValues.speed;
+            set
+            {
+                HarmonyPatches.sharedValues.speed = value;
+                AngleChanger.instance.spinSpeed = value;
+                NotifyPropertyChanged();
+            }
+        }
     }
 }
