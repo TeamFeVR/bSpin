@@ -8,6 +8,59 @@ using UnityEngine;
 
 namespace bSpin.Extentions
 {
+	public static class TransformExtensions
+	{
+		//similar to the one found in the LivFinder, but should work for ALL angles, not just behind you
+		public static float GetRotation(this Transform target, Vector3 origin)
+        {
+			return GetRot(target, origin);
+        }
+		public static float GetRotation(this Transform target)
+		{
+			return GetRot(target, Vector3.zero);
+		}
+		internal static float GetRot(Transform target, Vector3 origin)
+        {
+			//since we have to deal with more than just 180° of bullshit, we're gonna have to do some more math than usual
+
+			//pointing to the left returns negative values, and right returns positive, hopefully up to 180° in either direction
+
+			//and since unity is weird, Z is forward
+			//gonna draw a triangle here real quick
+			///
+			///         |\
+			///         | \
+			///adjacent |  \
+			///         |   \
+			///         |____\
+			///         opposite
+			/// 
+			/// geometry class coming in clutch
+			
+			float opposite = target.position.x;
+			float adjacent = target.position.z;
+
+			bool left = opposite < 0;
+			bool right = opposite > 0;
+			bool back = adjacent < 0;
+
+			opposite = Math.Abs(opposite);
+			adjacent = Math.Abs(adjacent);
+
+			float angle = (float)(Math.Atan(opposite / adjacent) * (180 / Math.PI));
+
+			//since we forced positive earlier, this offsets it to be where we pointed
+			if (back && left)
+				angle -= 90;
+			if (back && right)
+				angle += 90;
+			if (left && !back)
+				angle = -angle;
+			return angle;
+		}
+
+    }
+
     public static class MovementExtentions
     {
 		public static IEnumerator ExperimentalSpin(this Transform transform, CustomTypes.Spin speen, float speed, float offset = 0.0f)
