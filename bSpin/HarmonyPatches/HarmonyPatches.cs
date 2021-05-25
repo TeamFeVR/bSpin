@@ -52,11 +52,17 @@ namespace bSpin.HarmonyPatches
 				{
 					if (!sharedValues.noodle)
 					{
-						yield return sharedValues.player.transform.Spin(speen, sharedValues.speed, sharedValues.offset);
+						if(Configuration.PluginConfig.Instance.Experiments)
+							yield return sharedValues.player.transform.ExperimentalSpin(speen, sharedValues.speed, sharedValues.offset);
+						else
+							yield return sharedValues.player.transform.Spin(speen, sharedValues.speed, sharedValues.offset);
 					}
 					else if (sharedValues.noodle)
 					{
-						yield return sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed, sharedValues.offset);
+						if (Configuration.PluginConfig.Instance.Experiments)
+							yield return sharedValues.player.transform.ExperimentalNoodleSpin(speen, sharedValues.speed, sharedValues.offset);
+						else
+							yield return sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed, sharedValues.offset);
 					}
 				}
 			}
@@ -108,11 +114,17 @@ namespace bSpin.HarmonyPatches
 				{
 					if (!sharedValues.noodle)
 					{
-						yield return sharedValues.player.transform.Spin(speen, sharedValues.speed, sharedValues.offset);
+						if (Configuration.PluginConfig.Instance.Experiments)
+							yield return sharedValues.player.transform.ExperimentalSpin(speen, sharedValues.speed, sharedValues.offset);
+						else
+							yield return sharedValues.player.transform.Spin(speen, sharedValues.speed, sharedValues.offset);
 					}
-					else if (sharedValues.noodle && Configuration.PluginConfig.Instance.NoodleCompat)
+					else if (sharedValues.noodle)
 					{
-						yield return sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed, sharedValues.offset);
+						if (Configuration.PluginConfig.Instance.Experiments)
+							yield return sharedValues.player.transform.ExperimentalNoodleSpin(speen, sharedValues.speed, sharedValues.offset);
+						else
+							yield return sharedValues.player.transform.NoodleSpin(speen, sharedValues.speed, sharedValues.offset);
 					}
 				}
 			}

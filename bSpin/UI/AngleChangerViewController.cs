@@ -51,6 +51,12 @@ namespace bSpin.UI
             get => Configuration.PluginConfig.Instance.PauseMenu;
             set => Configuration.PluginConfig.Instance.PauseMenu = value;
         }
+        [UIValue("jank")]
+        public bool jank
+        {
+            get => Configuration.PluginConfig.Instance.Experiments;
+            set => Configuration.PluginConfig.Instance.Experiments = value;
+        }
         [UIAction("speed-increase")]
         public void speedIncrease()
         {

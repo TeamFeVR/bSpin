@@ -170,16 +170,19 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\rotation.png" />
+    <EmbeddedResource Include="UI\icons\rotation.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\noodle.png" />
+    <EmbeddedResource Include="UI\icons\noodle.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\AccountForCam.png" />
+    <EmbeddedResource Include="UI\icons\AccountForCam.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\pausemenu.png" />
+    <EmbeddedResource Include="UI\icons\pausemenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\icons\experiments.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

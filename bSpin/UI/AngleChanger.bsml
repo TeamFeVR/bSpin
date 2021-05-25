@@ -1,28 +1,29 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
-	<horizontal>
-		<vertical pref-width='75'>
-			<horizontal>
-				<page-button event-click='SpinList#PageUp' direction='Up'/>
-				<primary-button text='Refresh' on-click='refresh'/>
-				<page-button event-click='SpinList#PageDown' direction='Down'/>
-			</horizontal>
-			<list id='SpinList' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45'/>
-		</vertical>
-		<vertical pref-width='25'>
-			<modifier-container pref-width='25'>
-				<modifier src='bSpin.UI.rotation.png' text='Spin' value='enablespin' apply-on-change='true' hover-hint='Enables/Disables spinning camera effect'></modifier>
-				<modifier src='bSpin.UI.noodle.png' text='Noodle Compat' value='noodlecompat' apply-on-change='true' hover-hint='Use this if you fly off in analys'></modifier>
-				<modifier src='bSpin.UI.AccountForCam.png' text='Account for LIV' value='livcompat' apply-on-change='true' hover-hint='Adjusts the spin angles to account for the angle your camera is at'></modifier>
-				<modifier src='bSpin.UI.pausemenu.png' text='Pause UI' value='pauseui' apply-on-change='true' hover-hint='Enables toggling the spin and adjusting speed in the pause menu'></modifier>
-			</modifier-container>
-			<vertical pref-width='25'>
-				
-				<slider-setting text='.' min='0' max='20' increment='0.1' value='speed-value' bind-value='true' apply-on-change='true' pref-width='25' pad-left='-10'/>
-				<horizontal pref-width='25'>
-					<button text='-' on-click='speed-decrease' pref-width='12.5'/>
-					<button text='+' on-click='speed-increase' pref-width='12.5'/>
+	<vertical>
+		<horizontal>
+			<vertical pref-width='75'>
+				<horizontal>
+					<page-button event-click='SpinList#PageUp' direction='Up'/>
+					<primary-button text='Refresh' on-click='refresh'/>
+					<page-button event-click='SpinList#PageDown' direction='Down'/>
 				</horizontal>
+				<list id='SpinList' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45'/>
 			</vertical>
-		</vertical>
-	</horizontal>
+			<vertical pref-width='25'>
+				<modifier-container pref-width='25'>
+					<!--fun fact, all these icons were made by me, in blender!-->
+					<modifier src='bSpin.UI.icons.rotation.png' text='Spin' value='enablespin' apply-on-change='true' hover-hint='Enables/Disables spinning camera effect'></modifier>
+					<modifier src='bSpin.UI.icons.noodle.png' text='Noodle Compat' value='noodlecompat' apply-on-change='true' hover-hint='Use this if you fly off in analys'></modifier>
+					<modifier src='bSpin.UI.icons.AccountForCam.png' text='Account for LIV' value='livcompat' apply-on-change='true' hover-hint='Adjusts the spin angles to account for the angle your camera is at'></modifier>
+					<modifier src='bSpin.UI.icons.pausemenu.png' text='Pause UI' value='pauseui' apply-on-change='true' hover-hint='Enables toggling the spin and adjusting speed in the pause menu'></modifier>
+					<modifier src='bSpin.UI.icons.experiments.png' text='Experimental' value='jank' apply-on-change='true' hover-hint='Enables Experimental methods or features, disable this if something fucks up!'></modifier>
+				</modifier-container>
+			</vertical>
+		</horizontal>
+		<horizontal pref-width='100'>
+			<slider-setting text='Speed' min='0' max='20' increment='0.1' value='speed-value' bind-value='true' apply-on-change='true' pref-width='75'/>
+			<button text='-' on-click='speed-decrease' pref-width='12.5'/>
+			<button text='+' on-click='speed-increase' pref-width='12.5'/>
+		</horizontal>
+	</vertical>
 </bg>
