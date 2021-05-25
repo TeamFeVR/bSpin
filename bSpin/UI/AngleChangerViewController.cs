@@ -82,7 +82,8 @@ namespace bSpin.UI
             Plugin.spinProfiles = FileManager.GetSpinProfiles();
             setupLists();
         }
-
+        [UIAction("open-editor")]
+        void editor() => Spin_Editor.SpinEditorFlowCoordinator.Show();
         [UIAction("#post-parse")]
         void setupLists()
         {

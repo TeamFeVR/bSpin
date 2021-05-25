@@ -37,8 +37,8 @@ namespace bSpin.Extentions
 			/// 
 			/// geometry class coming in clutch
 			
-			float opposite = target.position.x;
-			float adjacent = target.position.z;
+			float opposite = target.position.x - origin.x;
+			float adjacent = target.position.z - origin.z;
 
 			bool left = opposite < 0;
 			bool right = opposite > 0;

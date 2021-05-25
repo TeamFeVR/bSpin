@@ -22,7 +22,7 @@ namespace bSpin
         internal static Plugin Instance { get; private set; }
         internal static IPALogger Log { get; private set; }
         internal static Harmony harmony { get; private set; }
-
+        internal static GameObject bSpinController { get; private set; }
         public static List<SpinProfile> spinProfiles { get; set; }
 
         [Init]
@@ -75,7 +75,8 @@ namespace bSpin
         [OnStart]
         public void OnApplicationStart()
         {
-            new GameObject("bSpinController").AddComponent<bSpinController>();
+            bSpinController = new GameObject("bSpinController");
+            bSpinController.AddComponent<bSpinController>();
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
 
         }

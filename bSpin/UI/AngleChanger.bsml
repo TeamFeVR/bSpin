@@ -3,9 +3,10 @@
 		<horizontal>
 			<vertical pref-width='75'>
 				<horizontal>
-					<page-button event-click='SpinList#PageUp' direction='Up'/>
-					<primary-button text='Refresh' on-click='refresh'/>
-					<page-button event-click='SpinList#PageDown' direction='Down'/>
+					<page-button event-click='SpinList#PageUp' direction='Up' pref-width='10'/>
+					<primary-button text='Refresh' on-click='refresh' pref-width='15'/>
+					<primary-button text='Edit Spins' on-click='open-editor' pref-width='15'/>
+					<page-button event-click='SpinList#PageDown' direction='Down' pref-width='10'/>
 				</horizontal>
 				<list id='SpinList' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45'/>
 			</vertical>
