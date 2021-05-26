@@ -60,15 +60,19 @@ namespace bSpin.UI.Spin_Editor
             [UIAction("refresh-visuals")]
             public void Refresh(bool selected, bool highlighted)
             {
+                
                 background.texture = Texture2D.whiteTexture;
-                background.color = new Color(1f, 1f, 1f, 0.125f);
+                if (highlighted)
+                    background.color = new Color(1f, 1f, 1f, 0.125f);
+                if (selected)
+                    background.color = new Color(0.5f, 0.5f, 1f, 0.5f);
             }
         }
 
         [UIAction("spin-selected")]
-        private void SpinSelected(TableView sender, SpinListObject obj)
+        internal static void SpinSelected(TableView sender, SpinListObject obj)
         {
-            RotationPanel.Load(obj.spin);
+            RotationPanel.Instance.Load(obj.spin);
         }
 
 

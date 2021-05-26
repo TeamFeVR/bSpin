@@ -1,32 +1,55 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<vertical>
 		<horizontal bg='panel-top'>
-			<text text='Edit Spin' align='Center' text-size='15'/>
+			<text text='Edit Spin' align='Center'/>
 		</horizontal>
-		<horizontal>
-			<vertical pref-width='75' pref-height='100'>
-				<scrollable-container id='rot-settings' pad='2'>
-					<string-setting text='Start Delay' value='start-delay'/>
-					<vertical bg='round-rect-panel' pref-height='30'>
-						<text text='Start'/>
-						<string-setting text='X' value='s-rot-x'/>
-						<string-setting text='Y' value='s-rot-y'/>
-						<string-setting text='Z' value='s-rot-z'/>
-					</vertical>
-					<vertical bg='round-rect-panel' pref-height='30'>
-						<text text='End'/>
-						<string-setting text='X' value='e-rot-x'/>
-						<string-setting text='Y' value='e-rot-y'/>
-						<string-setting text='Z' value='e-rot-z'/>
-					</vertical>
-					<string-setting text='End Delay' value='end-delay'/>
-					<string-setting text='Length' value='spin-length'/>
+		<horizontal pref-width='100' pref-height='60'>
+			<vertical pref-width='90' pref-height='60'>
+				<scrollable-container id='rot-settings' spacing='1' mask-overflow='true' horizontal-fit='PreferredSize'>
+					<string-setting text='Start Delay' value='start-delay' bind-value='true'/>
+					<string-setting text='Start X' value='s-rot-x' bind-value='true'/>
+					<string-setting text='Start Y' value='s-rot-y' bind-value='true'/>
+					<string-setting text='Start Z' value='s-rot-z' bind-value='true'/>
+					<string-setting text='End X' value='e-rot-x' bind-value='true'/>
+					<string-setting text='End Y' value='e-rot-y' bind-value='true'/>
+					<string-setting text='End Z' value='e-rot-z' bind-value='true'/>
+					<string-setting text='End Delay' value='end-delay' bind-value='true'/>
+					<string-setting text='Length' value='spin-length' bind-value='true'/>
 				</scrollable-container>
 			</vertical>
-			<vertical pref-width='25'>
-				<button text='Page Up' tags='PageUpFor:rot-settings' />
-				<button text='Page Down' tags='PageDownFor:rot-settings' />
+			<vertical pref-width='10' pref-height='100'>
+				<pg-button dir='Up' tags='PageUpFor:rot-settings' pref-height='10'/>
+				<pg-button dir='Down' tags='PageDownFor:rot-settings' pref-height='10'/>
 			</vertical>
 		</horizontal>
+		<horizontal pref-height='20'>
+			<primary-button text='modal test' event-click='number-picker'/>
+			<button text='Revert' on-click='revert-edits' active='~unchanged'/>
+			<primary-button text='Revert' on-click='revert-edits' active='~changed'/>
+			<button text='Apply' on-click='apply-edits' active='~unchanged'/>
+			<primary-button text='Apply' on-click='apply-edits' active='~changed'/>
+		</horizontal>
+		<modal show-event='number-picker' hide-event='close-number-picker' click-off-closes='false' move-to-center='true'>
+			<vertical>
+				<horizontal pref-height='70'>
+					<grid cell-size-x='20' cell-size-y='20' bg='round-rect-panel' spacing-x='1' spacing-y='1'>
+						<button text='1'/>
+						<button text='1'/>
+						<button text='1'/>
+						<button text='1'/>
+						<button text='1'/>
+						<button text='1'/>
+						<button text='1'/>
+						<button text='1'/>
+						<button text='1'/>
+					</grid>
+				</horizontal>
+				<horizontal pref-height='10'>
+					<button text='Cancel' event-click='close-number-picker'/>
+					<primary-button text='Set with controller'/>
+					<button text='Apply'/>
+				</horizontal>
+			</vertical>
+		</modal>
 	</vertical>
 </bg>
