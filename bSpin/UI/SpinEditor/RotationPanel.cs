@@ -10,7 +10,7 @@ namespace bSpin.UI.Spin_Editor
 {
     class RotationPanel : BSMLResourceViewController
     {
-        public override string ResourceName => "bSpin.UI.IngameMenu.RotationPanel.bsml";
+        public override string ResourceName => "bSpin.UI.SpinEditor.RotationPanel.bsml";
 
         [UIValue("start-delay")] static string StartDelay = "";
         [UIValue("s-rot-x")] static string SRotX = "";

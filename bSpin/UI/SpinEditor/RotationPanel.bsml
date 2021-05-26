@@ -1,12 +1,12 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<vertical>
 		<horizontal bg='panel-top'>
-			<text text='Edit Spin'/>
+			<text text='Exit Spin' align='Center' text-size='15'/>
 		</horizontal>
 		<horizontal>
-			<vertical pref-width='75'>
-				<scrollable-container id='rot-settings'>
-					<vertical>
+			<vertical pref-width='75' pref-height='100'>
+				<scrollable-container  id='rot-settings'>
+					<vertical child-expand-height='true'>
 						<string-setting text='Start Delay' value='start-delay'/>
 						<vertical bg='round-rect-panel'>
 							<text text='Start'/>

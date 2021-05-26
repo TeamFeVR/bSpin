@@ -83,7 +83,28 @@ namespace bSpin.UI
             setupLists();
         }
         [UIAction("open-editor")]
-        void editor() => Spin_Editor.SpinEditorFlowCoordinator.Show();
+        private void Show()
+        {
+            
+            FlowCoordinator flowCoordinator = BeatSaberUI.MainFlowCoordinator.YoungestChildFlowCoordinatorOrSelf();
+            if (!Spin_Editor.SpinEditorFlowCoordinator.Instance)
+            {
+                Spin_Editor.SpinEditorFlowCoordinator.Instance = BeatSaberUI.CreateFlowCoordinator<Spin_Editor.SpinEditorFlowCoordinator>();
+            }
+            if (!Spin_Editor.SpinEditorFlowCoordinator.Instance)
+                Plugin.Log.Critical("uh");
+                Spin_Editor.SpinEditorFlowCoordinator.SetPreviousFlowCoordinator(flowCoordinator);
+            try
+            {
+                flowCoordinator.PresentFlowCoordinator(Spin_Editor.SpinEditorFlowCoordinator.Instance);
+            }
+            catch (Exception e)
+            {
+                Plugin.Log.Critical(e.ToString());
+            }
+
+
+        }
         [UIAction("#post-parse")]
         void setupLists()
         {

@@ -150,10 +150,9 @@
     <Compile Include="Extra Functions\Vector3Converter.cs" />
     <Compile Include="UI\IngameMenu\FloatingScreenCreator.cs" />
     <Compile Include="UI\IngameMenu\PauseMenuController.cs" />
-    <Compile Include="UI\Spin Editor\FilePanel.cs" />
-    <Compile Include="UI\Spin Editor\RotationPanel.cs" />
-    <Compile Include="UI\Spin Editor\SpinEditorFlowCoordinator.cs" />
-    <Compile Include="UI\Spin Editor\SpinPanel.cs" />
+    <Compile Include="UI\SpinEditor\RotationPanel.cs" />
+    <Compile Include="UI\SpinEditor\SpinEditorFlowCoordinator.cs" />
+    <Compile Include="UI\SpinEditor\SpinPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
@@ -165,9 +164,8 @@
     <None Include="bSpin.csproj.user" Condition="Exists('bSpin.csproj.user')" />
     <EmbeddedResource Include="UI\AngleChanger.bsml" />
     <EmbeddedResource Include="UI\IngameMenu\PauseMenu.bsml" />
-    <EmbeddedResource Include="UI\Spin Editor\FilePanel.bsml" />
-    <EmbeddedResource Include="UI\Spin Editor\SpinPanel.bsml" />
-    <EmbeddedResource Include="UI\Spin Editor\RotationPanel.bsml" />
+    <EmbeddedResource Include="UI\SpinEditor\SpinPanel.bsml" />
+    <EmbeddedResource Include="UI\SpinEditor\RotationPanel.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">
