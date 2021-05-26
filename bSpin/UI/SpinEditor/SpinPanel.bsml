@@ -4,7 +4,27 @@
 			<text text='Spins' align='Center' text-size='15'/>
 		</horizontal>
 		<horizontal>
-			
+			<vertical>
+				<pg-button dir='Up' click-event='spin-list#PageUp'/>
+				<stack>
+					<custom-list visible-cells='5' cell-size='10' id='spin-list' contents='spins' select-cell='spin-selected'>
+						<stack vertical-fit='Unconstrained'>
+							<horizontal child-expand-width='false' vertical-fit='Unconstrained'>
+								<vertical horizontal-fit='Unconstrained'>
+									<text text='~spin-vectors' align='MidlineLeft' font-size='4' />
+									<text text='~spin-length' align='MidlineLeft' font-size='4' />
+								</vertical>
+								<vertical horizontal-fit='Unconstrained'>
+									<text text='~spin-start-delay' align='MidlineRight' font-size='4'/>
+									<text text='~spin-end-delay' align='MidlineRight' font-size='4'/>
+								</vertical>
+							</horizontal>
+							<raw-image id='bg' tags='hovered' />
+						</stack>
+					</custom-list>
+				</stack>
+				<pg-button dir='Down' click-event='spin-list#PageDown'/>
+			</vertical>
 		</horizontal>
 	</vertical>
 </bg>

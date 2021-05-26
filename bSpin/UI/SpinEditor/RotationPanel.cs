@@ -20,6 +20,7 @@ namespace bSpin.UI.Spin_Editor
         [UIValue("e-rot-y")] static string ERotY = "";
         [UIValue("e-rot-z")] static string ERotZ = "";
         [UIValue("end-delay")] static string EndDelay = "";
+        [UIValue("spin-length")] static string SpinLength = "";
 
         internal static void Load(CustomTypes.Spin spin)
         {
@@ -31,6 +32,7 @@ namespace bSpin.UI.Spin_Editor
             ERotY = spin.End.y.ToString();
             ERotZ = spin.End.z.ToString();
             EndDelay = spin.DelayAfterSpin.ToString();
+            SpinLength = spin.Length.ToString();
         }
 
 

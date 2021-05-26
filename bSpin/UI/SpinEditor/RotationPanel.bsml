@@ -1,27 +1,26 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<vertical>
 		<horizontal bg='panel-top'>
-			<text text='Exit Spin' align='Center' text-size='15'/>
+			<text text='Edit Spin' align='Center' text-size='15'/>
 		</horizontal>
 		<horizontal>
 			<vertical pref-width='75' pref-height='100'>
-				<scrollable-container  id='rot-settings'>
-					<vertical child-expand-height='true'>
-						<string-setting text='Start Delay' value='start-delay'/>
-						<vertical bg='round-rect-panel'>
-							<text text='Start'/>
-							<string-setting text='X' value='s-rot-x'/>
-							<string-setting text='Y' value='s-rot-y'/>
-							<string-setting text='Z' value='s-rot-z'/>
-						</vertical>
-						<vertical bg='round-rect-panel'>
-							<text text='End'/>
-							<string-setting text='X' value='e-rot-x'/>
-							<string-setting text='Y' value='e-rot-y'/>
-							<string-setting text='Z' value='e-rot-z'/>
-						</vertical>
-						<string-setting text='End Delay' value='end-delay'/>
+				<scrollable-container id='rot-settings' pad='2'>
+					<string-setting text='Start Delay' value='start-delay'/>
+					<vertical bg='round-rect-panel' pref-height='30'>
+						<text text='Start'/>
+						<string-setting text='X' value='s-rot-x'/>
+						<string-setting text='Y' value='s-rot-y'/>
+						<string-setting text='Z' value='s-rot-z'/>
 					</vertical>
+					<vertical bg='round-rect-panel' pref-height='30'>
+						<text text='End'/>
+						<string-setting text='X' value='e-rot-x'/>
+						<string-setting text='Y' value='e-rot-y'/>
+						<string-setting text='Z' value='e-rot-z'/>
+					</vertical>
+					<string-setting text='End Delay' value='end-delay'/>
+					<string-setting text='Length' value='spin-length'/>
 				</scrollable-container>
 			</vertical>
 			<vertical pref-width='25'>

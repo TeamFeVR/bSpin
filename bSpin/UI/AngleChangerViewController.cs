@@ -97,6 +97,7 @@ namespace bSpin.UI
             try
             {
                 flowCoordinator.PresentFlowCoordinator(Spin_Editor.SpinEditorFlowCoordinator.Instance);
+                Spin_Editor.SpinPanel.Instance.LoadInList(Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile));
             }
             catch (Exception e)
             {
