@@ -33,6 +33,21 @@ namespace bSpin.HarmonyPatches
 			Plugin.Log.Debug("Spin angle offset is " + sharedValues.offset + "°");
 			sharedValues.player = GameObject.Find("LocalPlayerGameCore");
 
+            if (Configuration.PluginConfig.Instance.Experiments)
+            {
+				GameObject origin = GameObject.Find("LocalPlayerGameCore/Origin");
+				GameObject spinHandle = new GameObject("bSpin_Handle");
+				spinHandle.transform.SetParent(origin.transform);
+				GameObject vrcore = origin.transform.GetChild(0).gameObject;
+				vrcore.transform.SetParent(spinHandle.transform);
+				sharedValues.player = spinHandle;
+
+				//basically what this does is insert itself in between Origin (the thing i believe noodle spins)
+				//and the player (usually called VRGameCore) which is the first child of Origin
+				//i did it this way because compatibility for the win!
+            }
+
+
 			if (sharedValues.noodle && Configuration.PluginConfig.Instance.NoodleCompat)
             {
 				sharedValues.player = sharedValues.player.transform.GetChild(0).gameObject;
