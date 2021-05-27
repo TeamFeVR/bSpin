@@ -2,10 +2,10 @@
 	<vertical>
 		<horizontal>
 			<vertical pref-width='75'>
-				<horizontal>
+				<horizontal child-control-width='true' horizontal-fit='PreferredSize'>
 					<page-button event-click='SpinList#PageUp' direction='Up' pref-width='10'/>
-					<primary-button text='Refresh' on-click='refresh' pref-width='15'/>
-					<primary-button text='Edit Spins' on-click='open-editor' pref-width='15'/>
+					<primary-button text='Refresh' on-click='refresh'/>
+					<primary-button text='Edit Spins' on-click='open-editor'/>
 					<page-button event-click='SpinList#PageDown' direction='Down' pref-width='10'/>
 				</horizontal>
 				<list id='SpinList' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45'/>

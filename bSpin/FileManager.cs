@@ -28,6 +28,9 @@ namespace bSpin
             }
             return spinProfiles;
         }
-
+        public static void SaveSpinProfile(SpinProfile profile)
+        {
+            Tools.SaveJson(profile.spins, profile.jsonPath);
+        }
     }
 }

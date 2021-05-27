@@ -9,6 +9,7 @@
 				<stack>
 					<custom-list visible-cells='5' cell-size='10' id='spin-list' contents='spins' select-cell='spin-selected'>
 						<stack vertical-fit='Unconstrained'>
+							<background id='bg' background='round-rect-panel'/>
 							<horizontal child-expand-width='false' vertical-fit='Unconstrained'>
 								<vertical horizontal-fit='Unconstrained'>
 									<text text='~spin-vectors' align='MidlineLeft' font-size='4' />
@@ -19,12 +20,21 @@
 									<text text='~spin-end-delay' align='MidlineRight' font-size='4'/>
 								</vertical>
 							</horizontal>
-							<raw-image id='bg' tags='hovered' />
 						</stack>
 					</custom-list>
 				</stack>
 				<pg-button dir='Down' click-event='spin-list#PageDown'/>
 			</vertical>
+			<vertical>
+				<pg-button dir='Up' on-click='move-up'/>
+				<pg-button dir='Down' on-click='move-down'/>
+				<primary-button text='Add' color='lime' on-click='add'/>
+				<primary-button text='Remove' color='red' on-click='remove'/>
+			</vertical>
+		</horizontal>
+		<horizontal>
+			<button text='Revert' on-click='revert-edits'/>
+			<primary-button text='Apply' on-click='apply-edits'/>
 		</horizontal>
 	</vertical>
 </bg>

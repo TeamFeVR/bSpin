@@ -1,55 +1,71 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
-	<vertical>
-		<horizontal bg='panel-top'>
+	<vertical pref-height='80'>
+		<horizontal bg='panel-top' pref-height='5'>
 			<text text='Edit Spin' align='Center'/>
 		</horizontal>
 		<horizontal pref-width='100' pref-height='60'>
-			<vertical pref-width='90' pref-height='60'>
-				<scrollable-container id='rot-settings' spacing='1' mask-overflow='true' horizontal-fit='PreferredSize'>
-					<string-setting text='Start Delay' value='start-delay' bind-value='true'/>
-					<string-setting text='Start X' value='s-rot-x' bind-value='true'/>
-					<string-setting text='Start Y' value='s-rot-y' bind-value='true'/>
-					<string-setting text='Start Z' value='s-rot-z' bind-value='true'/>
-					<string-setting text='End X' value='e-rot-x' bind-value='true'/>
-					<string-setting text='End Y' value='e-rot-y' bind-value='true'/>
-					<string-setting text='End Z' value='e-rot-z' bind-value='true'/>
-					<string-setting text='End Delay' value='end-delay' bind-value='true'/>
-					<string-setting text='Length' value='spin-length' bind-value='true'/>
-				</scrollable-container>
+			<vertical pref-width='85' pref-height='60'>
+				<stack pref-height='60'>
+					<custom-list visible-cells='5' cell-size='10' id='vector-list' contents='vectors' select-cell='vector-selected'>
+						<stack vertical-fit='Unconstrained'>
+							<background id='bg' background='round-rect-panel'/>
+							<horizontal child-expand-width='false' vertical-fit='Unconstrained'>
+								<vertical horizontal-fit='Unconstrained'>
+									<text text='~vector-name' align='MidlineLeft' font-size='5' />
+								</vertical>
+								<vertical horizontal-fit='Unconstrained'>
+									<text text='~vector-value' align='MidlineRight' font-size='6'/>
+								</vertical>
+							</horizontal>
+						</stack>
+					</custom-list>
+				</stack>
 			</vertical>
-			<vertical pref-width='10' pref-height='100'>
-				<pg-button dir='Up' tags='PageUpFor:rot-settings' pref-height='10'/>
-				<pg-button dir='Down' tags='PageDownFor:rot-settings' pref-height='10'/>
+			<vertical pref-width='15' pref-height='100' child-control-width='true'>
+				<pg-button dir='Up' click-event='vector-list#PageUp' pref-height='15' pref-width='15'/>
+				<pg-button dir='Down' click-event='vector-list#PageDown' pref-height='15' pref-width='15'/>
 			</vertical>
 		</horizontal>
-		<horizontal pref-height='20'>
-			<primary-button text='modal test' event-click='number-picker'/>
-			<button text='Revert' on-click='revert-edits' active='~unchanged'/>
-			<primary-button text='Revert' on-click='revert-edits' active='~changed'/>
-			<button text='Apply' on-click='apply-edits' active='~unchanged'/>
-			<primary-button text='Apply' on-click='apply-edits' active='~changed'/>
+		<horizontal pref-height='15' child-control-height='true'>
+			<primary-button text='Edit' event-click='number-picker'/>
+			<button text='Revert' on-click='revert-edits'/>
+			<primary-button text='Apply' on-click='apply-edits'/>
 		</horizontal>
-		<modal show-event='number-picker' hide-event='close-number-picker' click-off-closes='false' move-to-center='true'>
-			<vertical>
-				<horizontal pref-height='70'>
-					<grid cell-size-x='20' cell-size-y='20' bg='round-rect-panel' spacing-x='1' spacing-y='1'>
-						<button text='1'/>
-						<button text='1'/>
-						<button text='1'/>
-						<button text='1'/>
-						<button text='1'/>
-						<button text='1'/>
-						<button text='1'/>
-						<button text='1'/>
-						<button text='1'/>
-					</grid>
-				</horizontal>
-				<horizontal pref-height='10'>
-					<button text='Cancel' event-click='close-number-picker'/>
-					<primary-button text='Set with controller'/>
-					<button text='Apply'/>
-				</horizontal>
-			</vertical>
-		</modal>
 	</vertical>
+	<modal show-event='number-picker' hide-event='hide-number-picker' move-to-center='true' click-off-closes='false' size-delta-x='100' size-delta-y='70'>
+		<vertical pref-width='100' pref-height='70' bg='round-rect-panel' vertical-fit='PreferredSize' horizontal-fit='PreferredSize'>
+			<horizontal pref-height='60'>
+				<vertical pref-width='60'>
+					<horizontal pref-height='15'>
+						<button text='1' pref-height='15' pref-width='20' on-click='1'/>
+						<button text='2' pref-height='15' pref-width='20' on-click='2'/>
+						<button text='3' pref-height='15' pref-width='20' on-click='3'/>
+					</horizontal>
+					<horizontal pref-height='15'>
+						<button text='4' pref-height='15' pref-width='20' on-click='4'/>
+						<button text='5' pref-height='15' pref-width='20' on-click='5'/>
+						<button text='6' pref-height='15' pref-width='20' on-click='6'/>
+					</horizontal>
+					<horizontal pref-height='15'>
+						<button text='7' pref-height='15' pref-width='20' on-click='7'/>
+						<button text='8' pref-height='15' pref-width='20' on-click='8'/>
+						<button text='9' pref-height='15' pref-width='20' on-click='9'/>
+					</horizontal>
+					<horizontal pref-height='15'>
+						<button text='-' pref-height='15' pref-width='20' on-click='negative'/>
+						<button text='0' pref-height='15' pref-width='20' on-click='0'/>
+						<button text='Del' pref-height='15' pref-width='20' on-click='backspace'/>
+					</horizontal>
+				</vertical>
+				<vertical pref-width='40'>
+					<text text='~numpad-number-preview' font-size='15' align='Center' />
+				</vertical>
+			</horizontal>
+			<horizontal pref-height='10'>
+				<button text='Cancel' event-click='hide-number-picker'/>
+				<button text='Use Controller' interactable='false' hover-hint='Coming Soon!'/>
+				<primary-button text='Confirm' on-click='numpad-confirm' event-click='hide-number-picker'/>
+			</horizontal>
+		</vertical>
+	</modal>
 </bg>

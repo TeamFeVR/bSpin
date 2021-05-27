@@ -20,9 +20,17 @@ namespace bSpin.UI.Spin_Editor
         {
             Instance = this;
         }
-
+        internal static int selectedSpin = 0;
         public override string ResourceName => "bSpin.UI.SpinEditor.SpinPanel.bsml";
-        private static SpinProfile spins = new SpinProfile();
+        internal static SpinProfile cacheSpins = new SpinProfile();
+        internal static SpinProfile tempSpins = new SpinProfile();
+
+        [UIAction("#post-parse")]
+        private void PostParse()
+        {
+            SpinList.tableView.SelectCellWithIdx(selectedSpin);
+            
+        }
 
         [UIComponent("spin-list")]
         internal CustomCellListTableData SpinList;
@@ -33,7 +41,7 @@ namespace bSpin.UI.Spin_Editor
         public class SpinListObject
         {
             public Spin spin;
-
+            public int index;
             [UIValue("spin-start-delay")]
             private string startDelay;
 
@@ -47,11 +55,12 @@ namespace bSpin.UI.Spin_Editor
             private string endDelay;
 
             [UIComponent("bg")]
-            private RawImage background;
+            private ImageView background;
 
-            public SpinListObject(Spin spin)
+            public SpinListObject(Spin spin, int index)
             {
                 this.spin = spin;
+                this.index = index;
                 this.spinLength = "In " + spin.Length.ToString() + " Seconds";
                 this.startDelay = spin.DelayBeforeSpin.ToString() + "s Before";
                 this.endDelay = spin.DelayAfterSpin.ToString() + "s After";
@@ -60,12 +69,12 @@ namespace bSpin.UI.Spin_Editor
             [UIAction("refresh-visuals")]
             public void Refresh(bool selected, bool highlighted)
             {
-                
-                background.texture = Texture2D.whiteTexture;
-                if (highlighted)
-                    background.color = new Color(1f, 1f, 1f, 0.125f);
-                if (selected)
-                    background.color = new Color(0.5f, 0.5f, 1f, 0.5f);
+                var x = new UnityEngine.Color(0, 0, 0, 0.45f);
+
+                if (selected || highlighted)
+                    x.a = selected ? 0.9f : 0.6f;
+
+                background.color = x;
             }
         }
 
@@ -73,17 +82,106 @@ namespace bSpin.UI.Spin_Editor
         internal static void SpinSelected(TableView sender, SpinListObject obj)
         {
             RotationPanel.Instance.Load(obj.spin);
+            selectedSpin = obj.index;
+        }
+
+        [UIAction("apply-edits")]
+        internal void ApplyEdits()
+        {
+            cacheSpins = tempSpins;
+            Plugin.spinProfiles.RemoveAt(Configuration.PluginConfig.Instance.spinProfile);
+            Plugin.spinProfiles.Insert(Configuration.PluginConfig.Instance.spinProfile, tempSpins);
+            FileManager.SaveSpinProfile(tempSpins);
+        }
+        [UIAction("revert-edits")]
+        internal void RevertEdits()
+        {
+            Plugin.spinProfiles = FileManager.GetSpinProfiles();
+            cacheSpins = Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile);
+            tempSpins = cacheSpins;
+            ReloadSpins();
+        }
+
+        [UIAction("move-up")]
+        internal void MoveSpinUp()
+        {
+            if(selectedSpin > 0)
+            {
+                var spin = tempSpins.spins.ElementAt(selectedSpin);
+                tempSpins.spins.RemoveAt(selectedSpin);
+                tempSpins.spins.Insert(selectedSpin - 1, spin);
+                selectedSpin -= 1;
+                ReloadSpins();
+                SpinList.tableView.SelectCellWithIdx(selectedSpin);
+            }
+        }
+        [UIAction("move-down")]
+        internal void MoveSpinDown()
+        {
+            if (selectedSpin < tempSpins.spins.Count - 1)
+            {
+                var spin = tempSpins.spins.ElementAt(selectedSpin);
+                tempSpins.spins.RemoveAt(selectedSpin);
+                tempSpins.spins.Insert(selectedSpin + 1, spin);
+                selectedSpin += 1;
+                ReloadSpins();
+                SpinList.tableView.SelectCellWithIdx(selectedSpin);
+            }
+        }
+        [UIAction("add")]
+        internal void AddSpin()
+        {
+            tempSpins.spins.Add(new Spin(0, 10, Vector3.zero, Vector3.zero, 0));
+            ReloadSpins();
+            selectedSpin = tempSpins.spins.Count - 1;
+            SpinList.tableView.SelectCellWithIdx(tempSpins.spins.Count - 1);
+            RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
+        }
+        [UIAction("remove")]
+        internal void RemoveSpin()
+        {
+            tempSpins.spins.RemoveAt(selectedSpin);
+            ReloadSpins();
+            SpinList.tableView.SelectCellWithIdx(selectedSpin - 1);
+            selectedSpin = tempSpins.spins.Count - 1;
+            RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
+        }
+
+        internal static void ReplaceSpin(Spin spin)
+        {
+            tempSpins.spins.RemoveAt(selectedSpin);
+            tempSpins.spins.Insert(selectedSpin, spin);
+            Instance.ReloadSpins();
+        }
+
+        internal void ReloadSpins()
+        {
+            spinsList.Clear();
+            int i = 0;
+            foreach (var speen in tempSpins.spins)
+            {
+                spinsList.Add(new SpinListObject(speen, i));
+                i++;
+            }
+            i = 0;
+            SpinList.tableView.ReloadData();
         }
 
 
         internal void LoadInList(SpinProfile profile)
         {
+            cacheSpins = profile;
+            tempSpins = profile;
             spinsList.Clear();
+            int i = 0;
             foreach(var speen in profile.spins)
             {
-                spinsList.Add(new SpinListObject(speen));
+                spinsList.Add(new SpinListObject(speen, i));
+                i++;
             }
+            i = 0;
             SpinList.tableView.ReloadData();
+            RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
         }
     }
 }

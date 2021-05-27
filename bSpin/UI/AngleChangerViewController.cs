@@ -77,7 +77,7 @@ namespace bSpin.UI
             Configuration.PluginConfig.Instance.spinProfile = row;
         }
         [UIAction("refresh")]
-        void Refresh()
+        internal void Refresh()
         {
             Plugin.spinProfiles = FileManager.GetSpinProfiles();
             setupLists();

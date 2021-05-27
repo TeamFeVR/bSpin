@@ -30,7 +30,7 @@ namespace bSpin.CustomTypes
         public float DelayAfterSpin;
         [JsonConverter(typeof(EasingJsonConverter))]
         public EasingFunction.Ease Easing;
-        public Spin(float delayBeforeSpin, float length, Vector3 start, Vector3 end, float delayAfterSpin, EasingFunction.Ease easing)
+        public Spin(float delayBeforeSpin, float length, Vector3 start, Vector3 end, float delayAfterSpin, EasingFunction.Ease easing = EasingFunction.Ease.Linear)
         {
             this.DelayBeforeSpin = delayBeforeSpin;
             this.Length = length;
