@@ -40,6 +40,37 @@ namespace bSpin.CustomTypes
             this.Easing = easing;
         }
     }
+
+    public struct WobbleProfile
+    {
+        public List<Wobble> Wobbles;
+        public string name;
+        public string jsonPath;
+    }
+
+    public struct Wobble
+    {
+        public float Length;
+        [JsonConverter(typeof(Vector3Converter))]
+        public Vector3 Begin_Rot;
+        [JsonConverter(typeof(Vector3Converter))]
+        public Vector3 End_Rot;
+        [JsonConverter(typeof(Vector3Converter))]
+        public Vector3 Begin_Pos;
+        [JsonConverter(typeof(Vector3Converter))]
+        public Vector3 End_Pos;
+        [JsonConverter(typeof(EasingJsonConverter))]
+        public EasingFunction.Ease Easing;
+        public Wobble(float length, Vector3 rstart, Vector3 rend, Vector3 pstart, Vector3 pend, EasingFunction.Ease easing = EasingFunction.Ease.Linear)
+        {
+            this.Length = length;
+            this.Begin_Rot = rstart;
+            this.Begin_Pos = pstart;
+            this.End_Rot = rend;
+            this.End_Pos = pend;
+            this.Easing = easing;
+        }
+    }
     
 }
 namespace bSpin
@@ -60,8 +91,9 @@ namespace bSpin
             }*/
             return false;
         }
-
-
+    }
+    public class SpinTools
+    {
         public static List<CustomTypes.Spin> LoadJson(string path)
         {
             using (StreamReader r = new StreamReader(path))
@@ -73,6 +105,33 @@ namespace bSpin
             }
         }
         public static void SaveJson(List<CustomTypes.Spin> sList, string path)
+        {
+            using (StreamWriter w = new StreamWriter(path))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                string contents = JsonConvert.SerializeObject(sList);
+                var jtw = new JsonTextWriter(w);
+
+
+                jtw.Formatting = Formatting.Indented;
+                serializer.Serialize(jtw, sList);
+                w.Close();
+            }
+        }
+    }
+    public class WobbleTools
+    {
+        public static List<CustomTypes.Wobble> LoadJson(string path)
+        {
+            using (StreamReader r = new StreamReader(path))
+            {
+                string json = r.ReadToEnd();
+                List<CustomTypes.Wobble> items = JsonConvert.DeserializeObject<List<CustomTypes.Wobble>>(json);
+                r.Close();
+                return items;
+            }
+        }
+        public static void SaveJson(List<CustomTypes.Wobble> sList, string path)
         {
             using (StreamWriter w = new StreamWriter(path))
             {

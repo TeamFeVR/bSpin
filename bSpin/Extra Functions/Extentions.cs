@@ -75,6 +75,30 @@ namespace bSpin.Extentions
 
     public static class MovementExtentions
     {
+		public static IEnumerator Wobble(this Transform transform, CustomTypes.Wobble wobble, float speed)
+        {
+			float i = 0.0f;
+			float sT = Time.time;
+			while (i < 1.0f)
+			{
+				i = (Time.time - sT) / (wobble.Length / speed);
+
+				EasingFunction.Ease ease = wobble.Easing;
+				EasingFunction.Function func = EasingFunction.GetEasingFunction(ease);
+
+				float x = func(wobble.Begin_Rot.x, wobble.End_Rot.x, i);
+				float y = func(wobble.Begin_Rot.y, wobble.End_Rot.y, i);
+				float z = func(wobble.Begin_Rot.z, wobble.End_Rot.z, i);
+				transform.localEulerAngles = new Vector3(x, y, z);
+				float x2 = func(wobble.Begin_Pos.x, wobble.End_Pos.x, i);
+				float y2 = func(wobble.Begin_Pos.y, wobble.End_Pos.y, i);
+				float z2 = func(wobble.Begin_Pos.z, wobble.End_Pos.z, i);
+				transform.localPosition = new Vector3(x2, y2, z2);
+				yield return null;
+			}
+		}
+
+
 		public static IEnumerator ExperimentalSpin(this Transform transform, CustomTypes.Spin speen, float speed, float offset = 0.0f)
         {
 			yield return new WaitForSecondsRealtime(speen.DelayBeforeSpin / speed);

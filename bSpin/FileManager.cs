@@ -20,7 +20,7 @@ namespace bSpin
                 SpinProfile tempSpin = new SpinProfile();
                 Plugin.Log.Debug("Caching profile at " + sp);
 
-                tempSpin.spins = Tools.LoadJson(sp);
+                tempSpin.spins = SpinTools.LoadJson(sp);
                 tempSpin.name = sp.Substring((Path.Combine(UnityGame.UserDataPath, "bSpin") + "\\").Length);
                 tempSpin.jsonPath = sp;
 
@@ -30,7 +30,28 @@ namespace bSpin
         }
         public static void SaveSpinProfile(SpinProfile profile)
         {
-            Tools.SaveJson(profile.spins, profile.jsonPath);
+            SpinTools.SaveJson(profile.spins, profile.jsonPath);
+        }
+        public static List<WobbleProfile> GetWobbleProfiles()
+        {
+            List<String> jsonFiles = Directory.GetFiles(Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles") + "\\", "*.json").ToList();
+            List<WobbleProfile> spinProfiles = new List<WobbleProfile>();
+            foreach (var sp in jsonFiles)
+            {
+                WobbleProfile tempSpin = new WobbleProfile();
+                Plugin.Log.Debug("Caching profile at " + sp);
+
+                tempSpin.Wobbles = WobbleTools.LoadJson(sp);
+                tempSpin.name = sp.Substring((Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles") + "\\").Length);
+                tempSpin.jsonPath = sp;
+
+                spinProfiles.Add(tempSpin);
+            }
+            return spinProfiles;
+        }
+        public static void SaveWobbleProfile(WobbleProfile profile)
+        {
+            WobbleTools.SaveJson(profile.Wobbles, profile.jsonPath);
         }
     }
 }

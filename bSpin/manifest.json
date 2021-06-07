@@ -8,6 +8,6 @@
   "gameVersion": "1.13.4",
   "dependsOn": {
     "BSIPA": "^4.0.5"
-  }
+  },
   "features": []
 }
