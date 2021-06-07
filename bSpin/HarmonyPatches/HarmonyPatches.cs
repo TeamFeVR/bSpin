@@ -10,6 +10,7 @@ using System.Collections;
 using System.Reflection;
 using IPA.Utilities;
 using bSpin.Extentions;
+using BeatSaberMarkupLanguage.FloatingScreen;
 
 namespace bSpin.HarmonyPatches
 {
@@ -22,6 +23,8 @@ namespace bSpin.HarmonyPatches
 
 		static void Postfix(AudioTimeSyncController __instance)
 		{
+			UI.IngameMenu.FloatingScreenCreator.Create(sharedValues.ts);
+			UI.IngameMenu.FloatingScreenCreator.didThing = false;
 			PauseMenuPatch.MenuFound = false;
 			sharedValues.spins = Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile).spins;
 
@@ -108,6 +111,13 @@ namespace bSpin.HarmonyPatches
 		public static float speed;
 		public static bool noodle;
 		public static float offset;
+		public static bool ts
+        {
+            get
+            {
+				return IPA.Loader.PluginManager.GetPlugin("TrickSaber") != null;
+            }
+        }
 		public static GameObject player;
 
 	}

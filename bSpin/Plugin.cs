@@ -39,7 +39,10 @@ namespace bSpin
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             UI.AngleChanger.instance.AddTab();
             Log.Info("bSpin initialized.");
-            if(!Directory.Exists(Path.Combine(UnityGame.UserDataPath, "bSpin")))
+
+            
+
+            if (!Directory.Exists(Path.Combine(UnityGame.UserDataPath, "bSpin")))
             {
                 Directory.CreateDirectory(Path.Combine(UnityGame.UserDataPath, "bSpin"));
             }
@@ -50,6 +53,7 @@ namespace bSpin
                     using (var file = new FileStream(Path.Combine(UnityGame.UserDataPath, "bSpin", "demoSpin.json"), FileMode.Create, FileAccess.Write))
                     {
                         resource.CopyTo(file);
+                        file.Close();
                     }
                 }
 

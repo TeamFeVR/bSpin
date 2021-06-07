@@ -3,28 +3,36 @@
 		<horizontal bg='panel-top' pref-height='5'>
 			<text text='Edit Spin' align='Center'/>
 		</horizontal>
-		<horizontal pref-width='100' pref-height='60'>
+		<horizontal pref-width='100' pref-height='70' horizontal-fit='PreferredSize'>
 			<vertical pref-width='85' pref-height='60'>
-				<custom-list visible-cells='5' cell-size='10' id='vector-list' contents='vectors' select-cell='vector-selected'>
-						<horizontal pref-width='85' id='bgContainer' background='round-rect-panel' child-expand-width='false' vertical-fit='Unconstrained'>
-							<vertical horizontal-fit='Unconstrained'>
-								<text text='~vector-name' align='MidlineLeft' font-size='5' />
-							</vertical>
-							<vertical horizontal-fit='Unconstrained'>
-								<text text='~vector-value' align='MidlineRight' font-size='6'/>
-							</vertical>
-						</horizontal>
-					</custom-list>
+				<horizontal pref-height='10' bg='round-rect-panel' pad='1'>
+					<dropdown-list-setting text='Easing' choices='easings-choices' value='easing-choice' bind-value='true' apply-on-change='true'/>
+				</horizontal>
+				<custom-list visible-cells='6' cell-size='10' id='vector-list' contents='vectors' select-cell='vector-selected' pref-width='85'>
+					<horizontal pref-width='85' id='bgContainer' background='round-rect-panel' child-expand-width='false' vertical-fit='Unconstrained' horizontal-fit='PreferredSize'>
+						<vertical horizontal-fit='Unconstrained' pref-width='45' pad='1'>
+							<text text='~vector-name' align='MidlineLeft' font-size='5' />
+						</vertical>
+						<vertical horizontal-fit='Unconstrained' pref-width='10'>
+							<text text='~vector-value' align='MidlineRight' font-size='6'/>
+						</vertical>
+						<vertical pref-width='30' pad='1' preferred-height='10'>
+							<primary-button text='Edit' on-click='test-selector' pref-height='9'/>
+						</vertical>
+					</horizontal>
+				</custom-list>
 			</vertical>
-			<vertical pref-width='15' pref-height='100' child-control-width='true'>
-				<pg-button dir='Up' click-event='vector-list#PageUp' pref-height='15' pref-width='15'/>
-				<pg-button dir='Down' click-event='vector-list#PageDown' pref-height='15' pref-width='15'/>
+			<vertical pref-width='15' pref-height='70' vertical-fit='PreferredSize'>
+				<vertical pref-width='15' pref-height='40' child-control-width='true'>
+					<pg-button dir='Up' click-event='vector-list#PageUp' pref-height='15' pref-width='15'/>
+					<vertical preferred-height='40'/>
+					<pg-button dir='Down' click-event='vector-list#PageDown' pref-height='15' pref-width='15'/>
+				</vertical>
+				<vertical pref-width='15' pref-height='30' child-control-width='true'>
+					<button text='Revert' on-click='revert-edits' pref-height='15' pref-width='15'/>
+					<primary-button text='Apply' on-click='apply-edits' pref-height='15' pref-width='15'/>
+				</vertical>
 			</vertical>
-		</horizontal>
-		<horizontal pref-height='15' child-control-height='true'>
-			<primary-button text='Edit' event-click='number-picker'/>
-			<button text='Revert' on-click='revert-edits'/>
-			<primary-button text='Apply' on-click='apply-edits'/>
 		</horizontal>
 	</vertical>
 
@@ -56,7 +64,7 @@
 					</horizontal>
 				</vertical>
 				<vertical pref-width='40'>
-					<text text='~numpad-number-preview' font-size='15' align='Center' />
+					<text text='~numpad-number-preview' font-size='15' align='Center'/>
 				</vertical>
 			</horizontal>
 			<horizontal pref-height='10'>

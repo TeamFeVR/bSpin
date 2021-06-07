@@ -15,9 +15,14 @@ using UnityEngine.UI;
 
 namespace bSpin.UI.Spin_Editor
 {
-    class RotationPanel : BSMLResourceViewController
+    [ViewDefinition("bSpin.UI.SpinEditor.RotationPanel.bsml")]
+    [HotReload(RelativePathToLayout = @"RotationPanel.bsml")]
+    class RotationPanel : BSMLAutomaticViewController
     {
-        public override string ResourceName => "bSpin.UI.SpinEditor.RotationPanel.bsml";
+        [UIValue("easings-choices")]
+        private List<object> options = Enum.GetNames(typeof(EasingFunction.Ease)).ToList<object>();
+
+        EasingFunction.Ease EasingChoice;
         public static RotationPanel Instance;
         private static CustomTypes.Spin cacheSpin;
         private static CustomTypes.Spin editingSpin;
@@ -29,6 +34,19 @@ namespace bSpin.UI.Spin_Editor
         }
         private static VectorListObject tempObj;
         private string temp = "";
+
+        [UIValue("easing-choice")]
+        private string easeStringChoice
+        {
+            get => EasingChoice.ToString();
+            set
+            {
+                Enum.TryParse<EasingFunction.Ease>(value, out EasingChoice);
+                editingSpin.Easing = EasingChoice;
+                NotifyPropertyChanged();
+            }
+        }
+
         [UIValue("numpad-number-preview")] string numpadPreview
         {
             get => temp;
@@ -173,6 +191,16 @@ namespace bSpin.UI.Spin_Editor
             [UIComponent("bgContainer")]
             internal ImageView bg = null;
 
+            [UIAction("test-selector")]
+            void ExperimentalSelect()
+            {
+                Instance.numpadPreview = vector.ToString();
+                tempObj = this;
+                Instance.parserParams.EmitEvent("number-picker");
+                Refresh(true, false);
+            }
+
+
             public VectorListObject(float vector, string name, int index)
             {
                 this.vector = (int)vector;
@@ -183,13 +211,14 @@ namespace bSpin.UI.Spin_Editor
             [UIAction("refresh-visuals")]
             public void Refresh(bool selected, bool highlighted)
             {
+
                 bg.material = RoundedEdge;
                 var x = new Color(0,0,0,0.45f);
                 if (selected || highlighted)
                 {
                     x.a = selected ? 0.9f : 0.6f;
-                    x.r = selected ? 0.6f : 0.3f;
-                    x.g = selected ? 0.6f : 0.3f;
+                    x.r = selected ? 0.45f : 0.2f;
+                    x.g = selected ? 0.45f : 0.2f;
                     x.b = selected ? 0.9f : 0.6f;
                 }
                 bg.color = x;
@@ -199,6 +228,7 @@ namespace bSpin.UI.Spin_Editor
         internal void Load(CustomTypes.Spin spin)
         {
             RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
+            easeStringChoice = spin.Easing.ToString();
             cacheSpin = spin;
             editingSpin = spin;
             VectorList.data.Clear();

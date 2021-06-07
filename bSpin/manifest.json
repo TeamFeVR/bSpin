@@ -3,11 +3,11 @@
   "id": "bSpin",
   "name": "bSpin",
   "author": "headassbtw",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "",
   "gameVersion": "1.13.4",
   "dependsOn": {
     "BSIPA": "^4.0.5"
-  },
+  }
   "features": []
 }

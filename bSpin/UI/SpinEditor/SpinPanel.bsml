@@ -6,30 +6,39 @@
 		<horizontal>
 			<vertical>
 				<pg-button dir='Up' click-event='spin-list#PageUp'/>
-				<custom-list visible-cells='5' cell-size='10' id='spin-list' contents='spins' select-cell='spin-selected'>
-					<horizontal id='bgContainer' background='round-rect-panel' child-expand-width='false' vertical-fit='Unconstrained'>
-						<vertical horizontal-fit='Unconstrained'>
+				<custom-list visible-cells='6' cell-size='10' id='spin-list' contents='spins' select-cell='spin-selected'>
+					<vertical id='bgContainer' background='round-rect-panel' child-expand-width='false' horizontal-fit='Unconstrained' pref-width='85'>
+						<horizontal>
+							
 							<text text='~spin-vectors' align='MidlineLeft' font-size='4' />
-							<text text='~spin-length' align='MidlineLeft' font-size='4' />
-						</vertical>
-						<vertical horizontal-fit='Unconstrained'>
 							<text text='~spin-start-delay' align='MidlineRight' font-size='4'/>
+							
+						</horizontal>
+						<horizontal horizontal-fit='Unconstrained'>
+							<text text='~spin-length' align='MidlineLeft' font-size='4' />
+							<text text='~easing-label' face-color='purple'/>
 							<text text='~spin-end-delay' align='MidlineRight' font-size='4'/>
-						</vertical>
-					</horizontal>
+						</horizontal>
+					</vertical>
 				</custom-list>
 				<pg-button dir='Down' click-event='spin-list#PageDown'/>
 			</vertical>
 			<vertical>
-				<pg-button dir='Up' on-click='move-up'/>
-				<pg-button dir='Down' on-click='move-down'/>
-				<primary-button text='Add' color='lime' on-click='add'/>
-				<primary-button text='Remove' color='red' on-click='remove'/>
+				<vertical pref-width='20'>
+					<vertical bg='round-rect-panel'>
+						<pg-button dir='Up' on-click='move-up' pref-width='20'/>
+						<pg-button dir='Down' on-click='move-down' pref-width='20'/>
+					</vertical>
+					<vertical bg='round-rect-panel' pref-height='20'>
+						<primary-button text='Add' color='lime' on-click='add' pref-width='20' pref-height='10'/>
+						<primary-button text='Remove' color='red' on-click='remove' pref-width='20' pref-height='10'/>
+					</vertical>
+				</vertical>
+				<horizontal>
+					<button text='Revert' on-click='revert-edits'/>
+					<primary-button text='Apply' on-click='apply-edits'/>
+				</horizontal>
 			</vertical>
-		</horizontal>
-		<horizontal>
-			<button text='Revert' on-click='revert-edits'/>
-			<primary-button text='Apply' on-click='apply-edits'/>
 		</horizontal>
 	</vertical>
 </bg>

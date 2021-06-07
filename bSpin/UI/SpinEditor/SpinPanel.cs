@@ -13,7 +13,9 @@ using HMUI;
 
 namespace bSpin.UI.Spin_Editor
 {
-    class SpinPanel : BSMLResourceViewController
+    [ViewDefinition("bSpin.UI.SpinEditor.SpinPanel.bsml")]
+    [HotReload(RelativePathToLayout = @"SpinPanel.bsml")]
+    class SpinPanel : BSMLAutomaticViewController
     {
         internal static SpinPanel Instance;
         internal void Awake()
@@ -21,7 +23,6 @@ namespace bSpin.UI.Spin_Editor
             Instance = this;
         }
         internal static int selectedSpin = 0;
-        public override string ResourceName => "bSpin.UI.SpinEditor.SpinPanel.bsml";
         internal static SpinProfile cacheSpins = new SpinProfile();
         internal static SpinProfile tempSpins = new SpinProfile();
         internal static Material RoundedEdge = null;
@@ -33,6 +34,17 @@ namespace bSpin.UI.Spin_Editor
             SpinList.tableView.SelectCellWithIdx(selectedSpin);
             
         }
+        [UIValue("spin-name")]
+        internal string SpinName
+        {
+            get => tempSpins.name;
+            set
+            {
+                NotifyPropertyChanged();
+                tempSpins.name = value;
+            }
+        }
+
 
         [UIComponent("spin-list")]
         internal CustomCellListTableData SpinList;
@@ -59,6 +71,9 @@ namespace bSpin.UI.Spin_Editor
             [UIComponent("bgContainer")]
             internal ImageView bg;
 
+            [UIValue("easing-label")]
+            private string EasingLabel;
+
             public SpinListObject(Spin spin, int index)
             {
                 this.spin = spin;
@@ -66,6 +81,7 @@ namespace bSpin.UI.Spin_Editor
                 this.spinLength = "In " + spin.Length.ToString() + " Seconds";
                 this.startDelay = spin.DelayBeforeSpin.ToString() + "s Before";
                 this.endDelay = spin.DelayAfterSpin.ToString() + "s After";
+                this.EasingLabel = spin.Easing.ToString();
                 this.spinVectors = "(<#FF0000>" + spin.Begin.x + "<#FFFFFF>,<#00FF00>" + spin.Begin.y + "<#FFFFFF>,<#0000FF>" + spin.Begin.z + "<#FFFFFF>) to (<#FF0000>" + spin.End.x + "<#FFFFFF>,<#00FF00>" + spin.End.y + "<#FFFFFF>,<#0000FF>" + spin.End.z + "<#FFFFFF>)";
             }
             [UIAction("refresh-visuals")]

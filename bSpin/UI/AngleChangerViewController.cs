@@ -14,6 +14,7 @@ using BS_Utils.Utilities;
 
 namespace bSpin.UI
 {
+    [HotReload(RelativePathToLayout ="AngleChanger.bsml")]
     class AngleChanger : NotifiableSingleton<AngleChanger>
     {
         [UIValue("enablespin")]

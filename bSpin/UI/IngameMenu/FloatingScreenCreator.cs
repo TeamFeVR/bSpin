@@ -12,11 +12,18 @@ namespace bSpin.UI.IngameMenu
 {
     class FloatingScreenCreator
     {
-        private static bool didThing = false;
-        internal static FloatingScreen pauseFloatingScreen = FloatingScreen.CreateFloatingScreen(new Vector2(100, 20), false, new Vector3(0, 2, 2), Quaternion.Euler(0, 0, 0), 175f, false);
+        internal static bool didThing = false;
+        internal static FloatingScreen pauseFloatingScreen;
+        internal static void Create(bool up)
+        {
+            float y = up ? 2.2f : 2.0f;
+
+            pauseFloatingScreen = FloatingScreen.CreateFloatingScreen(new Vector2(100, 20), false, new Vector3(0, y, 2), Quaternion.Euler(0, 0, 0), 175f, false);
+        }
+
         internal static void Yeet(Transform menu = null)
         {
-            if (!didThing)
+            if (true)
             {
                 var _pm = BeatSaberUI.CreateViewController<PauseMenuController>();
                 pauseFloatingScreen.SetRootViewController(_pm, animationType: AnimationType.None);

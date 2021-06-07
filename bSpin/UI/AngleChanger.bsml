@@ -1,16 +1,16 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<vertical>
 		<horizontal>
-			<vertical pref-width='75'>
-				<horizontal child-control-width='true' horizontal-fit='PreferredSize'>
+			<vertical pref-width='75' pref-height='70'>
+				<horizontal child-control-width='true' horizontal-fit='PreferredSize' vertical-fit='PreferredSize' child-control-height='true'>
 					<page-button event-click='SpinList#PageUp' direction='Up' pref-width='10'/>
 					<primary-button text='Refresh' on-click='refresh'/>
 					<primary-button text='Edit Spins' on-click='open-editor'/>
 					<page-button event-click='SpinList#PageDown' direction='Down' pref-width='10'/>
 				</horizontal>
-				<list id='SpinList' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45'/>
+				<list id='SpinList' visible-cells='6' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45' pref-height='60'/>
 			</vertical>
-			<vertical pref-width='25'>
+			<vertical pref-width='25' pref-height='50'>
 				<modifier-container pref-width='25'>
 					<!--fun fact, all these icons were made by me, in blender!-->
 					<modifier src='bSpin.UI.icons.rotation.png' text='Spin' value='enablespin' apply-on-change='true' hover-hint='Enables/Disables spinning camera effect'></modifier>
@@ -19,9 +19,12 @@
 					<modifier src='bSpin.UI.icons.pausemenu.png' text='Pause UI' value='pauseui' apply-on-change='true' hover-hint='Enables toggling the spin and adjusting speed in the pause menu'></modifier>
 					<modifier src='bSpin.UI.icons.experiments.png' text='Experimental' value='jank' apply-on-change='true' hover-hint='Enables Experimental methods or features, disable this if something fucks up!'></modifier>
 				</modifier-container>
+				<horizontal pref-height='20'>
+					
+				</horizontal>
 			</vertical>
 		</horizontal>
-		<horizontal pref-width='100'>
+		<horizontal pref-width='100' pref-height='10'>
 			<slider-setting text='Speed' min='0' max='20' increment='0.1' value='speed-value' bind-value='true' apply-on-change='true' pref-width='75'/>
 			<button text='-' on-click='speed-decrease' pref-width='12.5'/>
 			<button text='+' on-click='speed-increase' pref-width='12.5'/>
