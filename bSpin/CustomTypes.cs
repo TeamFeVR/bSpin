@@ -46,6 +46,13 @@ namespace bSpin.CustomTypes
         public List<Wobble> Wobbles;
         public string name;
         public string jsonPath;
+
+        public WobbleProfile(string name, List<Wobble> wobbles)
+        {
+            this.name = name;
+            this.Wobbles = wobbles;
+            this.jsonPath = Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles", name + ".json");
+        }
     }
 
     public struct Wobble

@@ -75,7 +75,7 @@ namespace bSpin.Extentions
 
     public static class MovementExtentions
     {
-		public static IEnumerator Wobble(this Transform transform, CustomTypes.Wobble wobble, float speed)
+		public static IEnumerator Wobble(this Transform transform, CustomTypes.Wobble wobble, float speed = 1)
         {
 			float i = 0.0f;
 			float sT = Time.time;

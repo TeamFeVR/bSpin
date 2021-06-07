@@ -59,7 +59,12 @@ namespace bSpin.HarmonyPatches
 			Plugin.Log.Notice("There are currently " + sharedValues.spins.Count.ToString() + " Spins");
 			sharedValues.player.transform.localEulerAngles = new Vector3(0, 0.0f, 0);
 			Plugin.Log.Notice("I reset the rotation");
-			if(Configuration.PluginConfig.Instance.Enabled)
+			Twitch.Wobbler.Handle = new GameObject("bSpin_Handle_Wobble");
+			Twitch.Wobbler.Instance = Twitch.Wobbler.Handle.AddComponent<Twitch.Wobbler>();
+			Twitch.Wobbler.Instance.Innit();
+			sharedValues.player.transform.SetParent(Twitch.Wobbler.Handle.transform);
+
+			if (Configuration.PluginConfig.Instance.Enabled)
 				bSpinController.Instance.StartCoroutine(spin());
 		}
 		static IEnumerator spin()

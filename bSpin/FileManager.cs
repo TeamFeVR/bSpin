@@ -43,6 +43,7 @@ namespace bSpin
 
                 tempSpin.Wobbles = WobbleTools.LoadJson(sp);
                 tempSpin.name = sp.Substring((Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles") + "\\").Length);
+                tempSpin.name = tempSpin.name.Substring(0, tempSpin.name.IndexOf(".json"));
                 tempSpin.jsonPath = sp;
 
                 spinProfiles.Add(tempSpin);

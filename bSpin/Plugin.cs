@@ -23,7 +23,8 @@ namespace bSpin
         internal static IPALogger Log { get; private set; }
         internal static Harmony harmony { get; private set; }
         internal static GameObject bSpinController { get; private set; }
-        public static List<SpinProfile> spinProfiles { get; set; }
+        public static List<SpinProfile> spinProfiles { get; internal set; }
+        public static List<WobbleProfile> wobbles { get; internal set; }
 
         [Init]
         /// <summary>
@@ -54,14 +55,32 @@ namespace bSpin
             {
                 using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("bSpin.spin.json"))
                 {
-                    using (var file = new FileStream(Path.Combine(UnityGame.UserDataPath, "bSpin", "Spins", "demoSpin.json"), FileMode.Create, FileAccess.Write))
+                    using (var file = new FileStream(Path.Combine(UnityGame.UserDataPath, "bSpin", "demoSpin.json"), FileMode.Create, FileAccess.Write))
                     {
                         resource.CopyTo(file);
                         file.Close();
                     }
                 }
             }
+            if (Directory.GetFiles(Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles") + "\\").Length <= 0)
+            {
+                var wb = new List<Wobble>
+                {
+                    new Wobble(1, new Vector3(0, 0, 0), new Vector3(180, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 3, 0)),
+                    new Wobble(1, new Vector3(180, 0, 0), new Vector3(360, 0, 0), new Vector3(0, 3, 0), new Vector3(0, 0, 0))
+                };
+                FileManager.SaveWobbleProfile(new WobbleProfile("flip", wb));
+                using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("bSpin.zoom.json"))
+                {
+                    using (var file = new FileStream(Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles", "zoom.json"), FileMode.Create, FileAccess.Write))
+                    {
+                        resource.CopyTo(file);
+                        file.Close();
+                    }
+                }
 
+            }
+            wobbles = FileManager.GetWobbleProfiles();
             spinProfiles = FileManager.GetSpinProfiles();
             HarmonyPatches.sharedValues.spins = spinProfiles[0].spins;
         }
@@ -82,8 +101,12 @@ namespace bSpin
         [OnStart]
         public void OnApplicationStart()
         {
+            
             bSpinController = new GameObject("bSpinController");
             bSpinController.AddComponent<bSpinController>();
+            Twitch.CommandHandler.Instance = new Twitch.CommandHandler();
+            Twitch.CommandHandler.Instance.Start();
+            bSpinController.AddComponent<Twitch.Wobbler>();
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
 
         }
