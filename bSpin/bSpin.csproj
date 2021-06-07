@@ -144,6 +144,7 @@
     <Compile Include="Extra Functions\EasingFunctions.cs" />
     <Compile Include="Extra Functions\EasingJsonConverter.cs" />
     <Compile Include="Extra Functions\Extentions.cs" />
+    <Compile Include="Extra Functions\XRDeviceAngle.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
     <Compile Include="HarmonyPatches\HookLevelData.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Extra Functions\Vector3Converter.cs" />
     <Compile Include="UI\IngameMenu\FloatingScreenCreator.cs" />
     <Compile Include="UI\IngameMenu\PauseMenuController.cs" />
+    <Compile Include="UI\SpinEditor\ControllerAnglePanel.cs" />
     <Compile Include="UI\SpinEditor\RotationPanel.cs" />
     <Compile Include="UI\SpinEditor\SpinEditorFlowCoordinator.cs" />
     <Compile Include="UI\SpinEditor\SpinPanel.cs" />
@@ -171,6 +173,7 @@
     <EmbeddedResource Include="UI\IngameMenu\PauseMenu.bsml" />
     <EmbeddedResource Include="UI\SpinEditor\SpinPanel.bsml" />
     <EmbeddedResource Include="UI\SpinEditor\RotationPanel.bsml" />
+    <EmbeddedResource Include="UI\SpinEditor\ControllerAngle.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">

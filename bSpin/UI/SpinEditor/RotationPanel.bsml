@@ -5,21 +5,16 @@
 		</horizontal>
 		<horizontal pref-width='100' pref-height='60'>
 			<vertical pref-width='85' pref-height='60'>
-				<stack pref-height='60'>
-					<custom-list visible-cells='5' cell-size='10' id='vector-list' contents='vectors' select-cell='vector-selected'>
-						<stack vertical-fit='Unconstrained'>
-							<background id='bg' background='round-rect-panel'/>
-							<horizontal child-expand-width='false' vertical-fit='Unconstrained'>
-								<vertical horizontal-fit='Unconstrained'>
-									<text text='~vector-name' align='MidlineLeft' font-size='5' />
-								</vertical>
-								<vertical horizontal-fit='Unconstrained'>
-									<text text='~vector-value' align='MidlineRight' font-size='6'/>
-								</vertical>
-							</horizontal>
-						</stack>
+				<custom-list visible-cells='5' cell-size='10' id='vector-list' contents='vectors' select-cell='vector-selected'>
+						<horizontal pref-width='85' id='bgContainer' background='round-rect-panel' child-expand-width='false' vertical-fit='Unconstrained'>
+							<vertical horizontal-fit='Unconstrained'>
+								<text text='~vector-name' align='MidlineLeft' font-size='5' />
+							</vertical>
+							<vertical horizontal-fit='Unconstrained'>
+								<text text='~vector-value' align='MidlineRight' font-size='6'/>
+							</vertical>
+						</horizontal>
 					</custom-list>
-				</stack>
 			</vertical>
 			<vertical pref-width='15' pref-height='100' child-control-width='true'>
 				<pg-button dir='Up' click-event='vector-list#PageUp' pref-height='15' pref-width='15'/>
@@ -32,6 +27,9 @@
 			<primary-button text='Apply' on-click='apply-edits'/>
 		</horizontal>
 	</vertical>
+
+	
+	
 	<modal show-event='number-picker' hide-event='hide-number-picker' move-to-center='true' click-off-closes='false' size-delta-x='100' size-delta-y='70'>
 		<vertical pref-width='100' pref-height='70' bg='round-rect-panel' vertical-fit='PreferredSize' horizontal-fit='PreferredSize'>
 			<horizontal pref-height='60'>

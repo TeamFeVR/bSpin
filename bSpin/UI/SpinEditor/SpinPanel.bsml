@@ -6,23 +6,18 @@
 		<horizontal>
 			<vertical>
 				<pg-button dir='Up' click-event='spin-list#PageUp'/>
-				<stack>
-					<custom-list visible-cells='5' cell-size='10' id='spin-list' contents='spins' select-cell='spin-selected'>
-						<stack vertical-fit='Unconstrained'>
-							<background id='bg' background='round-rect-panel'/>
-							<horizontal child-expand-width='false' vertical-fit='Unconstrained'>
-								<vertical horizontal-fit='Unconstrained'>
-									<text text='~spin-vectors' align='MidlineLeft' font-size='4' />
-									<text text='~spin-length' align='MidlineLeft' font-size='4' />
-								</vertical>
-								<vertical horizontal-fit='Unconstrained'>
-									<text text='~spin-start-delay' align='MidlineRight' font-size='4'/>
-									<text text='~spin-end-delay' align='MidlineRight' font-size='4'/>
-								</vertical>
-							</horizontal>
-						</stack>
-					</custom-list>
-				</stack>
+				<custom-list visible-cells='5' cell-size='10' id='spin-list' contents='spins' select-cell='spin-selected'>
+					<horizontal id='bgContainer' background='round-rect-panel' child-expand-width='false' vertical-fit='Unconstrained'>
+						<vertical horizontal-fit='Unconstrained'>
+							<text text='~spin-vectors' align='MidlineLeft' font-size='4' />
+							<text text='~spin-length' align='MidlineLeft' font-size='4' />
+						</vertical>
+						<vertical horizontal-fit='Unconstrained'>
+							<text text='~spin-start-delay' align='MidlineRight' font-size='4'/>
+							<text text='~spin-end-delay' align='MidlineRight' font-size='4'/>
+						</vertical>
+					</horizontal>
+				</custom-list>
 				<pg-button dir='Down' click-event='spin-list#PageDown'/>
 			</vertical>
 			<vertical>

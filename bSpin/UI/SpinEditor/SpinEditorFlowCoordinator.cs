@@ -14,7 +14,7 @@ namespace bSpin.UI.Spin_Editor
         
         private static SpinPanel _spinPanel;
         private static RotationPanel _rotationPanel;
-
+        private static ControllerAnglePanel _controllerAnglePanel;
 
         internal static FlowCoordinator _previousFlowCoordinator;
         internal static SpinEditorFlowCoordinator Instance;
@@ -24,6 +24,8 @@ namespace bSpin.UI.Spin_Editor
                 _spinPanel = BeatSaberUI.CreateViewController<SpinPanel>();
             if (!_rotationPanel)
                 _rotationPanel = BeatSaberUI.CreateViewController<RotationPanel>();
+            if (!_controllerAnglePanel)
+                _controllerAnglePanel = BeatSaberUI.CreateViewController<ControllerAnglePanel>();
         }
         
 
@@ -40,7 +42,7 @@ namespace bSpin.UI.Spin_Editor
                 {
                     SetTitle("Spin Editor");
                     showBackButton = true;
-                    ProvideInitialViewControllers(_spinPanel, null, _rotationPanel);
+                    ProvideInitialViewControllers(_spinPanel, _rotationPanel);
                 }
             }
             catch (Exception e)

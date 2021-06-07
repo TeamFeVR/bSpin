@@ -1,0 +1,20 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<vertical pref-width='100' pref-height='90' vertical-fit='PreferredSize' horizontal-fit='PreferredSize'>
+		<horizontal pref-height='15'>
+			<text text='Controller Angles' font-size='15' font-align='Center'/>
+		</horizontal>
+		<stack>
+			<list list-style='Box' list-direction='Horizontal' list-height='30' cell-size='30' visible-cells='3' id='cal-type-list'>
+				<vertical pref-width='30' pref-height='30' vertical-fit='PreferredSize'>
+					<text text='~text' font-align='Center'/>
+				</vertical>
+			</list>
+			<horizontal pref-height='30' active='~calibrating'>
+				<text text='Press trigger to set...' font-size='25' font-align='Center'/>
+			</horizontal>
+		</stack>
+		<horizontal pref-height='20'>
+			<dropdown-list-setting text='Hand' options='hand-options' value='hand-value' bind-value='true' apply-on-change='true'/>
+		</horizontal>
+	</vertical>
+</bg>

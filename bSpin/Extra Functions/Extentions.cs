@@ -13,13 +13,25 @@ namespace bSpin.Extentions
 		//similar to the one found in the LivFinder, but should work for ALL angles, not just behind you
 		public static float GetRotation(this Transform target, Vector3 origin)
         {
-			return GetRot(target, origin);
+			Vector2 targ = new Vector2(target.position.x, target.position.z);
+			Vector2 orig = new Vector2(origin.x, origin.z);
+			return GetRot(targ, origin);
         }
 		public static float GetRotation(this Transform target)
 		{
-			return GetRot(target, Vector3.zero);
+			Vector2 targ = new Vector2(target.position.x, target.position.z);
+			return GetRot(targ, Vector2.zero);
 		}
-		internal static float GetRot(Transform target, Vector3 origin)
+		public static Vector3 PointingAt(this Vector3 origin, Vector3 targetPosition)
+        {
+			Vector3 vector = new Vector3();
+				vector.x = GetRot(new Vector2(targetPosition.z, targetPosition.y), new Vector2(origin.z, origin.y));
+				vector.y = GetRot(new Vector2(targetPosition.z, targetPosition.x), new Vector2(origin.z, origin.x));
+				vector.z = GetRot(new Vector2(targetPosition.x, targetPosition.y), new Vector2(origin.x, origin.y));
+			return vector;
+        }
+
+		internal static float GetRot(Vector2 target, Vector2 origin)
         {
 			//since we have to deal with more than just 180° of bullshit, we're gonna have to do some more math than usual
 
@@ -37,8 +49,8 @@ namespace bSpin.Extentions
 			/// 
 			/// geometry class coming in clutch
 			
-			float opposite = target.position.x - origin.x;
-			float adjacent = target.position.z - origin.z;
+			float opposite = target.x - origin.x;
+			float adjacent = target.y - origin.y;
 
 			bool left = opposite < 0;
 			bool right = opposite > 0;

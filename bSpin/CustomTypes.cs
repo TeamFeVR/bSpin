@@ -9,7 +9,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using IPA.Utilities;
 using SpinMod;
-using SongCore;
+//using SongCore;
 namespace bSpin.CustomTypes
 {
     public struct SpinProfile
@@ -48,7 +48,7 @@ namespace bSpin
     {
         public static bool IsModdedMap(IDifficultyBeatmap map)
         {
-            try
+            /*try
             {
                 return Collections.RetrieveDifficultyData(map)?
                     .additionalDifficultyData?
@@ -57,7 +57,8 @@ namespace bSpin
             catch
             {
                 return false;
-            }
+            }*/
+            return false;
         }
 
 

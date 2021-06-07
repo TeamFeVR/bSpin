@@ -24,10 +24,12 @@ namespace bSpin.UI.Spin_Editor
         public override string ResourceName => "bSpin.UI.SpinEditor.SpinPanel.bsml";
         internal static SpinProfile cacheSpins = new SpinProfile();
         internal static SpinProfile tempSpins = new SpinProfile();
+        internal static Material RoundedEdge = null;
 
         [UIAction("#post-parse")]
         private void PostParse()
         {
+            RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
             SpinList.tableView.SelectCellWithIdx(selectedSpin);
             
         }
@@ -54,8 +56,8 @@ namespace bSpin.UI.Spin_Editor
             [UIValue("spin-end-delay")]
             private string endDelay;
 
-            [UIComponent("bg")]
-            private ImageView background;
+            [UIComponent("bgContainer")]
+            internal ImageView bg;
 
             public SpinListObject(Spin spin, int index)
             {
@@ -69,12 +71,16 @@ namespace bSpin.UI.Spin_Editor
             [UIAction("refresh-visuals")]
             public void Refresh(bool selected, bool highlighted)
             {
-                var x = new UnityEngine.Color(0, 0, 0, 0.45f);
-
+                bg.material = RoundedEdge;
+                var x = new Color(0, 0, 0, 0.45f);
                 if (selected || highlighted)
-                    x.a = selected ? 0.9f : 0.6f;
-
-                background.color = x;
+                {
+                    x.a = selected ? 0.75f : 0.6f;
+                    x.r = selected ? 0.75f : 0.3f;
+                    x.g = selected ? 0.75f : 0.3f;
+                    x.b = selected ? 0.9f : 0.6f;
+                }
+                bg.color = x;
             }
         }
 

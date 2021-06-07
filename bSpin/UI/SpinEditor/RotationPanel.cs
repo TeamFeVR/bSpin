@@ -22,6 +22,7 @@ namespace bSpin.UI.Spin_Editor
         private static CustomTypes.Spin cacheSpin;
         private static CustomTypes.Spin editingSpin;
         internal static bool ChangesMade = false;
+        internal static Material RoundedEdge = null;
         private void Awake()
         {
             Instance = this;
@@ -169,8 +170,8 @@ namespace bSpin.UI.Spin_Editor
                 }
             }
 
-            [UIComponent("bg")]
-            private ImageView background;
+            [UIComponent("bgContainer")]
+            internal ImageView bg = null;
 
             public VectorListObject(float vector, string name, int index)
             {
@@ -182,17 +183,22 @@ namespace bSpin.UI.Spin_Editor
             [UIAction("refresh-visuals")]
             public void Refresh(bool selected, bool highlighted)
             {
-                var x = new UnityEngine.Color(0, 0, 0, 0.45f);
-
+                bg.material = RoundedEdge;
+                var x = new Color(0,0,0,0.45f);
                 if (selected || highlighted)
+                {
                     x.a = selected ? 0.9f : 0.6f;
-
-                background.color = x;
+                    x.r = selected ? 0.6f : 0.3f;
+                    x.g = selected ? 0.6f : 0.3f;
+                    x.b = selected ? 0.9f : 0.6f;
+                }
+                bg.color = x;
             }
         }
 
         internal void Load(CustomTypes.Spin spin)
         {
+            RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
             cacheSpin = spin;
             editingSpin = spin;
             VectorList.data.Clear();
