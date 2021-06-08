@@ -175,10 +175,12 @@
     <Compile Include="Twitch\Command.cs" />
     <Compile Include="Twitch\CommandHandler.cs" />
     <Compile Include="Twitch\Wobbler.cs" />
+    <Compile Include="UDP\NetworkHandler.cs" />
     <Compile Include="UI\AngleChangerViewController.cs" />
     <Compile Include="Extra Functions\Vector3Converter.cs" />
     <Compile Include="UI\IngameMenu\FloatingScreenCreator.cs" />
     <Compile Include="UI\IngameMenu\PauseMenuController.cs" />
+    <Compile Include="UI\Settings\SettingsController.cs" />
     <Compile Include="UI\SpinEditor\ControllerAnglePanel.cs" />
     <Compile Include="UI\SpinEditor\RotationPanel.cs" />
     <Compile Include="UI\SpinEditor\SpinEditorFlowCoordinator.cs" />
@@ -198,6 +200,7 @@
     <EmbeddedResource Include="UI\SpinEditor\RotationPanel.bsml" />
     <EmbeddedResource Include="UI\SpinEditor\ControllerAngle.bsml" />
     <EmbeddedResource Include="zoom.json" />
+    <EmbeddedResource Include="UI\Settings\settings.bsml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BeatSaberModdingTools.Tasks">

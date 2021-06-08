@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ChatCore;
@@ -9,92 +10,94 @@ using static bSpin.Twitch.Types;
 
 namespace bSpin.Twitch
 {
-    class CommandHandler
+    static class CommandHandler
     {
-        public string Usernamequestionmark = "";
-        public ChatCore.Services.Twitch.TwitchService twitchService;
-        internal static CommandHandler Instance;
+        public static ChatCore.Services.Twitch.TwitchService twitchService;
+        private static ChatCoreInstance coreInstance;
+        internal static System.Threading.Thread UDPListenerThread = new System.Threading.Thread(async => UDP.NetworkHandler.StartListener());
 
-        internal static List<Command> Commands;
-        
-        internal void SendMsg(string msg)
+        internal static void SendMsg(string msg)
         {
-            Instance.twitchService.SendTextMessage(msg, (Instance.twitchService).Channels.ElementAt(0).Value.Name.ToString());
+            twitchService.SendTextMessage(msg, (twitchService).Channels.ElementAt(0).Value.Name.ToString());
         }
 
-        public void Start()
+        public static void Start()
         {
             Plugin.Log.Notice("Starting up Twitch");
-            var streamCore = ChatCoreInstance.Create();
-            var streamingService = streamCore.RunAllServices();
-            streamingService.OnLogin += StreamingService_OnLogin;
-            streamingService.OnTextMessageReceived += StreamServiceProvider_OnMessageReceived;
-            twitchService = streamingService.GetTwitchService();
-            
+            coreInstance = ChatCoreInstance.Create();
+            twitchService = coreInstance.RunTwitchServices();
+            twitchService.OnJoinChannel += login;
+            twitchService.OnTextMessageReceived += StreamServiceProvider_OnMessageReceived;
         }
-        public void StreamingService_OnLogin(IChatService svc)
-        {
-            Plugin.Log.Info($"First twitch channel is \"{((ChatCore.Services.Twitch.TwitchService)svc).Channels.ElementAt(0).Value.Name.ToString()}\"");
 
-            if (svc is ChatCore.Services.Twitch.TwitchService twitchService)
+        static void login(IChatService svc, IChatChannel channel)
+        {
+            Plugin.Log.Notice($"ChatCore currently has {twitchService.Channels.Count().ToString()} Channels joined");
+            SendMsg($"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version} connected");
+            UDPListenerThread.Start();
+        }
+
+        public static void StreamServiceProvider_OnMessageReceived(IChatService svc, IChatMessage msg)
+        {
+            Console.WriteLine($"{msg.Sender.DisplayName}: {msg.Message}");
+            HandleMessage(msg.Message, msg.Sender);
+        }
+
+        internal static void HandleMessage(string message, IChatUser user)
+        {
+            if (message.ToLower().Contains("!debug"))
             {
-                Plugin.Log.Info("it's a twitch channel!");
-                twitchService.JoinChannel(twitchService.Channels.ElementAt(0).Value.Name.ToString());
-                twitchService.SendTextMessage("bSpin 1.3.0 alpha, unexpectedly-bonks-you edition, " + twitchService.DisplayName + twitchService.Channels.ElementAt(0).Value.Name.ToString(), twitchService.Channels.ElementAt(0).Value.Name.ToString());
+                SendMsg($"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version}");
+                string loadedProfs = Plugin.spinProfiles.Count.ToString();
+                SendMsg($"{loadedProfs} Spin profiles loaded!");
+                string loadedWobs = Plugin.wobbles.Count.ToString();
+                SendMsg($"{loadedWobs} Wobble{(Plugin.wobbles.Count > 1 ? "s" : "")} loaded!");
             }
-        }
-        public void StreamServiceProvider_OnMessageReceived(IChatService svc, IChatMessage msg)
-        {
-            if (svc is ChatCore.Services.Twitch.TwitchService twitchService)
+            else if (message.ToLower().Equals("!wobbles"))
             {
-                Console.WriteLine($"{msg.Sender.DisplayName}: {msg.Message}");
-
-
-
-                if (msg.Message.ToLower().Contains("!debug"))
+                string woblist = "Wobbles: ";
+                foreach (var wob in Plugin.wobbles)
                 {
-                    SendMsg($"bSpin alpha 1.3.0");
-                    string loadedProfs = Plugin.spinProfiles.Count.ToString();
-                    SendMsg($"{loadedProfs} Spin profiles loaded!");
-                    string loadedWobs = Plugin.wobbles.Count.ToString();
-                    SendMsg($"{loadedWobs} Wobble{(Plugin.wobbles.Count > 1 ? "s" : "")} loaded!");
+                    woblist += (wob.name) + ", ";
                 }
-                else if (msg.Message.ToLower().Equals("!wobbles"))
+                SendMsg(woblist);
+            }
+            else if (message.IsFirstWord("wobble"))
+            {
+                Wobbler.Instance.Wob(Plugin.wobbles.ElementAt(UnityEngine.Random.Range(0, Plugin.wobbles.Count)).name);
+            }
+
+
+            if (user.IsBroadcaster || user.IsModerator)
+            {
+
+                if (message.StartsWith("!wadmin wobble"))
                 {
-                    string woblist = "Wobbles: ";
-                    foreach (var wob in Plugin.wobbles)
+                    string toWobble = message.Substring("!wadmin wobble ".Length);
+                    try
                     {
-                        woblist += (wob.name) + ", ";
-                    }
-                    SendMsg(woblist);
-                }
-                else if (msg.Message.IsFirstWord("wobble"))
-                {
-                    Wobbler.Instance.Wob(Plugin.wobbles.ElementAt(UnityEngine.Random.Range(0, Plugin.wobbles.Count)).name);
-                }
-
-                if (msg.Sender.IsBroadcaster || msg.Sender.IsModerator)
-                {
-                    
-                    if (msg.Message.StartsWith("!wadmin wobble"))
-                    {
-                        string toWobble = msg.Message.Substring("!wadmin wobble ".Length);
                         Wobbler.Instance.Wob(toWobble);
                     }
-                    else if (msg.Message.ToLower().Equals("!clear"))
+                    catch (NullReferenceException)
                     {
-                        Wobbler.Instance.Clear();
+                        SendMsg("Requested wobble does not exist");
                     }
-                    else if (msg.Message.ToLower().Equals("!skip"))
-                    {
-                        Wobbler.Instance.Skip();
-                    }
-                    SendMsg(msg.Message.ParseWadmin());
                 }
+                else if (message.ToLower().Equals("!clear"))
+                {
+                    Wobbler.Instance.Clear();
+                }
+                else if (message.ToLower().Equals("!skip"))
+                {
+                    Wobbler.Instance.Skip();
+                }
+                SendMsg(message.ParseWadmin());
             }
         }
+
+
         
-        public bool IsVip(IChatUser user)
+        public static bool IsVip(IChatUser user)
         {
             foreach (IChatBadge badge in user.Badges)
             {
@@ -105,7 +108,7 @@ namespace bSpin.Twitch
             }
             return false;
         }
-        public async Task SendErrorMessage(string type, string error)
+        public static async Task SendErrorMessage(string type, string error)
         {
             Plugin.Log.Critical(error);
         }

@@ -17,6 +17,7 @@ namespace bSpin.Configuration
         public virtual bool AccountForLiv { get; set; } = false;
         public virtual bool PauseMenu { get; set; } = true;
         public virtual bool Experiments { get; set; } = true;
+        public virtual int UdpPort { get; set; } = 3233;
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).

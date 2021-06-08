@@ -13,6 +13,7 @@ using System.Reflection;
 using bSpin.CustomTypes;
 using IPA.Utilities;
 using System.IO;
+using BeatSaberMarkupLanguage.Settings;
 
 namespace bSpin
 {
@@ -101,11 +102,10 @@ namespace bSpin
         [OnStart]
         public void OnApplicationStart()
         {
-            
+            BSMLSettings.instance.AddSettingsMenu("bSpin", "bSpin.UI.Settings.settings.bsml", UI.Settings.SettingsController.instance);
             bSpinController = new GameObject("bSpinController");
             bSpinController.AddComponent<bSpinController>();
-            Twitch.CommandHandler.Instance = new Twitch.CommandHandler();
-            Twitch.CommandHandler.Instance.Start();
+            Twitch.CommandHandler.Start();
             bSpinController.AddComponent<Twitch.Wobbler>();
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
 
@@ -114,6 +114,8 @@ namespace bSpin
         [OnExit]
         public void OnApplicationQuit()
         {
+            UDP.NetworkHandler.listener.Close();
+
             UI.AngleChanger.instance.RemoveTab();
             Configuration.PluginConfig.Instance.SpinSpeed = HarmonyPatches.sharedValues.speed;
 

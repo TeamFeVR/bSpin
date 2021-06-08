@@ -146,26 +146,7 @@ namespace bSpin.Twitch
             return a[0];
         }
 
-        public static Command ToCommand(this IChatMessage msg)
-        {
-            string cmd = msg.Message.ToLower();
-
-            cmd = cmd.Substring(cmd.IndexOf("!") + 1);
-            string trigger = cmd.Substring(0, cmd.IndexOf(" "));
-            bool sub = false;
-            foreach(var comd in CommandHandler.Commands)
-                if (comd.Trigger.ToLower().Equals(trigger))
-                    sub = comd.HasSub;
-
-            int splits = sub ? 2 : 3;
-            var splitd = cmd.Split(' ');
-
-            var rtn = new Command();
-            rtn.Trigger = splitd[0];
-            rtn.Sub = splitd[1];
-            rtn.Args = splitd[2];
-            return rtn;
-        }
+        
 
 
     }
