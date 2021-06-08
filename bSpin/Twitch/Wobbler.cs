@@ -50,7 +50,7 @@ namespace bSpin.Twitch
                     coroutineQueue.Enqueue(wob(wobb.Wobbles));
             }
         }
-        private ConcurrentQueue<IEnumerator> coroutineQueue = new ConcurrentQueue<IEnumerator>();
+        private Queue<IEnumerator> coroutineQueue = new Queue<IEnumerator>();
 
         IEnumerator CoroutineCoordinator()
         {
@@ -58,7 +58,7 @@ namespace bSpin.Twitch
             {
                 while (coroutineQueue.Count > 0)
                 {
-                    coroutineQueue.TryDequeue(out currentWob);
+                    currentWob = coroutineQueue.Dequeue();
                     yield return Instance.StartCoroutine(currentWob);
                 }
                 yield return null;
