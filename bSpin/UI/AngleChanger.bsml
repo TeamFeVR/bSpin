@@ -10,7 +10,7 @@
 				</horizontal>
 				<list id='SpinList' visible-cells='6' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45' pref-height='60'/>
 			</vertical>
-			<vertical pref-width='25' pref-height='50'>
+			<vertical pref-width='25' pref-height='60'>
 				<modifier-container pref-width='25'>
 					<!--fun fact, all these icons were made by me, in blender!-->
 					<modifier src='bSpin.UI.icons.rotation.png' text='Spin' value='enablespin' apply-on-change='true' hover-hint='Enables/Disables spinning camera effect'></modifier>
@@ -18,6 +18,7 @@
 					<modifier src='bSpin.UI.icons.AccountForCam.png' text='Account for LIV' value='livcompat' apply-on-change='true' hover-hint='Adjusts the spin angles to account for the angle your camera is at'></modifier>
 					<modifier src='bSpin.UI.icons.pausemenu.png' text='Pause UI' value='pauseui' apply-on-change='true' hover-hint='Enables toggling the spin and adjusting speed in the pause menu'></modifier>
 					<modifier src='bSpin.UI.icons.experiments.png' text='Experimental' value='jank' apply-on-change='true' hover-hint='Enables Experimental methods or features, disable this if something fucks up!'></modifier>
+					<modifier src='bSpin.UI.icons.rotation.png' text='Wobble' value='enableeobble' apply-on-change='true' hover-hint='Enables/Disables wobbles'></modifier>
 				</modifier-container>
 				<horizontal pref-height='20'>
 					

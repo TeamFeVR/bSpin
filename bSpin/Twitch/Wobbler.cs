@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,7 @@ namespace bSpin.Twitch
                     coroutineQueue.Enqueue(wob(wobb.Wobbles));
             }
         }
-        private Queue<IEnumerator> coroutineQueue = new Queue<IEnumerator>();
+        private ConcurrentQueue<IEnumerator> coroutineQueue = new ConcurrentQueue<IEnumerator>();
 
         IEnumerator CoroutineCoordinator()
         {
@@ -57,7 +58,7 @@ namespace bSpin.Twitch
             {
                 while (coroutineQueue.Count > 0)
                 {
-                    currentWob = coroutineQueue.Dequeue();
+                    coroutineQueue.TryDequeue(out currentWob);
                     yield return Instance.StartCoroutine(currentWob);
                 }
                 yield return null;

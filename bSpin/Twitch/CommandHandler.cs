@@ -48,15 +48,10 @@ namespace bSpin.Twitch
             if (svc is ChatCore.Services.Twitch.TwitchService twitchService)
             {
                 Console.WriteLine($"{msg.Sender.DisplayName}: {msg.Message}");
-                
 
-                if (msg.Message.IsFirstWord("wobble"))
-                {
-                    Plugin.Log.Notice("it's getting through!");
-                    string toWobble = msg.Message.Substring("!wobble ".Length);
-                    Wobbler.Instance.Wob(toWobble);
-                }
-                else if (msg.Message.ToLower().Contains("!debug"))
+
+
+                if (msg.Message.ToLower().Contains("!debug"))
                 {
                     SendMsg($"bSpin alpha 1.3.0");
                     string loadedProfs = Plugin.spinProfiles.Count.ToString();
@@ -64,24 +59,38 @@ namespace bSpin.Twitch
                     string loadedWobs = Plugin.wobbles.Count.ToString();
                     SendMsg($"{loadedWobs} Wobble{(Plugin.wobbles.Count > 1 ? "s" : "")} loaded!");
                 }
-                else if (msg.Message.ToLower().Equals("!clear"))
-                {
-                    Twitch.Wobbler.Instance.Clear();
-                }
-                else if (msg.Message.ToLower().Equals("!skip"))
-                {
-                    Twitch.Wobbler.Instance.Skip();
-                }
                 else if (msg.Message.ToLower().Equals("!wobbles"))
                 {
                     string woblist = "Wobbles: ";
-                    foreach(var wob in Plugin.wobbles)
+                    foreach (var wob in Plugin.wobbles)
                     {
                         woblist += (wob.name) + ", ";
                     }
                     SendMsg(woblist);
                 }
-                SendMsg(msg.Message.ParseWadmin());
+                else if (msg.Message.IsFirstWord("wobble"))
+                {
+                    Wobbler.Instance.Wob(Plugin.wobbles.ElementAt(UnityEngine.Random.Range(0, Plugin.wobbles.Count)).name);
+                }
+
+                if (msg.Sender.IsBroadcaster || msg.Sender.IsModerator)
+                {
+                    
+                    if (msg.Message.StartsWith("!wadmin wobble"))
+                    {
+                        string toWobble = msg.Message.Substring("!wadmin wobble ".Length);
+                        Wobbler.Instance.Wob(toWobble);
+                    }
+                    else if (msg.Message.ToLower().Equals("!clear"))
+                    {
+                        Wobbler.Instance.Clear();
+                    }
+                    else if (msg.Message.ToLower().Equals("!skip"))
+                    {
+                        Wobbler.Instance.Skip();
+                    }
+                    SendMsg(msg.Message.ParseWadmin());
+                }
             }
         }
         
