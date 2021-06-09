@@ -67,8 +67,8 @@ namespace bSpin
             {
                 var wb = new List<Wobble>
                 {
-                    new Wobble(1, new Vector3(0, 0, 0), new Vector3(180, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 3, 0)),
-                    new Wobble(1, new Vector3(180, 0, 0), new Vector3(360, 0, 0), new Vector3(0, 3, 0), new Vector3(0, 0, 0))
+                    new Wobble(0.25f, new Vector3(0, 0, 0), new Vector3(180, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 3, 0)),
+                    new Wobble(0.25f, new Vector3(180, 0, 0), new Vector3(360, 0, 0), new Vector3(0, 3, 0), new Vector3(0, 0, 0))
                 };
                 FileManager.SaveWobbleProfile(new WobbleProfile("flip", wb));
                 using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("bSpin.zoom.json"))

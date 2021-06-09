@@ -32,14 +32,11 @@ namespace bSpin.UI.Settings
         [UIAction("#apply")]
         public void OnApply()
         {
-            if (Configuration.PluginConfig.Instance.UdpEnabled)
+            if (Twitch.CommandHandler.UDPListenerThread != null)
             {
-                // so apparently the OK button wouldn't fully press lmao
-                if(Twitch.CommandHandler.UDPListenerThread != null)
-                {
-                    Twitch.CommandHandler.UDPListenerThread.Abort();
+                Twitch.CommandHandler.UDPListenerThread.Abort();
+                if (Configuration.PluginConfig.Instance.UdpEnabled)
                     Twitch.CommandHandler.UDPListenerThread.Start();
-                }
             }
         }
     }
