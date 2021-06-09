@@ -34,8 +34,12 @@ namespace bSpin.UI.Settings
         {
             if (Configuration.PluginConfig.Instance.UdpEnabled)
             {
-                Twitch.CommandHandler.UDPListenerThread.Abort();
-                Twitch.CommandHandler.UDPListenerThread.Start();
+                // so apparently the OK button wouldn't fully press lmao
+                if(Twitch.CommandHandler.UDPListenerThread != null)
+                {
+                    Twitch.CommandHandler.UDPListenerThread.Abort();
+                    Twitch.CommandHandler.UDPListenerThread.Start();
+                }
             }
         }
     }

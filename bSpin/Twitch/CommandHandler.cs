@@ -52,7 +52,7 @@ namespace bSpin.Twitch
                 string loadedWobs = Plugin.wobbles.Count.ToString();
                 SendMsg($"{loadedWobs} Wobble{(Plugin.wobbles.Count > 1 ? "s" : "")} loaded!");
             }
-            else if (message.ToLower().Equals("!wobbles"))
+            if (message.ToLower().Equals("!wobbles"))
             {
                 string woblist = "Wobbles: ";
                 foreach (var wob in Plugin.wobbles)
@@ -63,34 +63,56 @@ namespace bSpin.Twitch
             }
             else if (message.IsFirstWord("wobble"))
             {
-                Wobbler.Instance.Wob(Plugin.wobbles.ElementAt(UnityEngine.Random.Range(0, Plugin.wobbles.Count)).name);
+
+                if (Configuration.PluginConfig.Instance.WobbleEnabled)
+                    Wobbler.Instance.Wob(Plugin.wobbles.ElementAt(UnityEngine.Random.Range(0, Plugin.wobbles.Count)).name);
+                else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
+                    SendMsg("Wobble is currently disabled.");
             }
 
 
             if (user.IsBroadcaster || user.IsModerator)
             {
+                if (Configuration.PluginConfig.Instance.WobbleEnabled)
+                {
+                    if (message.StartsWith("!wadmin wobble"))
+                    {
+                        if (Configuration.PluginConfig.Instance.WobbleEnabled)
+                        {
+                            string toWobble = message.Substring("!wadmin wobble ".Length);
+                            try
+                            {
+                                Wobbler.Instance.Wob(toWobble);
+                            }
+                            catch (NullReferenceException)
+                            {
+                                SendMsg("Requested wobble does not exist");
+                            }
+                        }
+                        else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
+                            SendMsg("Wobble is currently disabled.");
 
-                if (message.StartsWith("!wadmin wobble"))
-                {
-                    string toWobble = message.Substring("!wadmin wobble ".Length);
-                    try
-                    {
-                        Wobbler.Instance.Wob(toWobble);
                     }
-                    catch (NullReferenceException)
+                    else if (message.ToLower().Equals("!clear"))
                     {
-                        SendMsg("Requested wobble does not exist");
+                        if (Configuration.PluginConfig.Instance.WobbleEnabled)
+                            Wobbler.Instance.Clear();
+                        else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
+                            SendMsg("Wobble is currently disabled.");
                     }
+                    else if (message.ToLower().Equals("!skip"))
+                    {
+                        if (Configuration.PluginConfig.Instance.WobbleEnabled)
+                            Wobbler.Instance.Skip();
+                        else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
+                            SendMsg("Wobble is currently disabled.");
+                    }
+                    if (Configuration.PluginConfig.Instance.WobbleEnabled)
+                        SendMsg(message.ParseWadmin());
+                    else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
+                        SendMsg("Wobble is currently disabled.");
                 }
-                else if (message.ToLower().Equals("!clear"))
-                {
-                    Wobbler.Instance.Clear();
-                }
-                else if (message.ToLower().Equals("!skip"))
-                {
-                    Wobbler.Instance.Skip();
-                }
-                SendMsg(message.ParseWadmin());
+                
             }
         }
 
