@@ -19,11 +19,24 @@ namespace bSpin.UI.Settings
             }
         }
 
+        [UIValue("udp-en")]
+        internal bool UdpEnabled
+        {
+            get => Configuration.PluginConfig.Instance.UdpEnabled;
+            set
+            {
+                Configuration.PluginConfig.Instance.UdpEnabled = value;
+            }
+        }
+
         [UIAction("#apply")]
         public void OnApply()
         {
-            UDP.NetworkHandler.listener.Close();
-            UDP.NetworkHandler.StartListener();
+            if (Configuration.PluginConfig.Instance.UdpEnabled)
+            {
+                Twitch.CommandHandler.UDPListenerThread.Abort();
+                Twitch.CommandHandler.UDPListenerThread.Start();
+            }
         }
     }
 }

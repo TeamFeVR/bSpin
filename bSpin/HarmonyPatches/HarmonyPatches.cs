@@ -38,11 +38,11 @@ namespace bSpin.HarmonyPatches
 
             if (Configuration.PluginConfig.Instance.Experiments)
             {
-				GameObject origin = GameObject.Find("LocalPlayerGameCore/Origin");
+				GameObject origin = GameObject.Find("LocalPlayerGameCore");
 				GameObject spinHandle = new GameObject("bSpin_Handle");
 				spinHandle.transform.SetParent(origin.transform);
 				GameObject vrcore = origin.transform.GetChild(0).gameObject;
-				vrcore.transform.SetParent(spinHandle.transform);
+				vrcore.transform.SetParent(spinHandle.transform, true);
 				sharedValues.player = spinHandle;
 
 				//basically what this does is insert itself in between Origin (the thing i believe noodle spins)
@@ -106,6 +106,9 @@ namespace bSpin.HarmonyPatches
 				bSpinController.Instance.StopAllCoroutines();
 			}catch(Exception e) { Plugin.Log.Critical(e.ToString()); }
 			sharedValues.player.transform.eulerAngles = new Vector3(0, 0, 0);
+			if(Twitch.Wobbler.Instance != null)
+				Twitch.Wobbler.Instance.Stop();
+
 		}
 		[HarmonyTargetMethods]
 		static IEnumerable<MethodBase> TargetMethods()
@@ -120,7 +123,12 @@ namespace bSpin.HarmonyPatches
 		public static float speed;
 		public static bool noodle;
 		public static float offset;
-		public static bool wobble;
+		public static bool wobble
+        {
+			get => Configuration.PluginConfig.Instance.WobbleEnabled;
+            set => Configuration.PluginConfig.Instance.WobbleEnabled = value;
+
+		}
 		public static bool ts
         {
             get
@@ -139,6 +147,8 @@ namespace bSpin.HarmonyPatches
 		{
 			if (Configuration.PluginConfig.Instance.Enabled)
 				bSpinController.Instance.StartCoroutine(spin());
+			if (Twitch.Wobbler.Instance != null)
+				Twitch.Wobbler.Instance.Waitaminute();
 		}
 
 		static IEnumerator spin()

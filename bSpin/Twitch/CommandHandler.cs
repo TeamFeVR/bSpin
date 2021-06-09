@@ -34,7 +34,6 @@ namespace bSpin.Twitch
         {
             Plugin.Log.Notice($"ChatCore currently has {twitchService.Channels.Count().ToString()} Channels joined");
             SendMsg($"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version} connected");
-            UDPListenerThread.Start();
         }
 
         public static void StreamServiceProvider_OnMessageReceived(IChatService svc, IChatMessage msg)

@@ -10,14 +10,16 @@ namespace bSpin.Configuration
     internal class PluginConfig
     {
         public static PluginConfig Instance { get; set; }
-        public virtual int spinProfile {get; set;}
+        public virtual int spinProfile {get; set; }
         public virtual bool Enabled { get; set; } = true;
+        public virtual bool WobbleEnabled { get; set; } = true;
         public virtual bool NoodleCompat { get; set; } = false;
         public virtual float SpinSpeed { get; set; } = 1.0f;
         public virtual bool AccountForLiv { get; set; } = false;
         public virtual bool PauseMenu { get; set; } = true;
         public virtual bool Experiments { get; set; } = true;
         public virtual int UdpPort { get; set; } = 3233;
+        public virtual bool UdpEnabled { get; set; } = true;
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).

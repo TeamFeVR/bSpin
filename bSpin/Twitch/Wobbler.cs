@@ -30,14 +30,35 @@ namespace bSpin.Twitch
         {
             coroutineQueue.Clear();
         }
+        internal void Stop()
+        {
+            Handle.transform.localPosition = Vector3.zero;
+            Handle.transform.rotation = Quaternion.Euler(Vector3.zero);
+            Handle.transform.GetChild(0).transform.rotation = Quaternion.Euler(Vector3.zero);
+            if (currentWob != null)
+                Instance.StopCoroutine(currentWob);
+            if (coroutineQueue != null)
+                Instance.StopCoroutine(CoroutineCoordinator());
+        }
+        internal void Waitaminute()
+        {
+            if (currentWob != null)
+                Instance.StartCoroutine(currentWob);
+            if (coroutineQueue != null)
+                Instance.StartCoroutine(CoroutineCoordinator());
+        }
         internal void Skip()
         {
-            Instance.StopCoroutine(currentWob);
-            Instance.StopCoroutine(CoroutineCoordinator());
-            Instance.StartCoroutine(CoroutineCoordinator());
+            if (currentWob != null)
+                Instance.StopCoroutine(currentWob);
+            if(coroutineQueue != null)
+            {
+                Instance.StopCoroutine(CoroutineCoordinator());
+                Instance.StartCoroutine(CoroutineCoordinator());
+            }
             
             Handle.transform.localPosition = Vector3.zero;
-            Handle.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            Handle.transform.rotation = Quaternion.Euler(Vector3.zero);
         }
         internal void Wob(string profile)
         {
