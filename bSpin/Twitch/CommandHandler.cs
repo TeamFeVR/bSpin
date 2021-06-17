@@ -14,13 +14,17 @@ namespace bSpin.Twitch
     {
         public static ChatCore.Services.Twitch.TwitchService twitchService;
         internal static ChatCoreInstance coreInstance;
-        internal static System.Threading.Thread UDPListenerThread = new System.Threading.Thread(async => UDP.NetworkHandler.StartListener());
 
         internal static void SendMsg(string msg)
         {
             try
             {
-                twitchService.SendTextMessage(msg, (twitchService).Channels.ElementAt(0).Value.Name.ToString());
+                if (Configuration.PluginConfig.Instance.TwitchEnabled)
+                    twitchService.SendTextMessage(msg, (twitchService).Channels.ElementAt(0).Value.Name.ToString());
+                else if (!Configuration.PluginConfig.Instance.TwitchEnabled)
+                {
+                    Console.WriteLine(msg);
+                }
             }
             catch (Exception)
             {
@@ -31,6 +35,7 @@ namespace bSpin.Twitch
         internal static void Init()
         {
             coreInstance = ChatCoreInstance.Create();
+            UDP.NetworkHandler.Init();
         }
 
         internal static void Start()
@@ -60,7 +65,7 @@ namespace bSpin.Twitch
 
         public static void StreamServiceProvider_OnMessageReceived(IChatService svc, IChatMessage msg)
         {
-            Console.WriteLine($"{msg.Sender.DisplayName}: {msg.Message}");
+            //Console.WriteLine($"{msg.Sender.DisplayName}: {msg.Message}");
             HandleMessage(msg.Message, msg.Sender);
         }
 
@@ -89,7 +94,7 @@ namespace bSpin.Twitch
                 if (Configuration.PluginConfig.Instance.WobbleEnabled)
                     Wobbler.Instance.Wob(Plugin.wobbles.ElementAt(UnityEngine.Random.Range(0, Plugin.wobbles.Count)).name);
                 else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
-                    SendMsg("Wobble is currently disabled.");
+                    SendMsg($"{user.DisplayName}:  Wobble is currently disabled.");
             }
 
 
@@ -108,11 +113,11 @@ namespace bSpin.Twitch
                             }
                             catch (NullReferenceException)
                             {
-                                SendMsg("Requested wobble does not exist");
+                                SendMsg($"{user.DisplayName}:  Requested wobble does not exist");
                             }
                         }
                         else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
-                            SendMsg("Wobble is currently disabled.");
+                            SendMsg($"{user.DisplayName}:  Wobble is currently disabled.");
 
                     }
                     else if (message.ToLower().Equals("!clear"))
@@ -120,19 +125,19 @@ namespace bSpin.Twitch
                         if (Configuration.PluginConfig.Instance.WobbleEnabled)
                             Wobbler.Instance.Clear();
                         else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
-                            SendMsg("Wobble is currently disabled.");
+                            SendMsg($"{user.DisplayName}:  Wobble is currently disabled.");
                     }
                     else if (message.ToLower().Equals("!skip"))
                     {
                         if (Configuration.PluginConfig.Instance.WobbleEnabled)
                             Wobbler.Instance.Skip();
                         else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
-                            SendMsg("Wobble is currently disabled.");
+                            SendMsg($"{user.DisplayName}:  Wobble is currently disabled.");
                     }
                     if (Configuration.PluginConfig.Instance.WobbleEnabled)
                         SendMsg(message.ParseWadmin());
                     else if (!Configuration.PluginConfig.Instance.WobbleEnabled)
-                        SendMsg("Wobble is currently disabled.");
+                        SendMsg($"{user.DisplayName}:  Wobble is currently disabled.");
                 }
                 
             }

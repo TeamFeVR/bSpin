@@ -6,38 +6,83 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace bSpin.UDP
 {
     class NetworkHandler
     {
+        private static Thread ListenerThread;
+
         private static int Port
         {
             get => Configuration.PluginConfig.Instance.UdpPort;
         }
-        internal static bool Listening = true;
-
-        internal static UdpClient listener;
-        internal static void StartListener()
+        internal static bool IsOn;
+        internal static UdpState state;
+        public struct UdpState
         {
-            listener = new UdpClient(Port);
-            IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, Port);
-            try
+            public UdpClient u;
+            public IPEndPoint e;
+        }
+        internal static void Init()
+        {
+            IPEndPoint e = new IPEndPoint(IPAddress.Any, Port);
+            state.u = new UdpClient(e);
+            state.e = e;
+            Set(Configuration.PluginConfig.Instance.UdpEnabled);
+        }
+        internal static void Set(bool on)
+        {
+            switch (on)
             {
-                while (Listening)
-                {
-                    byte[] bytes = listener.Receive(ref groupEP);
-
-                    Console.WriteLine($"Received broadcast from {groupEP} :");
-                    Console.WriteLine($" {Encoding.ASCII.GetString(bytes, 0, bytes.Length)}");
-
-                    Twitch.CommandHandler.HandleMessage($"{Encoding.ASCII.GetString(bytes, 0, bytes.Length)}", new FakeUser("UDP Client"));
-                }
+                case true:
+                    if (!IsOn)
+                    {
+                        ListenerThread = new Thread(async => ReceiveMessages(state.u, state));
+                        ListenerThread.Start();
+                        IsOn = true;
+                    }
+                    Restart();
+                    break;
+                case false:
+                    if (IsOn)
+                    {
+                        ListenerThread.Abort();
+                        ListenerThread.Join();
+                        IsOn = false;
+                    }
+                    break;
             }
-            catch (SocketException e)
+        }
+        internal static void Restart()
+        {
+            IPEndPoint e = new IPEndPoint(IPAddress.Any, Port);
+            state.u = new UdpClient(e);
+            state.e = e;
+            if (IsOn)
             {
-                Console.WriteLine(e);
+                ListenerThread.Abort();
+                ListenerThread.Join();
             }
+            ListenerThread = new Thread(async => ReceiveMessages(state.u, state));
+            ListenerThread.Start();
+        }
+
+        private static void ReceiveCallback(IAsyncResult ar)
+        {
+
+            byte[] receiveBytes = state.u.EndReceive(ar, ref state.e);
+            string receiveString = Encoding.ASCII.GetString(receiveBytes);
+            Twitch.CommandHandler.HandleMessage(receiveString, new FakeUser("UDP Client"));
+            Restart();
+        }
+
+        private static void ReceiveMessages(UdpClient u, UdpState s)
+        {
+            u.BeginReceive(new AsyncCallback(ReceiveCallback), s);
+            while (true)
+                Thread.Sleep(100);
         }
 
         private class FakeMessage : IChatMessage

@@ -52,15 +52,6 @@ namespace bSpin.UI.Settings
         [UIAction("#apply")]
         public void OnApply()
         {
-            switch (Configuration.PluginConfig.Instance.UdpEnabled)
-            {
-                case true:
-                    UDP.NetworkHandler.Listening = true;
-                    break;
-                case false:
-                    UDP.NetworkHandler.Listening = false;
-                    break;
-            }
             switch (Configuration.PluginConfig.Instance.TwitchEnabled)
             {
                 case true:

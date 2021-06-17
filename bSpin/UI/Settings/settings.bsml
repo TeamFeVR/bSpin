@@ -5,7 +5,7 @@
 		<vertical preferred-height='25'>
 			<text color='red' text='UDP settings will not be applied until a game restart!'/>
 		</vertical>
-		
+		<vertical preferred-height='10'/>
 		<bool-setting text='UDP Enabled' value='udp-en' bind-value='true' apply-on-change='true'/>
 		<string-setting text='UDP Port' value='udp-port' bind-value='true' apply-on-change='true'/>
 	</settings-container>

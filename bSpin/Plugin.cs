@@ -101,18 +101,11 @@ namespace bSpin
                 Twitch.CommandHandler.Start();
             bSpinController.AddComponent<Twitch.Wobbler>();
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
-            if (Configuration.PluginConfig.Instance.UdpEnabled)
-                Twitch.CommandHandler.UDPListenerThread.Start();
         }
         
         [OnExit]
         public void OnApplicationQuit()
         {
-            if (Configuration.PluginConfig.Instance.UdpEnabled)
-            {
-                UDP.NetworkHandler.Listening = false;
-                Twitch.CommandHandler.UDPListenerThread.Abort();
-            }
             UI.AngleChanger.instance.RemoveTab();
             Configuration.PluginConfig.Instance.SpinSpeed = HarmonyPatches.sharedValues.speed;
 
