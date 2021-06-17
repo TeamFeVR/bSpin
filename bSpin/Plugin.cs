@@ -28,11 +28,6 @@ namespace bSpin
         public static List<WobbleProfile> wobbles { get; internal set; }
 
         [Init]
-        /// <summary>
-        /// Called when the plugin is first loaded by IPA (either when the game starts or when the plugin is enabled if it starts disabled).
-        /// [Init] methods that use a Constructor or called before regular methods like InitWithConfig.
-        /// Only use [Init] with one Constructor.
-        /// </summary>
         public void Init(IPALogger logger)
         {
             Instance = this;
@@ -87,16 +82,12 @@ namespace bSpin
         }
 
         #region BSIPA Config
-        //Uncomment to use BSIPA's config
-        
         [Init]
         public void InitWithConfig(Config conf)
         {
-            
             Configuration.PluginConfig.Instance = conf.Generated<Configuration.PluginConfig>();
             Log.Debug("Config loaded");
         }
-        
         #endregion
 
         [OnStart]
@@ -105,7 +96,9 @@ namespace bSpin
             BSMLSettings.instance.AddSettingsMenu("bSpin", "bSpin.UI.Settings.settings.bsml", UI.Settings.SettingsController.instance);
             bSpinController = new GameObject("bSpinController");
             bSpinController.AddComponent<bSpinController>();
-            Twitch.CommandHandler.Start();
+            Twitch.CommandHandler.Init();
+            if(Configuration.PluginConfig.Instance.TwitchEnabled)
+                Twitch.CommandHandler.Start();
             bSpinController.AddComponent<Twitch.Wobbler>();
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
             if (Configuration.PluginConfig.Instance.UdpEnabled)
@@ -116,8 +109,10 @@ namespace bSpin
         public void OnApplicationQuit()
         {
             if (Configuration.PluginConfig.Instance.UdpEnabled)
+            {
+                UDP.NetworkHandler.Listening = false;
                 Twitch.CommandHandler.UDPListenerThread.Abort();
-
+            }
             UI.AngleChanger.instance.RemoveTab();
             Configuration.PluginConfig.Instance.SpinSpeed = HarmonyPatches.sharedValues.speed;
 

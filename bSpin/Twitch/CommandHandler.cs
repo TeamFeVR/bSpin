@@ -13,27 +13,49 @@ namespace bSpin.Twitch
     static class CommandHandler
     {
         public static ChatCore.Services.Twitch.TwitchService twitchService;
-        private static ChatCoreInstance coreInstance;
+        internal static ChatCoreInstance coreInstance;
         internal static System.Threading.Thread UDPListenerThread = new System.Threading.Thread(async => UDP.NetworkHandler.StartListener());
 
         internal static void SendMsg(string msg)
         {
-            twitchService.SendTextMessage(msg, (twitchService).Channels.ElementAt(0).Value.Name.ToString());
+            try
+            {
+                twitchService.SendTextMessage(msg, (twitchService).Channels.ElementAt(0).Value.Name.ToString());
+            }
+            catch (Exception)
+            {
+                Plugin.Log.Debug($"Failed to send twitch message, but if it succeeded, it would be \"{msg}\"");
+            }
         }
 
-        public static void Start()
+        internal static void Init()
+        {
+            coreInstance = ChatCoreInstance.Create();
+        }
+
+        internal static void Start()
         {
             Plugin.Log.Notice("Starting up Twitch");
-            coreInstance = ChatCoreInstance.Create();
+            
             twitchService = coreInstance.RunTwitchServices();
             twitchService.OnJoinChannel += login;
             twitchService.OnTextMessageReceived += StreamServiceProvider_OnMessageReceived;
+        }
+        internal static void Stop()
+        {
+            Plugin.Log.Notice("Shutting down Twitch");
+            coreInstance.StopTwitchServices();
+            twitchService.OnJoinChannel -= login;
+            twitchService.OnTextMessageReceived -= StreamServiceProvider_OnMessageReceived;
+            twitchService = null;
+            
         }
 
         static void login(IChatService svc, IChatChannel channel)
         {
             Plugin.Log.Notice($"ChatCore currently has {twitchService.Channels.Count().ToString()} Channels joined");
-            SendMsg($"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version} connected");
+            if(Configuration.PluginConfig.Instance.TwitchAnnounce)
+                SendMsg($"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version} connected");
         }
 
         public static void StreamServiceProvider_OnMessageReceived(IChatService svc, IChatMessage msg)

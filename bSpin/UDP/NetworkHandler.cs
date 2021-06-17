@@ -15,6 +15,7 @@ namespace bSpin.UDP
         {
             get => Configuration.PluginConfig.Instance.UdpPort;
         }
+        internal static bool Listening = true;
 
         internal static UdpClient listener;
         internal static void StartListener()
@@ -23,7 +24,7 @@ namespace bSpin.UDP
             IPEndPoint groupEP = new IPEndPoint(IPAddress.Any, Port);
             try
             {
-                while (true)
+                while (Listening)
                 {
                     byte[] bytes = listener.Receive(ref groupEP);
 

@@ -1,5 +1,11 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
-	<settings-container>
+	<settings-container child-control-width='true'>
+		<bool-setting text='Twitch Enabled' value='twitch-en' bind-value='true' apply-on-change='true'/>
+		<bool-setting text='Announce connection to chat' value='twitch-ann' bind-value='true' apply-on-change='true'/>
+		<vertical preferred-height='25'>
+			<text color='red' text='UDP settings will not be applied until a game restart!'/>
+		</vertical>
+		
 		<bool-setting text='UDP Enabled' value='udp-en' bind-value='true' apply-on-change='true'/>
 		<string-setting text='UDP Port' value='udp-port' bind-value='true' apply-on-change='true'/>
 	</settings-container>

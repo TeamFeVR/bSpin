@@ -9,6 +9,26 @@ namespace bSpin.UI.Settings
 {
     class SettingsController : PersistentSingleton<SettingsController>
     {
+        [UIValue("twitch-en")]
+        internal bool TwitchEnabled
+        {
+            get => Configuration.PluginConfig.Instance.TwitchEnabled;
+            set
+            {
+                Configuration.PluginConfig.Instance.TwitchEnabled = value;
+            }
+        }
+
+        [UIValue("twitch-ann")]
+        internal bool TwitchAnnounce
+        {
+            get => Configuration.PluginConfig.Instance.TwitchAnnounce;
+            set
+            {
+                Configuration.PluginConfig.Instance.TwitchAnnounce = value;
+            }
+        }
+
         [UIValue("udp-port")]
         internal string UdpPort
         {
@@ -32,14 +52,26 @@ namespace bSpin.UI.Settings
         [UIAction("#apply")]
         public void OnApply()
         {
-            if (Configuration.PluginConfig.Instance.UdpEnabled)
+            switch (Configuration.PluginConfig.Instance.UdpEnabled)
             {
-                // so apparently the OK button wouldn't fully press lmao
-                if(Twitch.CommandHandler.UDPListenerThread != null)
-                {
-                    Twitch.CommandHandler.UDPListenerThread.Abort();
-                    Twitch.CommandHandler.UDPListenerThread.Start();
-                }
+                case true:
+                    UDP.NetworkHandler.Listening = true;
+                    break;
+                case false:
+                    UDP.NetworkHandler.Listening = false;
+                    break;
+            }
+            switch (Configuration.PluginConfig.Instance.TwitchEnabled)
+            {
+                case true:
+                    if (Twitch.CommandHandler.twitchService == null)
+                        Twitch.CommandHandler.Start();
+                    break;
+
+                case false:
+                    if (Twitch.CommandHandler.twitchService != null)
+                        Twitch.CommandHandler.Stop();
+                    break;
             }
         }
     }

@@ -20,6 +20,8 @@ namespace bSpin.Configuration
         public virtual bool Experiments { get; set; } = true;
         public virtual int UdpPort { get; set; } = 3233;
         public virtual bool UdpEnabled { get; set; } = true;
+        public virtual bool TwitchEnabled { get; set; } = true;
+        public virtual bool TwitchAnnounce { get; set; } = true;
 
         /// <summary>
         /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).
