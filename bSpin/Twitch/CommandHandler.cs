@@ -77,7 +77,7 @@ namespace bSpin.Twitch
                 string loadedProfs = Plugin.spinProfiles.Count.ToString();
                 SendMsg($"{loadedProfs} Spin profiles loaded!");
                 string loadedWobs = Plugin.wobbles.Count.ToString();
-                SendMsg($"{loadedWobs} Wobble{(Plugin.wobbles.Count > 1 ? "s" : "")} loaded!");
+                SendMsg($"{loadedWobs} Wobble{(Plugin.wobbles.Count != 1 ? "s" : "")} loaded!");
             }
             if (message.ToLower().Equals("!wobbles"))
             {
