@@ -14,7 +14,7 @@ namespace bSpin.Twitch
     {
         public static ChatCore.Services.Twitch.TwitchService twitchService;
         internal static ChatCoreInstance coreInstance;
-
+        internal static List<string> MessageQueue = new List<string>();
         internal static void SendMsg(string msg)
         {
             try
@@ -45,6 +45,7 @@ namespace bSpin.Twitch
             twitchService = coreInstance.RunTwitchServices();
             twitchService.OnJoinChannel += login;
             twitchService.OnTextMessageReceived += StreamServiceProvider_OnMessageReceived;
+            
         }
         internal static void Stop()
         {
@@ -61,6 +62,10 @@ namespace bSpin.Twitch
             Plugin.Log.Notice($"ChatCore currently has {twitchService.Channels.Count().ToString()} Channels joined");
             if(Configuration.PluginConfig.Instance.TwitchAnnounce)
                 SendMsg($"{Assembly.GetExecutingAssembly().GetName().Name} v{Assembly.GetExecutingAssembly().GetName().Version} connected");
+            foreach (var VARIABLE in MessageQueue)
+            {
+                SendMsg(VARIABLE);
+            }
         }
 
         public static void StreamServiceProvider_OnMessageReceived(IChatService svc, IChatMessage msg)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using ChatCore;
 using ChatCore.Interfaces;
 using UnityEngine;
 using bSpin.CustomTypes;
+using IPA.Utilities;
 
 namespace bSpin.Twitch
 {
@@ -49,7 +51,14 @@ namespace bSpin.Twitch
             var cmd = command.Substring("!wadmin ".Length);
             var a = cmd.Split(' ');
 
-            if (a[1].ToLower().Equals("preset"))
+            if (a[0].ToLower().Equals("toggle"))
+            {
+                Configuration.PluginConfig.Instance.Enabled = !Configuration.PluginConfig.Instance.Enabled;
+                CommandHandler.SendMsg($"Wobble is now {(Configuration.PluginConfig.Instance.Enabled ? "enabled" : "disabled")}.");
+            }
+
+
+                if (a[1].ToLower().Equals("preset"))
             {
                 if (a[0].ToLower().Equals("add"))
                 {
@@ -60,6 +69,17 @@ namespace bSpin.Twitch
                             new CustomTypes.Wobble(1, new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0))
                         }
                         ));
+                }
+                else if (a[0].ToLower().Equals("remove"))
+                {
+                    for (int i = 0; i < Plugin.wobbles.Count; i++)
+                    {
+                        if (Plugin.wobbles[i].name.ToLower().Equals(a[2].ToLower()))
+                        {
+                            Plugin.wobbles.RemoveAt(i);
+                            File.Delete((Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles", $"{a[2]}.json")));
+                        }
+                    }
                 }
                 else if (a[0].ToLower().Equals("set"))
                 {

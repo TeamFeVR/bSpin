@@ -97,10 +97,11 @@ namespace bSpin
             bSpinController = new GameObject("bSpinController");
             bSpinController.AddComponent<bSpinController>();
             Twitch.CommandHandler.Init();
-            if(Configuration.PluginConfig.Instance.TwitchEnabled)
-                Twitch.CommandHandler.Start();
             bSpinController.AddComponent<Twitch.Wobbler>();
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
+            if(!Configuration.PluginConfig.Instance.TwitchEnabled)
+                return;
+            Twitch.CommandHandler.Start();
         }
         
         [OnExit]

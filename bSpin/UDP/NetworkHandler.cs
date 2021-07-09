@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using bSpin.Twitch;
 
 namespace bSpin.UDP
 {
@@ -27,10 +28,19 @@ namespace bSpin.UDP
         }
         internal static void Init()
         {
-            IPEndPoint e = new IPEndPoint(IPAddress.Any, Port);
-            state.u = new UdpClient(e);
-            state.e = e;
-            Set(Configuration.PluginConfig.Instance.UdpEnabled);
+            try
+            {
+                IPEndPoint e = new IPEndPoint(IPAddress.Any, Port);
+                state.u = new UdpClient(e);
+                state.e = e;
+                Set(Configuration.PluginConfig.Instance.UdpEnabled);
+            }
+            catch (SocketException e)
+            {
+                Plugin.Log.Critical("Socket Eror:");
+                Plugin.Log.Info(e.ToString());
+                CommandHandler.MessageQueue.Add("UDP Startup failed, check logs for more information");
+            }
         }
         internal static void Set(bool on)
         {
