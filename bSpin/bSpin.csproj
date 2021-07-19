@@ -60,6 +60,9 @@
       <HintPath>$(BeatSaberDir)\Plugins\BS_Utils.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Camera2, Version=0.4.2.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Steam\steamapps\common\Beat Saber\Plugins\Camera2.dll</HintPath>
+    </Reference>
     <Reference Include="ChatCore, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>False</Private>
       <HintPath>$(BeatSaberDir)\Libs\ChatCore.dll</HintPath>
@@ -185,6 +188,10 @@
     <Compile Include="UI\SpinEditor\RotationPanel.cs" />
     <Compile Include="UI\SpinEditor\SpinEditorFlowCoordinator.cs" />
     <Compile Include="UI\SpinEditor\SpinPanel.cs" />
+    <Compile Include="UI\WobbleEditor\SpinPanel.cs" />
+    <Compile Include="UI\WobbleEditor\RotationPanel.cs" />
+    <Compile Include="UI\WobbleEditor\WobbleEditorFlowCoordinator.cs" />
+    <Compile Include="UI\WobbleSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
@@ -199,6 +206,9 @@
     <EmbeddedResource Include="UI\SpinEditor\SpinPanel.bsml" />
     <EmbeddedResource Include="UI\SpinEditor\RotationPanel.bsml" />
     <EmbeddedResource Include="UI\SpinEditor\ControllerAngle.bsml" />
+    <EmbeddedResource Include="UI\WobbleEditor\SpinPanel.bsml" />
+    <EmbeddedResource Include="UI\WobbleEditor\RotationPanel.bsml" />
+    <EmbeddedResource Include="UI\WobbleSettings.bsml" />
     <EmbeddedResource Include="zoom.json" />
     <EmbeddedResource Include="UI\Settings\settings.bsml" />
   </ItemGroup>

@@ -35,6 +35,7 @@ namespace bSpin
             harmony = new Harmony("headassbtw.bSpin");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             UI.AngleChanger.instance.AddTab();
+            UI.WobbleSettings.instance.AddTab();
             Log.Info("bSpin initialized.");
 
             
@@ -108,6 +109,7 @@ namespace bSpin
         public void OnApplicationQuit()
         {
             UI.AngleChanger.instance.RemoveTab();
+            UI.WobbleSettings.instance.RemoveTab();
             Configuration.PluginConfig.Instance.SpinSpeed = HarmonyPatches.sharedValues.speed;
 
         }

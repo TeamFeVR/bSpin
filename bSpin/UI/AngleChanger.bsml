@@ -19,7 +19,6 @@
 						<modifier src='bSpin.UI.icons.AccountForCam.png' text='Account for LIV' value='livcompat' apply-on-change='true' hover-hint='Adjusts the spin angles to account for the angle your camera is at'></modifier>
 						<modifier src='bSpin.UI.icons.pausemenu.png' text='Pause UI' value='pauseui' apply-on-change='true' hover-hint='Enables toggling the spin and adjusting speed in the pause menu'></modifier>
 						<modifier src='bSpin.UI.icons.experiments.png' text='Experimental' value='jank' apply-on-change='true' hover-hint='Enables Experimental methods or features, disable this if something fucks up!'></modifier>
-						<modifier src='bSpin.UI.icons.rotation.png' text='Wobble' value='enablewobble' apply-on-change='true' hover-hint='Enables/Disables wobbles'></modifier>
 					</modifier-container>
 				</vertical>
 				<vertical pref-height='10'>

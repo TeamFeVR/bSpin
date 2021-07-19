@@ -23,13 +23,6 @@ namespace bSpin.UI
             get => Configuration.PluginConfig.Instance.Enabled;
             set => Configuration.PluginConfig.Instance.Enabled = value;
         }
-        [UIValue("enablewobble")]
-        public bool enableWobble
-        {
-            get => HarmonyPatches.sharedValues.wobble;
-            set => HarmonyPatches.sharedValues.wobble = value;
-        }
-
         [UIValue("noodlecompat")]
         public bool noodleCompat
         {
