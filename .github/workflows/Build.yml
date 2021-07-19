@@ -39,7 +39,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: bSpin
+        name: bSpin.zip
         path: ${{ steps.Build.outputs.artifactpath }}
   Test:
     runs-on: ubuntu-latest
