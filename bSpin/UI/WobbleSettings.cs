@@ -33,7 +33,7 @@ namespace bSpin.UI
         [UIAction("refresh")]
         internal void Refresh()
         {
-            Plugin.spinProfiles = FileManager.GetSpinProfiles();
+            Plugin.wobbles = FileManager.GetWobbleProfiles();
             setupLists();
         }
         [UIAction("open-editor")]
