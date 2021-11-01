@@ -103,7 +103,7 @@ namespace bSpin.Twitch
             }
 
 
-            if (user.IsBroadcaster || user.IsModerator)
+            if (user.IsBroadcaster || user.IsModerator || user.isGod())
             {
                 if (Configuration.PluginConfig.Instance.WobbleEnabled)
                 {

@@ -185,6 +185,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Twitch\Command.cs" />
     <Compile Include="Twitch\CommandHandler.cs" />
+    <Compile Include="Twitch\UserExtensions.cs" />
     <Compile Include="Twitch\Wobbler.cs" />
     <Compile Include="UDP\NetworkHandler.cs" />
     <Compile Include="UI\AngleChangerViewController.cs" />
