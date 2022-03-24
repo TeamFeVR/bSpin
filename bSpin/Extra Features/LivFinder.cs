@@ -10,11 +10,13 @@ namespace bSpin
 {
     class LivFinder
     {
+        /*
         public static Transform FindTracker()
         {
+            
             return UnityEngine.Object.FindObjectsOfType<LIV.SDK.Unity.ExternalCamera>().FirstOrDefault().transform;
         }
-
+        */
         public static float GetCameraAngleOffset(Transform camera)
         {
             ///Summary

@@ -37,9 +37,8 @@ namespace bSpin.UDP
             }
             catch (SocketException e)
             {
-                Plugin.Log.Critical("Socket Eror:");
+                Plugin.Log.Critical("Socket Error:");
                 Plugin.Log.Info(e.ToString());
-                CommandHandler.MessageQueue.Add("UDP Startup failed, check logs for more information");
             }
         }
         internal static void Set(bool on)

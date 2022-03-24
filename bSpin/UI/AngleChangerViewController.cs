@@ -14,7 +14,7 @@ using BS_Utils.Utilities;
 
 namespace bSpin.UI
 {
-    [HotReload(RelativePathToLayout ="AngleChanger.bsml")]
+    [HotReload(RelativePathToLayout ="./AngleChanger.bsml")]
     class AngleChanger : NotifiableSingleton<AngleChanger>
     {
         [UIValue("enablespin")]
@@ -56,18 +56,6 @@ namespace bSpin.UI
         {
             get => Configuration.PluginConfig.Instance.Experiments;
             set => Configuration.PluginConfig.Instance.Experiments = value;
-        }
-        [UIAction("speed-increase")]
-        public void speedIncrease()
-        {
-            spinSpeed += 0.1f;
-            NotifyPropertyChanged("spinSpeed");
-        }
-        [UIAction("speed-decrease")]
-        public void speedDecrease()
-        {
-            spinSpeed -= 0.1f;
-            NotifyPropertyChanged("spinSpeed");
         }
 
         [UIComponent("SpinList")] public CustomListTableData spinListData = new CustomListTableData();

@@ -28,9 +28,10 @@ namespace bSpin.HarmonyPatches
 			PauseMenuPatch.MenuFound = false;
 			sharedValues.spins = Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile).spins;
 
-			if (Configuration.PluginConfig.Instance.AccountForLiv)
+			/*if (Configuration.PluginConfig.Instance.AccountForLiv)
 				sharedValues.offset = LivFinder.GetCameraAngleOffset(LivFinder.FindTracker());
-			else
+			else*/
+			//LIV SDK update broke this, not worth fixing
 				sharedValues.offset = 0.0f;
 
 			Plugin.Log.Debug("Spin angle offset is " + sharedValues.offset + "°");

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+/*
 namespace bSpin.HarmonyPatches
 {
 	[HarmonyPatch]
@@ -16,7 +16,7 @@ namespace bSpin.HarmonyPatches
 		public static bool isModdedMap = false;
 		public static bool isWallMap = false;
 
-		static SpawnRotationProcessor spawnRotationProcessor = new SpawnRotationProcessor();
+		//static SpawnRotationProcessor spawnRotationProcessor = new SpawnRotationProcessor();
 
 		static void Prefix(IDifficultyBeatmap difficultyBeatmap)
 		{
@@ -47,3 +47,4 @@ namespace bSpin.HarmonyPatches
 		}
 	}
 }
+*/

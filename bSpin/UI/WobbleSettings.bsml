@@ -1,27 +1,22 @@
-﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
-	<vertical>
-		<horizontal>
-			<vertical pref-width='75' pref-height='70'>
-				<horizontal child-control-width='true' horizontal-fit='PreferredSize' vertical-fit='PreferredSize' child-control-height='true'>
-					<page-button event-click='SpinList#PageUp' direction='Up' pref-width='10'/>
-					<primary-button text='Refresh' on-click='refresh'/>
-					
-					<page-button event-click='SpinList#PageDown' direction='Down' pref-width='10'/>
-				</horizontal>
-				<list id='SpinList' visible-cells='6' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45' pref-height='60'/>
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
+	<vertical pref-height='70' pref-width='100'>
+		<horizontal pref-height='70' pref-width='100'>
+			<vertical pref-width='50' pref-height='70'>
+			    <horizontal pref-width='50' pref-height='8'>
+                    <page-button event-click='SpinList#PageUp' direction='Up' pref-width='25'/>
+                    <page-button event-click='SpinList#PageDown' direction='Down' pref-width='25'/>
+                </horizontal>
+				<list id='SpinList' visible-cells='6' select-cell='profileSelect' vertical-fit='PreferredSize' list-width='45' pref-height='47'/>
 			</vertical>
-			<vertical pref-width='25' pref-height='70'>
-				<vertical pref-height='10'>
-					<primary-button text='Edit Wobbles' on-click='open-editor'/>
-				</vertical>
-				<vertical pref-height='60'>
-					<modifier-container pref-width='25'>
-						<!--fun fact, all these icons were made by me, in blender!-->
-						
-						<modifier src='bSpin.UI.icons.rotation.png' text='Wobble' value='enablewobble' apply-on-change='true' hover-hint='Enables/Disables wobbles'></modifier>
-					</modifier-container>
-				</vertical>
-				
+			<vertical pref-width='50' pref-height='70'>
+			    <horizontal pref-width='50' pref-height='5'>
+			        <primary-button text='Refresh' on-click='refresh'/>
+                    <primary-button text='Edit Wobbles' on-click='open-editor'/>
+			    </horizontal>
+				<modifier-container pref-width='50' pref-height='50'>
+                    <!--fun fact, all these icons were made by me, in blender!-->
+                    <modifier src='bSpin.UI.icons.rotation.png' text='Wobble' value='enablewobble' apply-on-change='true' hover-hint='Enables/Disables wobbles'/>
+                </modifier-container>
 			</vertical>
 		</horizontal>
 	</vertical>

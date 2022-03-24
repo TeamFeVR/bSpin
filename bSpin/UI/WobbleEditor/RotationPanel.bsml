@@ -1,7 +1,13 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'>
 	<vertical pref-height='80'>
-		<horizontal bg='panel-top' pref-height='5'>
-			<text text='Edit Wobble Movement' align='Center'/>
+		<horizontal bg='panel-top' pref-height='8'>
+		    <horizontal pref-width='60'>
+		        <text text='Edit Wobble Movement' align='Center'/>
+		    </horizontal>
+		    <horizontal pref-width='40'>
+                <button text='Revert' on-click='revert-edits'/>
+                <primary-button text='Apply' on-click='apply-edits'/>
+            </horizontal>
 		</horizontal>
 		<horizontal pref-width='100' pref-height='70' horizontal-fit='PreferredSize'>
 			<vertical pref-width='85' pref-height='60'>
@@ -23,16 +29,12 @@
 				</custom-list>
 			</vertical>
 			<vertical pref-width='15' pref-height='70' vertical-fit='PreferredSize'>
-				<vertical pref-width='15' pref-height='40' child-control-width='true'>
-					<pg-button dir='Up' click-event='vector-list#PageUp' pref-height='15' pref-width='15'/>
-					<vertical preferred-height='40'/>
-					<pg-button dir='Down' click-event='vector-list#PageDown' pref-height='15' pref-width='15'/>
-				</vertical>
-				<vertical pref-width='15' pref-height='30' child-control-width='true'>
-					<button text='Revert' on-click='revert-edits' pref-height='15' pref-width='15'/>
-					<primary-button text='Apply' on-click='apply-edits' pref-height='15' pref-width='15'/>
-				</vertical>
-			</vertical>
+                <vertical pref-width='15' pref-height='40' child-control-width='true'>
+                    <pg-button dir='Up' click-event='vector-list#PageUp' pref-height='15' pref-width='15'/>
+                    <vertical preferred-height='40'/>
+                    <pg-button dir='Down' click-event='vector-list#PageDown' pref-height='15' pref-width='15'/>
+                </vertical>
+            </vertical>
 		</horizontal>
 	</vertical>
 
