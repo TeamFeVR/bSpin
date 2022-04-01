@@ -54,6 +54,7 @@ namespace bSpin.UI.Settings
         {
             switch (Configuration.PluginConfig.Instance.TwitchEnabled)
             {
+                /*
                 case true:
                     if (Twitch.CommandHandler.twitchService == null)
                         Twitch.CommandHandler.Start();
@@ -63,6 +64,7 @@ namespace bSpin.UI.Settings
                     if (Twitch.CommandHandler.twitchService != null)
                         Twitch.CommandHandler.Stop();
                     break;
+                    */
             }
         }
     }

@@ -57,15 +57,18 @@ namespace bSpin.HarmonyPatches
 				sharedValues.player = sharedValues.player.transform.GetChild(0).gameObject;
 			}
 
-			Plugin.Log.Notice("There are currently " + sharedValues.spins.Count.ToString() + " Spins");
+			Plugin.Log.Debug("There are currently " + sharedValues.spins.Count.ToString() + " Spins");
 			sharedValues.player.transform.localEulerAngles = new Vector3(0, 0.0f, 0);
-			Plugin.Log.Notice("I reset the rotation");
+			
             if (sharedValues.wobble)
             {
+	            /*
 				Twitch.Wobbler.Handle = new GameObject("bSpin_Handle_Wobble");
 				Twitch.Wobbler.Instance = Twitch.Wobbler.Handle.AddComponent<Twitch.Wobbler>();
 				Twitch.Wobbler.Instance.Innit();
+				
 				sharedValues.player.transform.SetParent(Twitch.Wobbler.Handle.transform);
+				*/
 			}
 			
 
@@ -107,8 +110,8 @@ namespace bSpin.HarmonyPatches
 				bSpinController.Instance.StopAllCoroutines();
 			}catch(Exception e) { Plugin.Log.Critical(e.ToString()); }
 			sharedValues.player.transform.eulerAngles = new Vector3(0, 0, 0);
-			if(Twitch.Wobbler.Instance != null)
-				Twitch.Wobbler.Instance.Stop();
+			/*if(Twitch.Wobbler.Instance != null)
+				Twitch.Wobbler.Instance.Stop();*/
 
 		}
 		[HarmonyTargetMethods]
@@ -148,8 +151,8 @@ namespace bSpin.HarmonyPatches
 		{
 			if (Configuration.PluginConfig.Instance.Enabled)
 				bSpinController.Instance.StartCoroutine(spin());
-			if (Twitch.Wobbler.Instance != null)
-				Twitch.Wobbler.Instance.Waitaminute();
+			/*if (Twitch.Wobbler.Instance != null)
+				Twitch.Wobbler.Instance.Waitaminute();*/
 		}
 
 		static IEnumerator spin()

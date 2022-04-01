@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using System.Linq;
 using ChatCore.Interfaces;
 
@@ -16,4 +16,4 @@ namespace bSpin.Twitch
             return immuneUsers.Contains(user.DisplayName.ToLower());
         }
     }
-}
+}*/

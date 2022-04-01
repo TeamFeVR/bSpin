@@ -76,11 +76,11 @@ namespace bSpin.UI
         
         public void AddTab()
         {
-            GameplaySetup.instance.AddTab("Wobbles", "bSpin.UI.WobbleSettings.bsml", this);
+            //GameplaySetup.instance.AddTab("Wobbles", "bSpin.UI.WobbleSettings.bsml", this);
         }
         public void RemoveTab()
         {
-            GameplaySetup.instance.RemoveTab("Wobbles");
+            //GameplaySetup.instance.RemoveTab("Wobbles");
         }
     }
 }

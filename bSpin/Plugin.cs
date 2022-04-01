@@ -14,6 +14,7 @@ using bSpin.CustomTypes;
 using IPA.Utilities;
 using System.IO;
 using BeatSaberMarkupLanguage.Settings;
+using bSpin.Network;
 
 namespace bSpin
 {
@@ -80,6 +81,10 @@ namespace bSpin
             wobbles = FileManager.GetWobbleProfiles();
             spinProfiles = FileManager.GetSpinProfiles();
             HarmonyPatches.sharedValues.spins = spinProfiles[0].spins;
+
+            var net = new NetworkHandler();
+
+
         }
 
         #region BSIPA Config
@@ -97,12 +102,12 @@ namespace bSpin
             BSMLSettings.instance.AddSettingsMenu("bSpin", "bSpin.UI.Settings.settings.bsml", UI.Settings.SettingsController.instance);
             bSpinController = new GameObject("bSpinController");
             bSpinController.AddComponent<bSpinController>();
-            Twitch.CommandHandler.Init();
-            bSpinController.AddComponent<Twitch.Wobbler>();
+            /*Twitch.CommandHandler.Init();
+            bSpinController.AddComponent<Twitch.Wobbler>();*/
             HarmonyPatches.sharedValues.speed = Configuration.PluginConfig.Instance.SpinSpeed;
             if(!Configuration.PluginConfig.Instance.TwitchEnabled)
                 return;
-            Twitch.CommandHandler.Start();
+            //Twitch.CommandHandler.Start();
         }
         
         [OnExit]

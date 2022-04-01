@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using static bSpin.Twitch.CommandHandler;
 using bSpin.CustomTypes;
 using System.Collections;
 using bSpin.Extentions;
 
-namespace bSpin.Twitch
+namespace bSpin.Funky
 {
     class Wobbler : MonoBehaviour
     {
