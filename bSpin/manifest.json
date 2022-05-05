@@ -3,9 +3,9 @@
   "id": "bSpin",
   "name": "bSpin",
   "author": "headassbtw",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "description": "",
-  "gameVersion": "1.20.0",
+  "gameVersion": "1.21.0",
   "dependsOn": {
     "BSIPA": "^4.2.1"
   },
