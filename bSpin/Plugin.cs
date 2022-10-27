@@ -51,14 +51,22 @@ namespace bSpin
             }
             if (Directory.GetFiles(Path.Combine(UnityGame.UserDataPath, "bSpin") + "\\").Length <= 0)
             {
-                using (var resource = Assembly.GetExecutingAssembly().GetManifestResourceStream("bSpin.spin.json"))
+                var demoSpins = new List<string>
                 {
-                    using (var file = new FileStream(Path.Combine(UnityGame.UserDataPath, "bSpin", "demoSpin.json"), FileMode.Create, FileAccess.Write))
-                    {
-                        resource.CopyTo(file);
-                        file.Close();
-                    }
-                }
+                    "bSpin.spin.json",
+                    "bSpin.spin_45.json",
+                    "bSpin.spin_90.json",
+                    "bSpin.spin_180.json",
+                    "bSpin.spin_360.json"
+                };
+
+                demoSpins.ForEach(x =>
+                {
+                    using var manifestResourceStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(x);
+                    using var fileStream = new FileStream(Path.Combine(UnityGame.UserDataPath, "bSpin", x.Replace("bSpin.", "")), FileMode.Create, FileAccess.Write);
+                    manifestResourceStream?.CopyTo(fileStream);
+                    fileStream.Close();
+                });
             }
             if (Directory.GetFiles(Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles") + "\\").Length <= 0)
             {

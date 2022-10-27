@@ -213,6 +213,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="spin.json" />
+    <EmbeddedResource Include="spin_45.json" />
+    <EmbeddedResource Include="spin_90.json" />
+    <EmbeddedResource Include="spin_180.json" />
+    <EmbeddedResource Include="spin_360.json" />
     <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
     <None Include="Directory.Build.targets" Condition="Exists('Directory.Build.targets')" />
     <None Include="bSpin.csproj.user" Condition="Exists('bSpin.csproj.user')" />
