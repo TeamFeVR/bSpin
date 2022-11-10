@@ -1,0 +1,50 @@
+[
+  {
+    "DelayBeforeSpin": 0.0,
+    "Length": 120.0,
+    "Begin": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "End": {
+      "x": 0.0,
+      "y": 360.0,
+      "z": 0.0
+    },
+    "DelayAfterSpin": 2.5,
+    "Easing": "EaseOutQuad"
+  },
+  {
+    "DelayBeforeSpin": 0.0,
+    "Length": 240.0,
+    "Begin": {
+      "x": 0.0,
+      "y": 360.0,
+      "z": 0.0
+    },
+    "End": {
+      "x": 0.0,
+      "y": -360.0,
+      "z": 0.0
+    },
+    "DelayAfterSpin": 2.5,
+    "Easing": "EaseInOutQuad"
+  },
+  {
+    "DelayBeforeSpin": 0.0,
+    "Length": 120.0,
+    "Begin": {
+      "x": 0.0,
+      "y": -360.0,
+      "z": 0.0
+    },
+    "End": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "DelayAfterSpin": 0.0,
+    "Easing": "EaseInQuad"
+  }
+]
