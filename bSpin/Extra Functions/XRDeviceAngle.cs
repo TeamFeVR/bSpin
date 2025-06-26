@@ -2,31 +2,21 @@
 using UnityEngine.XR;
 using static bSpin.Extentions.TransformExtensions;
 
-namespace bSpin.Extra_Functions
-{
-    static class XRDeviceAngle
-    {
-        internal enum ControllerAngleMode
-        {
-            Point,
-            ArmPoint,
-            Look
-        }
-        internal static Vector3 AnglesFromController(ControllerAngleMode mode, bool? leftHand = null)
-        {
-            Vector3 angs = new Vector3();
+namespace bSpin.Extra_Functions {
+    internal static class XRDeviceAngle {
+        internal static Vector3 AnglesFromController(ControllerAngleMode mode, bool? leftHand = null) {
+            var angs = new Vector3();
 
-            Vector3 HandPos = new Vector3();
-            Vector3 HeadPos = new Vector3();
+            var HandPos = new Vector3();
+            var HeadPos = new Vector3();
 
-            InputDevice Hand = InputDevices.GetDeviceAtXRNode(XRNode.Head);
-            InputDevice Head = InputDevices.GetDeviceAtXRNode(XRNode.Head);
-            InputDevice LeftHand = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-            InputDevice RightHand = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+            var Hand = InputDevices.GetDeviceAtXRNode(XRNode.Head);
+            var Head = InputDevices.GetDeviceAtXRNode(XRNode.Head);
+            var LeftHand = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+            var RightHand = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
 
             Head.TryGetFeatureValue(CommonUsages.devicePosition, out HeadPos);
-            switch (leftHand)
-            {
+            switch (leftHand) {
                 case true:
                     Hand = LeftHand;
                     LeftHand.TryGetFeatureValue(CommonUsages.devicePosition, out HandPos);
@@ -36,8 +26,8 @@ namespace bSpin.Extra_Functions
                     RightHand.TryGetFeatureValue(CommonUsages.devicePosition, out HandPos);
                     break;
             }
-            switch (mode)
-            {
+
+            switch (mode) {
                 case ControllerAngleMode.ArmPoint:
                     angs = HeadPos.PointingAt(HandPos);
                     break;
@@ -52,9 +42,14 @@ namespace bSpin.Extra_Functions
                     angs = tempAngs2.eulerAngles;
                     break;
             }
+
             return angs;
         }
 
-
+        internal enum ControllerAngleMode {
+            Point,
+            ArmPoint,
+            Look
+        }
     }
 }

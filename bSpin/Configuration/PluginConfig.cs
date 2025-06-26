@@ -2,12 +2,11 @@
 using IPA.Config.Stores;
 
 [assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
-namespace bSpin.Configuration
-{
-    internal class PluginConfig
-    {
+
+namespace bSpin.Configuration {
+    internal class PluginConfig {
         public static PluginConfig Instance { get; set; }
-        public virtual int spinProfile {get; set; }
+        public virtual int spinProfile { get; set; }
         public virtual bool Enabled { get; set; } = true;
         public virtual bool WobbleEnabled { get; set; } = true;
         public virtual bool NoodleCompat { get; set; } = false;
@@ -19,28 +18,15 @@ namespace bSpin.Configuration
         public virtual bool UdpEnabled { get; set; } = true;
         public virtual bool TwitchEnabled { get; set; } = true;
         public virtual bool TwitchAnnounce { get; set; } = true;
-
-        /// <summary>
-        /// This is called whenever BSIPA reads the config from disk (including when file changes are detected).
-        /// </summary>
-        public virtual void OnReload()
-        {
-
+        
+        public virtual void OnReload() {
         }
-
-        /// <summary>
-        /// Call this to force BSIPA to update the config file. This is also called by BSIPA if it detects the file was modified.
-        /// </summary>
-        public virtual void Changed()
-        {
+        
+        public virtual void Changed() {
             // Do stuff when the config is changed.
         }
-
-        /// <summary>
-        /// Call this to have BSIPA copy the values from <paramref name="other"/> into this config.
-        /// </summary>
-        public virtual void CopyFrom(PluginConfig other)
-        {
+        
+        public virtual void CopyFrom(PluginConfig other) {
             // This instance's members populated from other
         }
     }

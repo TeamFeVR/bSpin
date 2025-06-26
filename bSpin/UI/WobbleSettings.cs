@@ -1,79 +1,72 @@
 ﻿using System;
 using System.Linq;
-using HMUI;
 using BeatSaberMarkupLanguage;
-using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Util;
+using bSpin.Configuration;
+using bSpin.HarmonyPatches;
+using bSpin.UI.Wobble_Editor;
+using HMUI;
 
-namespace bSpin.UI
-{
-    [HotReload(RelativePathToLayout ="AngleChanger.bsml")]
-    class WobbleSettings : NotifiableSingleton<WobbleSettings>
-    {
-        private int SelectedEditWobble = 0;
-        [UIValue("enablewobble")]
-        public bool enableWobble
-        {
-            get => HarmonyPatches.sharedValues.wobble;
-            set => HarmonyPatches.sharedValues.wobble = value;
-        }
+namespace bSpin.UI {
+    [HotReload(RelativePathToLayout = "AngleChanger.bsml")]
+    internal class WobbleSettings : NotifiableSingleton<WobbleSettings> {
+        private int SelectedEditWobble;
         [UIComponent("SpinList")] public CustomListTableData spinListData = new CustomListTableData();
+
+        [UIValue("enablewobble")]
+        public bool enableWobble {
+            get => sharedValues.wobble;
+            set => sharedValues.wobble = value;
+        }
+
         [UIAction("profileSelect")]
-        void profileSelected(TableView _, int row)
-        {
+        private void profileSelected(TableView _, int row) {
             SelectedEditWobble = row;
         }
+
         [UIAction("refresh")]
-        internal void Refresh()
-        {
+        internal void Refresh() {
             Plugin.wobbles = FileManager.GetWobbleProfiles();
             setupLists();
         }
+
         [UIAction("open-editor")]
-        private void Show()
-        {
-            
-            FlowCoordinator flowCoordinator = BeatSaberUI.MainFlowCoordinator.YoungestChildFlowCoordinatorOrSelf();
-            if (!Wobble_Editor.SpinEditorFlowCoordinator.Instance)
-            {
-                Wobble_Editor.SpinEditorFlowCoordinator.Instance = BeatSaberUI.CreateFlowCoordinator<Wobble_Editor.SpinEditorFlowCoordinator>();
-            }
-            if (!Wobble_Editor.SpinEditorFlowCoordinator.Instance)
+        private void Show() {
+            var flowCoordinator = BeatSaberUI.MainFlowCoordinator.YoungestChildFlowCoordinatorOrSelf();
+            if (!SpinEditorFlowCoordinator.Instance)
+                SpinEditorFlowCoordinator.Instance = BeatSaberUI.CreateFlowCoordinator<SpinEditorFlowCoordinator>();
+            if (!SpinEditorFlowCoordinator.Instance)
                 Plugin.Log.Critical("uh");
-            Wobble_Editor.SpinEditorFlowCoordinator.SetPreviousFlowCoordinator(flowCoordinator);
-            try
-            {
-                flowCoordinator.PresentFlowCoordinator(Wobble_Editor.SpinEditorFlowCoordinator.Instance);
-                Wobble_Editor.SpinPanel.Instance.LoadInList(Plugin.wobbles.ElementAt(SelectedEditWobble));
+            SpinEditorFlowCoordinator.SetPreviousFlowCoordinator(flowCoordinator);
+            try {
+                flowCoordinator.PresentFlowCoordinator(SpinEditorFlowCoordinator.Instance);
+                SpinPanel.Instance.LoadInList(Plugin.wobbles.ElementAt(SelectedEditWobble));
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 Plugin.Log.Critical(e.ToString());
             }
-
-
         }
+
         [UIAction("#post-parse")]
-        void setupLists()
-        {
+        private void setupLists() {
             spinListData.Data.Clear();
-            foreach(var profile in Plugin.wobbles)
-            {
+            foreach (var profile in Plugin.wobbles) {
                 var tempCell = new CustomListTableData.CustomCellInfo(profile.Name);
 
                 spinListData.Data.Add(tempCell);
             }
+
             spinListData.TableView.ReloadData();
-            spinListData.TableView.SelectCellWithIdx(Configuration.PluginConfig.Instance.spinProfile);
+            spinListData.TableView.SelectCellWithIdx(PluginConfig.Instance.spinProfile);
         }
-        
-        public void AddTab()
-        {
+
+        public void AddTab() {
             //GameplaySetup.instance.AddTab("Wobbles", "bSpin.UI.WobbleSettings.bsml", this);
         }
-        public void RemoveTab()
-        {
+
+        public void RemoveTab() {
             //GameplaySetup.instance.RemoveTab("Wobbles");
         }
     }

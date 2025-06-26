@@ -1,130 +1,72 @@
-﻿using BeatSaberMarkupLanguage.ViewControllers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using bSpin.CustomTypes;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
-using UnityEngine;
+using BeatSaberMarkupLanguage.ViewControllers;
+using bSpin.Configuration;
+using bSpin.CustomTypes;
 using HMUI;
+using UnityEngine;
 
-namespace bSpin.UI.Spin_Editor
-{
+namespace bSpin.UI.Spin_Editor {
     [ViewDefinition("bSpin.UI.SpinEditor.SpinPanel.bsml")]
     [HotReload(RelativePathToLayout = @"SpinPanel.bsml")]
-    class SpinPanel : BSMLAutomaticViewController
-    {
+    internal class SpinPanel : BSMLAutomaticViewController {
         internal static SpinPanel Instance;
-        internal void Awake()
-        {
-            Instance = this;
-        }
-        internal static int selectedSpin = 0;
-        internal static SpinProfile cacheSpins = new SpinProfile();
-        internal static SpinProfile tempSpins = new SpinProfile();
-        internal static Material RoundedEdge = null;
+        internal static int selectedSpin;
+        internal static SpinProfile cacheSpins;
+        internal static SpinProfile tempSpins;
+        internal static Material RoundedEdge;
 
-        [UIAction("#post-parse")]
-        private void PostParse()
-        {
-            RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
-            SpinList.TableView.SelectCellWithIdx(selectedSpin);
-            
-        }
+
+        [UIComponent("spin-list")] internal CustomCellListTableData SpinList;
+
+        [UIValue("spins")] public List<object> spinsList = new List<object>();
+
         [UIValue("spin-name")]
-        internal string SpinName
-        {
+        internal string SpinName {
             get => tempSpins.name;
-            set
-            {
+            set {
                 NotifyPropertyChanged();
                 tempSpins.name = value;
             }
         }
 
+        internal void Awake() {
+            Instance = this;
+        }
 
-        [UIComponent("spin-list")]
-        internal CustomCellListTableData SpinList;
-
-        [UIValue("spins")]
-        public List<object> spinsList = new List<object>();
-
-        public class SpinListObject
-        {
-            public Spin spin;
-            public int index;
-            [UIValue("spin-start-delay")]
-            private string startDelay;
-
-            [UIValue("spin-vectors")]
-            private string spinVectors;
-
-            [UIValue("spin-length")]
-            private string spinLength;
-
-            [UIValue("spin-end-delay")]
-            private string endDelay;
-
-            [UIComponent("bgContainer")]
-            internal ImageView bg;
-
-            [UIValue("easing-label")]
-            private string EasingLabel;
-
-            public SpinListObject(Spin spin, int index)
-            {
-                this.spin = spin;
-                this.index = index;
-                this.spinLength = "In " + spin.Length.ToString() + " Seconds";
-                this.startDelay = spin.DelayBeforeSpin.ToString() + "s Before";
-                this.endDelay = spin.DelayAfterSpin.ToString() + "s After";
-                this.EasingLabel = spin.Easing.ToString();
-                this.spinVectors = "(<#FF0000>" + spin.Begin.x + "<#FFFFFF>,<#00FF00>" + spin.Begin.y + "<#FFFFFF>,<#0000FF>" + spin.Begin.z + "<#FFFFFF>) to (<#FF0000>" + spin.End.x + "<#FFFFFF>,<#00FF00>" + spin.End.y + "<#FFFFFF>,<#0000FF>" + spin.End.z + "<#FFFFFF>)";
-            }
-            [UIAction("refresh-visuals")]
-            public void Refresh(bool selected, bool highlighted)
-            {
-                bg.material = RoundedEdge;
-                var x = new Color(0, 0, 0, 0.45f);
-                if (selected || highlighted)
-                {
-                    x.a = selected ? 0.75f : 0.6f;
-                    x.r = selected ? 0.75f : 0.3f;
-                    x.g = selected ? 0.75f : 0.3f;
-                    x.b = selected ? 0.9f : 0.6f;
-                }
-                bg.color = x;
-            }
+        [UIAction("#post-parse")]
+        private void PostParse() {
+            RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
+            SpinList.TableView.SelectCellWithIdx(selectedSpin);
         }
 
         [UIAction("spin-selected")]
-        internal static void SpinSelected(TableView sender, SpinListObject obj)
-        {
+        internal static void SpinSelected(TableView sender, SpinListObject obj) {
             RotationPanel.Instance.Load(obj.spin);
             selectedSpin = obj.index;
         }
 
         [UIAction("apply-edits")]
-        internal void ApplyEdits()
-        {
+        internal void ApplyEdits() {
             cacheSpins = tempSpins;
-            Plugin.spinProfiles.RemoveAt(Configuration.PluginConfig.Instance.spinProfile);
-            Plugin.spinProfiles.Insert(Configuration.PluginConfig.Instance.spinProfile, tempSpins);
+            Plugin.spinProfiles.RemoveAt(PluginConfig.Instance.spinProfile);
+            Plugin.spinProfiles.Insert(PluginConfig.Instance.spinProfile, tempSpins);
             FileManager.SaveSpinProfile(tempSpins);
         }
+
         [UIAction("revert-edits")]
-        internal void RevertEdits()
-        {
+        internal void RevertEdits() {
             Plugin.spinProfiles = FileManager.GetSpinProfiles();
-            cacheSpins = Plugin.spinProfiles.ElementAt(Configuration.PluginConfig.Instance.spinProfile);
+            cacheSpins = Plugin.spinProfiles.ElementAt(PluginConfig.Instance.spinProfile);
             tempSpins = cacheSpins;
             ReloadSpins();
         }
 
         [UIAction("move-up")]
-        internal void MoveSpinUp()
-        {
-            if(selectedSpin > 0)
-            {
+        internal void MoveSpinUp() {
+            if (selectedSpin > 0) {
                 var spin = tempSpins.spins.ElementAt(selectedSpin);
                 tempSpins.spins.RemoveAt(selectedSpin);
                 tempSpins.spins.Insert(selectedSpin - 1, spin);
@@ -133,11 +75,10 @@ namespace bSpin.UI.Spin_Editor
                 SpinList.TableView.SelectCellWithIdx(selectedSpin);
             }
         }
+
         [UIAction("move-down")]
-        internal void MoveSpinDown()
-        {
-            if (selectedSpin < tempSpins.spins.Count - 1)
-            {
+        internal void MoveSpinDown() {
+            if (selectedSpin < tempSpins.spins.Count - 1) {
                 var spin = tempSpins.spins.ElementAt(selectedSpin);
                 tempSpins.spins.RemoveAt(selectedSpin);
                 tempSpins.spins.Insert(selectedSpin + 1, spin);
@@ -146,18 +87,18 @@ namespace bSpin.UI.Spin_Editor
                 SpinList.TableView.SelectCellWithIdx(selectedSpin);
             }
         }
+
         [UIAction("add")]
-        internal void AddSpin()
-        {
+        internal void AddSpin() {
             tempSpins.spins.Add(new Spin(0, 10, Vector3.zero, Vector3.zero, 0));
             ReloadSpins();
             selectedSpin = tempSpins.spins.Count - 1;
             SpinList.TableView.SelectCellWithIdx(tempSpins.spins.Count - 1);
             RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
         }
+
         [UIAction("remove")]
-        internal void RemoveSpin()
-        {
+        internal void RemoveSpin() {
             tempSpins.spins.RemoveAt(selectedSpin);
             ReloadSpins();
             SpinList.TableView.SelectCellWithIdx(selectedSpin - 1);
@@ -165,41 +106,81 @@ namespace bSpin.UI.Spin_Editor
             RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
         }
 
-        internal static void ReplaceSpin(Spin spin)
-        {
+        internal static void ReplaceSpin(Spin spin) {
             tempSpins.spins.RemoveAt(selectedSpin);
             tempSpins.spins.Insert(selectedSpin, spin);
             Instance.ReloadSpins();
         }
 
-        internal void ReloadSpins()
-        {
+        internal void ReloadSpins() {
             spinsList.Clear();
-            int i = 0;
-            foreach (var speen in tempSpins.spins)
-            {
+            var i = 0;
+            foreach (var speen in tempSpins.spins) {
                 spinsList.Add(new SpinListObject(speen, i));
                 i++;
             }
+
             i = 0;
             SpinList.TableView.ReloadData();
         }
 
 
-        internal void LoadInList(SpinProfile profile)
-        {
+        internal void LoadInList(SpinProfile profile) {
             cacheSpins = profile;
             tempSpins = profile;
             spinsList.Clear();
-            int i = 0;
-            foreach(var speen in profile.spins)
-            {
+            var i = 0;
+            foreach (var speen in profile.spins) {
                 spinsList.Add(new SpinListObject(speen, i));
                 i++;
             }
+
             i = 0;
             SpinList.TableView.ReloadData();
             RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
+        }
+
+        public class SpinListObject {
+            [UIComponent("bgContainer")] internal ImageView bg;
+
+            [UIValue("easing-label")] private string EasingLabel;
+
+            [UIValue("spin-end-delay")] private string endDelay;
+
+            public int index;
+            public Spin spin;
+
+            [UIValue("spin-length")] private string spinLength;
+
+            [UIValue("spin-vectors")] private string spinVectors;
+
+            [UIValue("spin-start-delay")] private string startDelay;
+
+            public SpinListObject(Spin spin, int index) {
+                this.spin = spin;
+                this.index = index;
+                spinLength = "In " + spin.Length + " Seconds";
+                startDelay = spin.DelayBeforeSpin + "s Before";
+                endDelay = spin.DelayAfterSpin + "s After";
+                EasingLabel = spin.Easing.ToString();
+                spinVectors = "(<#FF0000>" + spin.Begin.x + "<#FFFFFF>,<#00FF00>" + spin.Begin.y +
+                              "<#FFFFFF>,<#0000FF>" + spin.Begin.z + "<#FFFFFF>) to (<#FF0000>" + spin.End.x +
+                              "<#FFFFFF>,<#00FF00>" + spin.End.y + "<#FFFFFF>,<#0000FF>" + spin.End.z + "<#FFFFFF>)";
+            }
+
+            [UIAction("refresh-visuals")]
+            public void Refresh(bool selected, bool highlighted) {
+                bg.material = RoundedEdge;
+                var x = new Color(0, 0, 0, 0.45f);
+                if (selected || highlighted) {
+                    x.a = selected ? 0.75f : 0.6f;
+                    x.r = selected ? 0.75f : 0.3f;
+                    x.g = selected ? 0.75f : 0.3f;
+                    x.b = selected ? 0.9f : 0.6f;
+                }
+
+                bg.color = x;
+            }
         }
     }
 }

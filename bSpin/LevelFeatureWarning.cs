@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace bSpin
-{
-    class LevelFeatureWarning
-    {
+namespace bSpin {
+    class LevelFeatureWarning {
     }
 }

@@ -1,87 +1,84 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Parser;
 using BeatSaberMarkupLanguage.ViewControllers;
+using bSpin.CustomTypes;
 using HMUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-namespace bSpin.UI.Spin_Editor
-{
+
+namespace bSpin.UI.Spin_Editor {
     [ViewDefinition("bSpin.UI.SpinEditor.RotationPanel.bsml")]
     [HotReload(RelativePathToLayout = @"RotationPanel.bsml")]
-    class RotationPanel : BSMLAutomaticViewController
-    {
+    internal class RotationPanel : BSMLAutomaticViewController {
+        public static RotationPanel Instance;
+        private static Spin cacheSpin;
+        private static Spin editingSpin;
+        internal static bool ChangesMade;
+        internal static Material RoundedEdge;
+        private static VectorListObject tempObj;
+
+        [UIComponent("kb-text")] private static TextMeshProUGUI kbText;
+
+        private EasingFunction.Ease EasingChoice;
+
         [UIValue("easings-choices")]
         private List<object> options = Enum.GetNames(typeof(EasingFunction.Ease)).ToList<object>();
 
-        EasingFunction.Ease EasingChoice;
-        public static RotationPanel Instance;
-        private static CustomTypes.Spin cacheSpin;
-        private static CustomTypes.Spin editingSpin;
-        internal static bool ChangesMade = false;
-        internal static Material RoundedEdge = null;
-        private void Awake()
-        {
-            Instance = this;
-        }
-        private static VectorListObject tempObj;
+        [UIParams] private BSMLParserParams parserParams;
+
         private string temp = "";
 
+        [UIComponent("vector-list")] internal CustomCellListTableData VectorList;
+
+        [UIValue("vectors")] public List<object> vectorsList = new List<object>();
+
         [UIValue("easing-choice")]
-        private string easeStringChoice
-        {
+        private string easeStringChoice {
             get => EasingChoice.ToString();
-            set
-            {
-                Enum.TryParse<EasingFunction.Ease>(value, out EasingChoice);
+            set {
+                Enum.TryParse(value, out EasingChoice);
                 editingSpin.Easing = EasingChoice;
                 NotifyPropertyChanged();
             }
         }
 
-        [UIValue("numpad-number-preview")] string numpadPreview
-        {
+        [UIValue("numpad-number-preview")]
+        private string numpadPreview {
             get => temp;
-            set
-            {
+            set {
                 temp = value;
                 NotifyPropertyChanged();
             }
         }
 
         [UIValue("changed")]
-        internal bool changed
-        {
+        internal bool changed {
             get => ChangesMade;
-            set
-            {
+            set {
                 ChangesMade = value;
                 NotifyPropertyChanged();
             }
         }
-        [UIValue("unchanged")] bool unchanged => !ChangesMade;
 
-        [UIComponent("kb-text")] static TextMeshProUGUI kbText;
+        [UIValue("unchanged")] private bool unchanged => !ChangesMade;
 
-        [UIComponent("vector-list")]
-        internal CustomCellListTableData VectorList;
-
-        [UIValue("vectors")]
-        public List<object> vectorsList = new List<object>();
+        private void Awake() {
+            Instance = this;
+        }
 
         [UIAction("revert-edits")]
-        void Revert()
-        {
+        private void Revert() {
             editingSpin = cacheSpin;
             Load(cacheSpin);
             ChangesMade = false;
         }
+
         [UIAction("apply-edits")]
-        void Apply()
-        {
+        private void Apply() {
             cacheSpin = editingSpin;
             SpinPanel.ReplaceSpin(editingSpin);
             ChangesMade = false;
@@ -108,47 +105,41 @@ namespace bSpin.UI.Spin_Editor
 
 
         [UIAction("vector-selected")]
-        internal static void VectorSelected(TableView sender, VectorListObject obj)
-        {
+        internal static void VectorSelected(TableView sender, VectorListObject obj) {
             tempObj = obj;
             Instance.numpadPreview = obj.vector.ToString();
         }
 
-        [UIParams]
-        BSMLParserParams parserParams;
-
 
         [UIAction("numpad-confirm")]
-        void NumpadConfirm()
-        {
+        private void NumpadConfirm() {
             ChangesMade = true;
             parserParams.EmitEvent("numpad-confirm");
-            int tmp = Int32.Parse(numpadPreview);
-            switch (tempObj.vectorIndex)
-            {
+            var tmp = int.Parse(numpadPreview);
+            switch (tempObj.vectorIndex) {
                 case 0:
-                    
+
                     if (tmp < 0)
                         tmp = -tmp;
                     editingSpin.DelayBeforeSpin = tmp;
                     break;
                 case 1:
-                    editingSpin.Begin.x = Int32.Parse(numpadPreview);
+                    editingSpin.Begin.x = int.Parse(numpadPreview);
                     break;
                 case 2:
-                    editingSpin.Begin.y = Int32.Parse(numpadPreview);
+                    editingSpin.Begin.y = int.Parse(numpadPreview);
                     break;
                 case 3:
-                    editingSpin.Begin.z = Int32.Parse(numpadPreview);
+                    editingSpin.Begin.z = int.Parse(numpadPreview);
                     break;
                 case 4:
-                    editingSpin.End.x = Int32.Parse(numpadPreview);
+                    editingSpin.End.x = int.Parse(numpadPreview);
                     break;
                 case 5:
-                    editingSpin.End.y = Int32.Parse(numpadPreview);
+                    editingSpin.End.y = int.Parse(numpadPreview);
                     break;
                 case 6:
-                    editingSpin.End.z = Int32.Parse(numpadPreview);
+                    editingSpin.End.z = int.Parse(numpadPreview);
                     break;
                 case 7:
                     if (tmp < 0)
@@ -161,67 +152,13 @@ namespace bSpin.UI.Spin_Editor
                     editingSpin.Length = tmp;
                     break;
             }
+
             ((VectorListObject)VectorList.Data[tempObj.vectorIndex]).vectorValue = tmp.ToString();
             VectorList.TableView.ReloadData();
             numpadPreview = "";
         }
 
-        public class VectorListObject
-        {
-            public float vector;
-            public int vectorIndex;
-            [UIValue("vector-name")]
-            private string vectorName;
-
-            [UIValue("vector-value")]
-            public string vectorValue
-            {
-                get => vector.ToString();
-                set
-                {
-                    vector = float.Parse(value);
-                }
-            }
-
-            [UIComponent("bgContainer")]
-            internal ImageView bg = null;
-
-            [UIAction("test-selector")]
-            void ExperimentalSelect()
-            {
-                Instance.numpadPreview = vector.ToString();
-                tempObj = this;
-                Instance.parserParams.EmitEvent("number-picker");
-                Refresh(true, false);
-            }
-
-
-            public VectorListObject(float vector, string name, int index)
-            {
-                this.vector = (int)vector;
-                this.vectorName = name;
-                this.vectorValue = vector.ToString();
-                this.vectorIndex = index;
-            }
-            [UIAction("refresh-visuals")]
-            public void Refresh(bool selected, bool highlighted)
-            {
-
-                bg.material = RoundedEdge;
-                var x = new Color(0,0,0,0.45f);
-                if (selected || highlighted)
-                {
-                    x.a = selected ? 0.9f : 0.6f;
-                    x.r = selected ? 0.45f : 0.2f;
-                    x.g = selected ? 0.45f : 0.2f;
-                    x.b = selected ? 0.9f : 0.6f;
-                }
-                bg.color = x;
-            }
-        }
-
-        internal void Load(CustomTypes.Spin spin)
-        {
+        internal void Load(Spin spin) {
             RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
             easeStringChoice = spin.Easing.ToString();
             cacheSpin = spin;
@@ -229,18 +166,61 @@ namespace bSpin.UI.Spin_Editor
             VectorList.Data.Clear();
             VectorList.Data.Add(new VectorListObject(spin.DelayBeforeSpin, "Delay Before", 0));
             VectorList.Data.Add(new VectorListObject(spin.Begin.x, "Start X", 1));
-            VectorList.Data.Add(new VectorListObject(spin.Begin.y, "Start Y",2));
-            VectorList.Data.Add(new VectorListObject(spin.Begin.z, "Start Z",3));
-            VectorList.Data.Add(new VectorListObject(spin.End.x, "End X",4));
-            VectorList.Data.Add(new VectorListObject(spin.End.y, "End Y",5));
-            VectorList.Data.Add(new VectorListObject(spin.End.z, "End Z",6));
-            VectorList.Data.Add(new VectorListObject(spin.DelayAfterSpin, "Delay After",7));
-            VectorList.Data.Add(new VectorListObject(spin.Length, "Length",8));
+            VectorList.Data.Add(new VectorListObject(spin.Begin.y, "Start Y", 2));
+            VectorList.Data.Add(new VectorListObject(spin.Begin.z, "Start Z", 3));
+            VectorList.Data.Add(new VectorListObject(spin.End.x, "End X", 4));
+            VectorList.Data.Add(new VectorListObject(spin.End.y, "End Y", 5));
+            VectorList.Data.Add(new VectorListObject(spin.End.z, "End Z", 6));
+            VectorList.Data.Add(new VectorListObject(spin.DelayAfterSpin, "Delay After", 7));
+            VectorList.Data.Add(new VectorListObject(spin.Length, "Length", 8));
             VectorList.TableView.ReloadData();
             tempObj = (VectorListObject)VectorList.Data[0];
             VectorList.TableView.SelectCellWithIdx(0);
         }
 
+        public class VectorListObject {
+            [UIComponent("bgContainer")] internal ImageView bg = null;
 
+            public float vector;
+            public int vectorIndex;
+
+            [UIValue("vector-name")] private string vectorName;
+
+
+            public VectorListObject(float vector, string name, int index) {
+                this.vector = (int)vector;
+                vectorName = name;
+                vectorValue = vector.ToString();
+                vectorIndex = index;
+            }
+
+            [UIValue("vector-value")]
+            public string vectorValue {
+                get => vector.ToString();
+                set => vector = float.Parse(value);
+            }
+
+            [UIAction("test-selector")]
+            private void ExperimentalSelect() {
+                Instance.numpadPreview = vector.ToString();
+                tempObj = this;
+                Instance.parserParams.EmitEvent("number-picker");
+                Refresh(true, false);
+            }
+
+            [UIAction("refresh-visuals")]
+            public void Refresh(bool selected, bool highlighted) {
+                bg.material = RoundedEdge;
+                var x = new Color(0, 0, 0, 0.45f);
+                if (selected || highlighted) {
+                    x.a = selected ? 0.9f : 0.6f;
+                    x.r = selected ? 0.45f : 0.2f;
+                    x.g = selected ? 0.45f : 0.2f;
+                    x.b = selected ? 0.9f : 0.6f;
+                }
+
+                bg.color = x;
+            }
+        }
     }
 }

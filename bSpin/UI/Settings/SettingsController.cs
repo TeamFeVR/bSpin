@@ -1,56 +1,36 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
-using System;
 using BeatSaberMarkupLanguage.Util;
+using bSpin.Configuration;
 
-namespace bSpin.UI.Settings
-{
-    class SettingsController : PersistentSingleton<SettingsController>
-    {
+namespace bSpin.UI.Settings {
+    internal class SettingsController : PersistentSingleton<SettingsController> {
         [UIValue("twitch-en")]
-        internal bool TwitchEnabled
-        {
-            get => Configuration.PluginConfig.Instance.TwitchEnabled;
-            set
-            {
-                Configuration.PluginConfig.Instance.TwitchEnabled = value;
-            }
+        internal bool TwitchEnabled {
+            get => PluginConfig.Instance.TwitchEnabled;
+            set => PluginConfig.Instance.TwitchEnabled = value;
         }
 
         [UIValue("twitch-ann")]
-        internal bool TwitchAnnounce
-        {
-            get => Configuration.PluginConfig.Instance.TwitchAnnounce;
-            set
-            {
-                Configuration.PluginConfig.Instance.TwitchAnnounce = value;
-            }
+        internal bool TwitchAnnounce {
+            get => PluginConfig.Instance.TwitchAnnounce;
+            set => PluginConfig.Instance.TwitchAnnounce = value;
         }
 
         [UIValue("udp-port")]
-        internal string UdpPort
-        {
-            get => Configuration.PluginConfig.Instance.UdpPort.ToString();
-            set
-            {
-                Configuration.PluginConfig.Instance.UdpPort = Int32.Parse(value);
-            }
+        internal string UdpPort {
+            get => PluginConfig.Instance.UdpPort.ToString();
+            set => PluginConfig.Instance.UdpPort = int.Parse(value);
         }
 
         [UIValue("udp-en")]
-        internal bool UdpEnabled
-        {
-            get => Configuration.PluginConfig.Instance.UdpEnabled;
-            set
-            {
-                Configuration.PluginConfig.Instance.UdpEnabled = value;
-            }
+        internal bool UdpEnabled {
+            get => PluginConfig.Instance.UdpEnabled;
+            set => PluginConfig.Instance.UdpEnabled = value;
         }
 
         [UIAction("#apply")]
-        public void OnApply()
-        {
-            switch (Configuration.PluginConfig.Instance.TwitchEnabled)
-            {
+        public void OnApply() {
+            switch (PluginConfig.Instance.TwitchEnabled) {
                 /*
                 case true:
                     if (Twitch.CommandHandler.twitchService == null)
