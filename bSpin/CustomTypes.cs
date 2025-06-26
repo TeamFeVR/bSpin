@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Newtonsoft.Json;
 using IPA.Utilities;
 using SpinMod;
-//using SongCore;
+
 namespace bSpin.CustomTypes
 {
     public struct SpinProfile

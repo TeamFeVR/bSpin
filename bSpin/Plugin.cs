@@ -1,19 +1,14 @@
 ﻿using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
 using HarmonyLib;
 using System.Reflection;
 using bSpin.CustomTypes;
 using IPA.Utilities;
 using System.IO;
-using BeatSaberMarkupLanguage.Settings;
 using BeatSaberMarkupLanguage.Util;
 using bSpin.Network;
 

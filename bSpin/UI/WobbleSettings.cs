@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HMUI;
 using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Components;
-using BeatSaberMarkupLanguage.GameplaySetup;
-using BeatSaberMarkupLanguage.ViewControllers;
-using UnityEngine.UI;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Util;
-using BS_Utils.Utilities;
 
 namespace bSpin.UI
 {

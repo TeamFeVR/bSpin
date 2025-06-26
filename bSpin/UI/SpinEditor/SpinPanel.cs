@@ -1,14 +1,10 @@
 ﻿using BeatSaberMarkupLanguage.ViewControllers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using bSpin.CustomTypes;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using UnityEngine;
-using UnityEngine.UI;
 using HMUI;
 
 namespace bSpin.UI.Spin_Editor

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using bSpin.Configuration;
+﻿using System.Threading.Tasks;
 using WebSocketSharp;
 using Newtonsoft.Json;
 

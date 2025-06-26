@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using System.Threading;
 using HarmonyLib;
 using System.Collections;
 using System.Reflection;
-using IPA.Utilities;
 using bSpin.Extentions;
-using BeatSaberMarkupLanguage.FloatingScreen;
 
 namespace bSpin.HarmonyPatches
 {
