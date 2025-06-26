@@ -31,17 +31,17 @@ namespace bSpin.UI.Wobble_Editor
         private void PostParse()
         {
             RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
-            SpinList.tableView.SelectCellWithIdx(selectedSpin);
+            SpinList.TableView.SelectCellWithIdx(selectedSpin);
             
         }
         [UIValue("spin-name")]
         internal string SpinName
         {
-            get => tempSpins.name;
+            get => tempSpins.Name;
             set
             {
                 NotifyPropertyChanged();
-                tempSpins.name = value;
+                tempSpins.Name = value;
             }
         }
 
@@ -83,8 +83,8 @@ namespace bSpin.UI.Wobble_Editor
                 this.index = index;
                 this.spinLength = "In " + spin.Length.ToString() + " Seconds";
                 this.EasingLabel = spin.Easing.ToString();
-                this.spinVectors = "Rot: (<#FF0000>" + spin.Begin_Rot.x + "<#FFFFFF>,<#00FF00>" + spin.Begin_Rot.y + "<#FFFFFF>,<#0000FF>" + spin.Begin_Rot.z + "<#FFFFFF>) to (<#FF0000>" + spin.End_Rot.x + "<#FFFFFF>,<#00FF00>" + spin.End_Rot.y + "<#FFFFFF>,<#0000FF>" + spin.End_Rot.z + "<#FFFFFF>)";
-                this.posVectors = "Pos: (<#FF0000>" + spin.Begin_Pos.x + "<#FFFFFF>,<#00FF00>" + spin.Begin_Pos.y + "<#FFFFFF>,<#0000FF>" + spin.Begin_Pos.z + "<#FFFFFF>) to (<#FF0000>" + spin.End_Pos.x + "<#FFFFFF>,<#00FF00>" + spin.End_Pos.y + "<#FFFFFF>,<#0000FF>" + spin.End_Pos.z + "<#FFFFFF>)";
+                this.spinVectors = "Rot: (<#FF0000>" + spin.BeginRot.x + "<#FFFFFF>,<#00FF00>" + spin.BeginRot.y + "<#FFFFFF>,<#0000FF>" + spin.BeginRot.z + "<#FFFFFF>) to (<#FF0000>" + spin.EndRot.x + "<#FFFFFF>,<#00FF00>" + spin.EndRot.y + "<#FFFFFF>,<#0000FF>" + spin.EndRot.z + "<#FFFFFF>)";
+                this.posVectors = "Pos: (<#FF0000>" + spin.BeginPos.x + "<#FFFFFF>,<#00FF00>" + spin.BeginPos.y + "<#FFFFFF>,<#0000FF>" + spin.BeginPos.z + "<#FFFFFF>) to (<#FF0000>" + spin.EndPos.x + "<#FFFFFF>,<#00FF00>" + spin.EndPos.y + "<#FFFFFF>,<#0000FF>" + spin.EndPos.z + "<#FFFFFF>)";
             }
             [UIAction("refresh-visuals")]
             public void Refresh(bool selected, bool highlighted)
@@ -136,7 +136,7 @@ namespace bSpin.UI.Wobble_Editor
                 tempSpins.Wobbles.Insert(selectedSpin - 1, spin);
                 selectedSpin -= 1;
                 ReloadSpins();
-                SpinList.tableView.SelectCellWithIdx(selectedSpin);
+                SpinList.TableView.SelectCellWithIdx(selectedSpin);
             }
         }
         [UIAction("move-down")]
@@ -149,7 +149,7 @@ namespace bSpin.UI.Wobble_Editor
                 tempSpins.Wobbles.Insert(selectedSpin + 1, spin);
                 selectedSpin += 1;
                 ReloadSpins();
-                SpinList.tableView.SelectCellWithIdx(selectedSpin);
+                SpinList.TableView.SelectCellWithIdx(selectedSpin);
             }
         }
         [UIAction("add")]
@@ -158,7 +158,7 @@ namespace bSpin.UI.Wobble_Editor
             tempSpins.Wobbles.Add(new Wobble(0, Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero));
             ReloadSpins();
             selectedSpin = tempSpins.Wobbles.Count - 1;
-            SpinList.tableView.SelectCellWithIdx(tempSpins.Wobbles.Count - 1);
+            SpinList.TableView.SelectCellWithIdx(tempSpins.Wobbles.Count - 1);
             RotationPanel.Instance.Load(tempSpins.Wobbles.ElementAt(selectedSpin));
         }
         [UIAction("remove")]
@@ -166,7 +166,7 @@ namespace bSpin.UI.Wobble_Editor
         {
             tempSpins.Wobbles.RemoveAt(selectedSpin);
             ReloadSpins();
-            SpinList.tableView.SelectCellWithIdx(selectedSpin - 1);
+            SpinList.TableView.SelectCellWithIdx(selectedSpin - 1);
             selectedSpin = tempSpins.Wobbles.Count - 1;
             RotationPanel.Instance.Load(tempSpins.Wobbles.ElementAt(selectedSpin));
         }
@@ -188,7 +188,7 @@ namespace bSpin.UI.Wobble_Editor
                 i++;
             }
             i = 0;
-            SpinList.tableView.ReloadData();
+            SpinList.TableView.ReloadData();
         }
 
 
@@ -204,7 +204,7 @@ namespace bSpin.UI.Wobble_Editor
                 i++;
             }
             i = 0;
-            SpinList.tableView.ReloadData();
+            SpinList.TableView.ReloadData();
             RotationPanel.Instance.Load(tempSpins.Wobbles.ElementAt(selectedSpin));
         }
     }

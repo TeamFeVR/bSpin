@@ -31,7 +31,7 @@ namespace bSpin.UI.Spin_Editor
         private void PostParse()
         {
             RoundedEdge = Resources.FindObjectsOfTypeAll<Material>().Where(m => m.name == "UINoGlowRoundEdge").First();
-            SpinList.tableView.SelectCellWithIdx(selectedSpin);
+            SpinList.TableView.SelectCellWithIdx(selectedSpin);
             
         }
         [UIValue("spin-name")]
@@ -134,7 +134,7 @@ namespace bSpin.UI.Spin_Editor
                 tempSpins.spins.Insert(selectedSpin - 1, spin);
                 selectedSpin -= 1;
                 ReloadSpins();
-                SpinList.tableView.SelectCellWithIdx(selectedSpin);
+                SpinList.TableView.SelectCellWithIdx(selectedSpin);
             }
         }
         [UIAction("move-down")]
@@ -147,7 +147,7 @@ namespace bSpin.UI.Spin_Editor
                 tempSpins.spins.Insert(selectedSpin + 1, spin);
                 selectedSpin += 1;
                 ReloadSpins();
-                SpinList.tableView.SelectCellWithIdx(selectedSpin);
+                SpinList.TableView.SelectCellWithIdx(selectedSpin);
             }
         }
         [UIAction("add")]
@@ -156,7 +156,7 @@ namespace bSpin.UI.Spin_Editor
             tempSpins.spins.Add(new Spin(0, 10, Vector3.zero, Vector3.zero, 0));
             ReloadSpins();
             selectedSpin = tempSpins.spins.Count - 1;
-            SpinList.tableView.SelectCellWithIdx(tempSpins.spins.Count - 1);
+            SpinList.TableView.SelectCellWithIdx(tempSpins.spins.Count - 1);
             RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
         }
         [UIAction("remove")]
@@ -164,7 +164,7 @@ namespace bSpin.UI.Spin_Editor
         {
             tempSpins.spins.RemoveAt(selectedSpin);
             ReloadSpins();
-            SpinList.tableView.SelectCellWithIdx(selectedSpin - 1);
+            SpinList.TableView.SelectCellWithIdx(selectedSpin - 1);
             selectedSpin = tempSpins.spins.Count - 1;
             RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
         }
@@ -186,7 +186,7 @@ namespace bSpin.UI.Spin_Editor
                 i++;
             }
             i = 0;
-            SpinList.tableView.ReloadData();
+            SpinList.TableView.ReloadData();
         }
 
 
@@ -202,7 +202,7 @@ namespace bSpin.UI.Spin_Editor
                 i++;
             }
             i = 0;
-            SpinList.tableView.ReloadData();
+            SpinList.TableView.ReloadData();
             RotationPanel.Instance.Load(tempSpins.spins.ElementAt(selectedSpin));
         }
     }

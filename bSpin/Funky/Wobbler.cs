@@ -63,10 +63,10 @@ namespace bSpin.Funky
         {
             foreach (var wobb in Plugin.wobbles)
             {
-                Plugin.Log.Info(wobb.name);
+                Plugin.Log.Info(wobb.Name);
 
 
-                if (wobb.name.ToLower().Equals(profile))
+                if (wobb.Name.ToLower().Equals(profile))
                     coroutineQueue.Enqueue(wob(wobb.Wobbles));
             }
         }

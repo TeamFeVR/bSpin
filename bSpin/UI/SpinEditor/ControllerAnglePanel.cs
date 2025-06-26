@@ -37,16 +37,9 @@ namespace bSpin.UI.Spin_Editor
         [UIAction("#post-parse")]
         private void PostParse()
         {
-            tableList.data.AddRange(new CustomListTableData.CustomCellInfo[]
-            {
-                new CustomListTableData.CustomCellInfo
-                (
-                    "Changelog\n",
-                    "The changelog for Enhancements"
-
-                )
-            });
-            tableList.tableView.ReloadData();
+            tableList.Data.Add( new CustomListTableData.CustomCellInfo (
+                "WIP\n", "Idk what this was"));
+            tableList.TableView.ReloadData();
         }
 
     }

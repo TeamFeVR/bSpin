@@ -132,40 +132,40 @@ namespace bSpin.UI.Wobble_Editor
             switch (tempObj.vectorIndex)
             {
                 case 0:
-                    editingSpin.Begin_Pos.x = Int32.Parse(numpadPreview);
+                    editingSpin.BeginPos.x = Int32.Parse(numpadPreview);
                     break;
                 case 1:
-                    editingSpin.Begin_Pos.y = Int32.Parse(numpadPreview);
+                    editingSpin.BeginPos.y = Int32.Parse(numpadPreview);
                     break;
                 case 2:
-                    editingSpin.Begin_Pos.z = Int32.Parse(numpadPreview);
+                    editingSpin.BeginPos.z = Int32.Parse(numpadPreview);
                     break;
                 case 3:
-                    editingSpin.End_Pos.x = Int32.Parse(numpadPreview);
+                    editingSpin.EndPos.x = Int32.Parse(numpadPreview);
                     break;
                 case 4:
-                    editingSpin.End_Pos.y = Int32.Parse(numpadPreview);
+                    editingSpin.EndPos.y = Int32.Parse(numpadPreview);
                     break;
                 case 5:
-                    editingSpin.End_Pos.z = Int32.Parse(numpadPreview);
+                    editingSpin.EndPos.z = Int32.Parse(numpadPreview);
                     break;
                 case 6:
-                    editingSpin.Begin_Rot.x = Int32.Parse(numpadPreview);
+                    editingSpin.BeginRot.x = Int32.Parse(numpadPreview);
                     break;
                 case 7:
-                    editingSpin.Begin_Rot.y = Int32.Parse(numpadPreview);
+                    editingSpin.BeginRot.y = Int32.Parse(numpadPreview);
                     break;
                 case 8:
-                    editingSpin.Begin_Rot.z = Int32.Parse(numpadPreview);
+                    editingSpin.BeginRot.z = Int32.Parse(numpadPreview);
                     break;
                 case 9:
-                    editingSpin.End_Pos.x = Int32.Parse(numpadPreview);
+                    editingSpin.EndPos.x = Int32.Parse(numpadPreview);
                     break;
                 case 10:
-                    editingSpin.End_Pos.y = Int32.Parse(numpadPreview);
+                    editingSpin.EndPos.y = Int32.Parse(numpadPreview);
                     break;
                 case 11:
-                    editingSpin.End_Pos.z = Int32.Parse(numpadPreview);
+                    editingSpin.EndPos.z = Int32.Parse(numpadPreview);
                     break;
                 case 12:
                     if (tmp < 0)
@@ -173,8 +173,8 @@ namespace bSpin.UI.Wobble_Editor
                     editingSpin.Length = tmp;
                     break;
             }
-            ((VectorListObject)VectorList.data.ElementAt(tempObj.vectorIndex)).vectorValue = tmp.ToString();
-            VectorList.tableView.ReloadData();
+            ((VectorListObject)VectorList.Data[tempObj.vectorIndex]).vectorValue = tmp.ToString();
+            VectorList.TableView.ReloadData();
             numpadPreview = "";
         }
 
@@ -238,23 +238,23 @@ namespace bSpin.UI.Wobble_Editor
             easeStringChoice = spin.Easing.ToString();
             cacheSpin = spin;
             editingSpin = spin;
-            VectorList.data.Clear();
-            VectorList.data.Add(new VectorListObject(spin.Begin_Pos.x, "Start X Pos", 0));
-            VectorList.data.Add(new VectorListObject(spin.Begin_Pos.y, "Start Y Pos", 1));
-            VectorList.data.Add(new VectorListObject(spin.Begin_Pos.z, "Start Z Pos", 2));
-            VectorList.data.Add(new VectorListObject(spin.End_Pos.x, "End X Pos", 3));
-            VectorList.data.Add(new VectorListObject(spin.End_Pos.y, "End Y Pos", 4));
-            VectorList.data.Add(new VectorListObject(spin.End_Pos.z, "End Z Pos", 5));
-            VectorList.data.Add(new VectorListObject(spin.Begin_Rot.x, "Start X Rotation", 6));
-            VectorList.data.Add(new VectorListObject(spin.Begin_Rot.y, "Start Y Rotation", 7));
-            VectorList.data.Add(new VectorListObject(spin.Begin_Rot.z, "Start Z Rotation", 8));
-            VectorList.data.Add(new VectorListObject(spin.End_Rot.x, "End X Rotation", 9));
-            VectorList.data.Add(new VectorListObject(spin.End_Rot.y, "End Y Rotation", 10));
-            VectorList.data.Add(new VectorListObject(spin.End_Rot.z, "End Z Rotation", 11));
-            VectorList.data.Add(new VectorListObject(spin.Length, "Length",12));
-            VectorList.tableView.ReloadData();
-            tempObj = (VectorListObject)VectorList.data.ElementAt(0);
-            VectorList.tableView.SelectCellWithIdx(0);
+            VectorList.Data.Clear();
+            VectorList.Data.Add(new VectorListObject(spin.BeginPos.x, "Start X Pos", 0));
+            VectorList.Data.Add(new VectorListObject(spin.BeginPos.y, "Start Y Pos", 1));
+            VectorList.Data.Add(new VectorListObject(spin.BeginPos.z, "Start Z Pos", 2));
+            VectorList.Data.Add(new VectorListObject(spin.EndPos.x, "End X Pos", 3));
+            VectorList.Data.Add(new VectorListObject(spin.EndPos.y, "End Y Pos", 4));
+            VectorList.Data.Add(new VectorListObject(spin.EndPos.z, "End Z Pos", 5));
+            VectorList.Data.Add(new VectorListObject(spin.BeginRot.x, "Start X Rotation", 6));
+            VectorList.Data.Add(new VectorListObject(spin.BeginRot.y, "Start Y Rotation", 7));
+            VectorList.Data.Add(new VectorListObject(spin.BeginRot.z, "Start Z Rotation", 8));
+            VectorList.Data.Add(new VectorListObject(spin.EndRot.x, "End X Rotation", 9));
+            VectorList.Data.Add(new VectorListObject(spin.EndRot.y, "End Y Rotation", 10));
+            VectorList.Data.Add(new VectorListObject(spin.EndRot.z, "End Z Rotation", 11));
+            VectorList.Data.Add(new VectorListObject(spin.Length, "Length",12));
+            VectorList.TableView.ReloadData();
+            tempObj = (VectorListObject)VectorList.Data[0];
+            VectorList.TableView.SelectCellWithIdx(0);
         }
     }
 }

@@ -44,14 +44,14 @@ namespace bSpin.CustomTypes
     public struct WobbleProfile
     {
         public List<Wobble> Wobbles;
-        public string name;
-        public string jsonPath;
+        public string Name;
+        public string JsonPath;
 
         public WobbleProfile(string name, List<Wobble> wobbles)
         {
-            this.name = name;
+            this.Name = name;
             this.Wobbles = wobbles;
-            this.jsonPath = Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles", name + ".json");
+            this.JsonPath = Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles", name + ".json");
         }
     }
 
@@ -59,22 +59,22 @@ namespace bSpin.CustomTypes
     {
         public float Length;
         [JsonConverter(typeof(Vector3Converter))]
-        public Vector3 Begin_Rot;
+        public Vector3 BeginRot;
         [JsonConverter(typeof(Vector3Converter))]
-        public Vector3 End_Rot;
+        public Vector3 EndRot;
         [JsonConverter(typeof(Vector3Converter))]
-        public Vector3 Begin_Pos;
+        public Vector3 BeginPos;
         [JsonConverter(typeof(Vector3Converter))]
-        public Vector3 End_Pos;
+        public Vector3 EndPos;
         [JsonConverter(typeof(EasingJsonConverter))]
         public EasingFunction.Ease Easing;
         public Wobble(float length, Vector3 rstart, Vector3 rend, Vector3 pstart, Vector3 pend, EasingFunction.Ease easing = EasingFunction.Ease.Linear)
         {
             this.Length = length;
-            this.Begin_Rot = rstart;
-            this.Begin_Pos = pstart;
-            this.End_Rot = rend;
-            this.End_Pos = pend;
+            this.BeginRot = rstart;
+            this.BeginPos = pstart;
+            this.EndRot = rend;
+            this.EndPos = pend;
             this.Easing = easing;
         }
     }
@@ -82,23 +82,6 @@ namespace bSpin.CustomTypes
 }
 namespace bSpin
 {
-    public class Tools
-    {
-        public static bool IsModdedMap(IDifficultyBeatmap map)
-        {
-            /*try
-            {
-                return Collections.RetrieveDifficultyData(map)?
-                    .additionalDifficultyData?
-                    ._requirements?.Any(x => x == "Noodle Extensions") == true;
-            }
-            catch
-            {
-                return false;
-            }*/
-            return false;
-        }
-    }
     public class SpinTools
     {
         public static List<CustomTypes.Spin> LoadJson(string path)

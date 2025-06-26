@@ -7,10 +7,8 @@ using HMUI;
 using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.GameplaySetup;
-using BeatSaberMarkupLanguage.ViewControllers;
-using UnityEngine.UI;
 using BeatSaberMarkupLanguage.Attributes;
-using BS_Utils.Utilities;
+using BeatSaberMarkupLanguage.Util;
 
 namespace bSpin.UI
 {
@@ -76,12 +74,10 @@ namespace bSpin.UI
             
             FlowCoordinator flowCoordinator = BeatSaberUI.MainFlowCoordinator.YoungestChildFlowCoordinatorOrSelf();
             if (!Spin_Editor.SpinEditorFlowCoordinator.Instance)
-            {
                 Spin_Editor.SpinEditorFlowCoordinator.Instance = BeatSaberUI.CreateFlowCoordinator<Spin_Editor.SpinEditorFlowCoordinator>();
-            }
             if (!Spin_Editor.SpinEditorFlowCoordinator.Instance)
                 Plugin.Log.Critical("uh");
-                Spin_Editor.SpinEditorFlowCoordinator.SetPreviousFlowCoordinator(flowCoordinator);
+            Spin_Editor.SpinEditorFlowCoordinator.SetPreviousFlowCoordinator(flowCoordinator);
             try
             {
                 flowCoordinator.PresentFlowCoordinator(Spin_Editor.SpinEditorFlowCoordinator.Instance);
@@ -98,24 +94,24 @@ namespace bSpin.UI
         void setupLists()
         {
             spinSpeed = HarmonyPatches.sharedValues.speed;
-            spinListData.data.Clear();
+            spinListData.Data.Clear();
             foreach(var profile in Plugin.spinProfiles)
             {
                 var tempCell = new CustomListTableData.CustomCellInfo(profile.name);
 
-                spinListData.data.Add(tempCell);
+                spinListData.Data.Add(tempCell);
             }
-            spinListData.tableView.ReloadData();
-            spinListData.tableView.SelectCellWithIdx(Configuration.PluginConfig.Instance.spinProfile);
+            spinListData.TableView.ReloadData();
+            spinListData.TableView.SelectCellWithIdx(Configuration.PluginConfig.Instance.spinProfile);
         }
         
         public void AddTab()
         {
-            GameplaySetup.instance.AddTab("bSpin", "bSpin.UI.AngleChanger.bsml", this);
+            GameplaySetup.Instance.AddTab("bSpin", "bSpin.UI.AngleChanger.bsml", this);
         }
         public void RemoveTab()
         {
-            GameplaySetup.instance.RemoveTab("bSpin");
+            GameplaySetup.Instance.RemoveTab("bSpin");
         }
     }
 }

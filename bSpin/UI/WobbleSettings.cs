@@ -10,6 +10,7 @@ using BeatSaberMarkupLanguage.GameplaySetup;
 using BeatSaberMarkupLanguage.ViewControllers;
 using UnityEngine.UI;
 using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.Util;
 using BS_Utils.Utilities;
 
 namespace bSpin.UI
@@ -63,15 +64,15 @@ namespace bSpin.UI
         [UIAction("#post-parse")]
         void setupLists()
         {
-            spinListData.data.Clear();
+            spinListData.Data.Clear();
             foreach(var profile in Plugin.wobbles)
             {
-                var tempCell = new CustomListTableData.CustomCellInfo(profile.name);
+                var tempCell = new CustomListTableData.CustomCellInfo(profile.Name);
 
-                spinListData.data.Add(tempCell);
+                spinListData.Data.Add(tempCell);
             }
-            spinListData.tableView.ReloadData();
-            spinListData.tableView.SelectCellWithIdx(Configuration.PluginConfig.Instance.spinProfile);
+            spinListData.TableView.ReloadData();
+            spinListData.TableView.SelectCellWithIdx(Configuration.PluginConfig.Instance.spinProfile);
         }
         
         public void AddTab()

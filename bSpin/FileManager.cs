@@ -42,9 +42,9 @@ namespace bSpin
                 Plugin.Log.Debug("Caching profile at " + sp);
 
                 tempSpin.Wobbles = WobbleTools.LoadJson(sp);
-                tempSpin.name = sp.Substring((Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles") + "\\").Length);
-                tempSpin.name = tempSpin.name.Substring(0, tempSpin.name.IndexOf(".json"));
-                tempSpin.jsonPath = sp;
+                tempSpin.Name = sp.Substring((Path.Combine(UnityGame.UserDataPath, "bSpin", "Wobbles") + "\\").Length);
+                tempSpin.Name = tempSpin.Name.Substring(0, tempSpin.Name.IndexOf(".json"));
+                tempSpin.JsonPath = sp;
 
                 spinProfiles.Add(tempSpin);
             }
@@ -52,7 +52,7 @@ namespace bSpin
         }
         public static void SaveWobbleProfile(WobbleProfile profile)
         {
-            WobbleTools.SaveJson(profile.Wobbles, profile.jsonPath);
+            WobbleTools.SaveJson(profile.Wobbles, profile.JsonPath);
         }
     }
 }

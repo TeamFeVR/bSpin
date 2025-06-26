@@ -14,6 +14,7 @@ using bSpin.CustomTypes;
 using IPA.Utilities;
 using System.IO;
 using BeatSaberMarkupLanguage.Settings;
+using BeatSaberMarkupLanguage.Util;
 using bSpin.Network;
 
 namespace bSpin
@@ -35,8 +36,13 @@ namespace bSpin
             Log = logger;
             harmony = new Harmony("headassbtw.bSpin");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
-            UI.AngleChanger.instance.AddTab();
-            UI.WobbleSettings.instance.AddTab();
+            
+            MainMenuAwaiter.MainMenuInitializing += delegate {
+                //BSMLSettings.Instance.AddSettingsMenu("bSpin", "bSpin.UI.Settings.settings.bsml", UI.Settings.SettingsController.instance);
+                UI.AngleChanger.instance.AddTab();
+                UI.WobbleSettings.instance.AddTab();
+            };
+            
             Log.Info("bSpin initialized.");
 
             
@@ -107,7 +113,6 @@ namespace bSpin
         [OnStart]
         public void OnApplicationStart()
         {
-            BSMLSettings.instance.AddSettingsMenu("bSpin", "bSpin.UI.Settings.settings.bsml", UI.Settings.SettingsController.instance);
             bSpinController = new GameObject("bSpinController");
             bSpinController.AddComponent<bSpinController>();
             /*Twitch.CommandHandler.Init();

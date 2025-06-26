@@ -86,13 +86,13 @@ namespace bSpin.Extentions
 				EasingFunction.Ease ease = wobble.Easing;
 				EasingFunction.Function func = EasingFunction.GetEasingFunction(ease);
 
-				float x = func(wobble.Begin_Rot.x, wobble.End_Rot.x, i);
-				float y = func(wobble.Begin_Rot.y, wobble.End_Rot.y, i);
-				float z = func(wobble.Begin_Rot.z, wobble.End_Rot.z, i);
+				float x = func(wobble.BeginRot.x, wobble.EndRot.x, i);
+				float y = func(wobble.BeginRot.y, wobble.EndRot.y, i);
+				float z = func(wobble.BeginRot.z, wobble.EndRot.z, i);
 				transform.localEulerAngles = new Vector3(x, y, z);
-				float x2 = func(wobble.Begin_Pos.x, wobble.End_Pos.x, i);
-				float y2 = func(wobble.Begin_Pos.y, wobble.End_Pos.y, i);
-				float z2 = func(wobble.Begin_Pos.z, wobble.End_Pos.z, i);
+				float x2 = func(wobble.BeginPos.x, wobble.EndPos.x, i);
+				float y2 = func(wobble.BeginPos.y, wobble.EndPos.y, i);
+				float z2 = func(wobble.BeginPos.z, wobble.EndPos.z, i);
 				transform.localPosition = new Vector3(x2, y2, z2);
 				yield return null;
 			}

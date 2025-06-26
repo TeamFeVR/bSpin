@@ -166,8 +166,8 @@ namespace bSpin.UI.Spin_Editor
                     editingSpin.Length = tmp;
                     break;
             }
-            ((VectorListObject)VectorList.data.ElementAt(tempObj.vectorIndex)).vectorValue = tmp.ToString();
-            VectorList.tableView.ReloadData();
+            ((VectorListObject)VectorList.Data[tempObj.vectorIndex]).vectorValue = tmp.ToString();
+            VectorList.TableView.ReloadData();
             numpadPreview = "";
         }
 
@@ -231,19 +231,19 @@ namespace bSpin.UI.Spin_Editor
             easeStringChoice = spin.Easing.ToString();
             cacheSpin = spin;
             editingSpin = spin;
-            VectorList.data.Clear();
-            VectorList.data.Add(new VectorListObject(spin.DelayBeforeSpin, "Delay Before", 0));
-            VectorList.data.Add(new VectorListObject(spin.Begin.x, "Start X", 1));
-            VectorList.data.Add(new VectorListObject(spin.Begin.y, "Start Y",2));
-            VectorList.data.Add(new VectorListObject(spin.Begin.z, "Start Z",3));
-            VectorList.data.Add(new VectorListObject(spin.End.x, "End X",4));
-            VectorList.data.Add(new VectorListObject(spin.End.y, "End Y",5));
-            VectorList.data.Add(new VectorListObject(spin.End.z, "End Z",6));
-            VectorList.data.Add(new VectorListObject(spin.DelayAfterSpin, "Delay After",7));
-            VectorList.data.Add(new VectorListObject(spin.Length, "Length",8));
-            VectorList.tableView.ReloadData();
-            tempObj = (VectorListObject)VectorList.data.ElementAt(0);
-            VectorList.tableView.SelectCellWithIdx(0);
+            VectorList.Data.Clear();
+            VectorList.Data.Add(new VectorListObject(spin.DelayBeforeSpin, "Delay Before", 0));
+            VectorList.Data.Add(new VectorListObject(spin.Begin.x, "Start X", 1));
+            VectorList.Data.Add(new VectorListObject(spin.Begin.y, "Start Y",2));
+            VectorList.Data.Add(new VectorListObject(spin.Begin.z, "Start Z",3));
+            VectorList.Data.Add(new VectorListObject(spin.End.x, "End X",4));
+            VectorList.Data.Add(new VectorListObject(spin.End.y, "End Y",5));
+            VectorList.Data.Add(new VectorListObject(spin.End.z, "End Z",6));
+            VectorList.Data.Add(new VectorListObject(spin.DelayAfterSpin, "Delay After",7));
+            VectorList.Data.Add(new VectorListObject(spin.Length, "Length",8));
+            VectorList.TableView.ReloadData();
+            tempObj = (VectorListObject)VectorList.Data[0];
+            VectorList.TableView.SelectCellWithIdx(0);
         }
 
 
